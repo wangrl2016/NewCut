@@ -1,0 +1,6 @@
+[requires]
+ffmpeg/5.0
+glog/0.6.0
+
+[generators]
+cmake
