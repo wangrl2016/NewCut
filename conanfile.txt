@@ -1,6 +1,14 @@
 [requires]
 ffmpeg/5.0
-glog/0.6.0
+glog/0.5.0
 
 [generators]
 cmake
+
+[options]
+ffmpeg:with_libwebp=False
+ffmpeg:with_libx265=False
+ffmpeg:with_openh264=False
+ffmpeg:with_openjpeg=False
+ffmpeg:with_opus=False
+ffmpeg:with_vorbis=False

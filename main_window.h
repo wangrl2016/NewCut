@@ -7,16 +7,19 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow {
-Q_OBJECT
+namespace nc {
+    class MainWindow : public QMainWindow {
+    Q_OBJECT
 
-public:
-    explicit MainWindow(QWidget* parent = nullptr);
+    public:
+        MainWindow();
 
-    ~MainWindow() override;
+        void LoadFile(const QString& filename);
 
-private:
-    Ui::MainWindow* ui;
-};
+    private:
+
+
+    };
+}
 
 #endif // NEW_CUT_MAIN_WINDOW_H
