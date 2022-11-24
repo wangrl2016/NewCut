@@ -3,7 +3,7 @@
 #include <QCommandLineParser>
 #include "main_window.h"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
     // Initialize Google’s logging library.
     google::InitGoogleLogging(argv[0]);
     FLAGS_stderrthreshold = google::INFO;
@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
     parser.process(app);
 
     nc::MainWindow main_window;
-    if(!parser.positionalArguments().isEmpty())
+    if (!parser.positionalArguments().isEmpty())
         main_window.LoadFile(parser.positionalArguments().first());
     main_window.show();
     return QApplication::exec();

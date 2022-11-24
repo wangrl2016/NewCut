@@ -26,9 +26,9 @@ namespace nc {
 
         void Open();
 
-        void Save();
+        bool Save();
 
-        void SaveAs();
+        bool SaveAs();
 
         void About();
 
