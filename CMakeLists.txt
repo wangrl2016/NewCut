@@ -29,10 +29,11 @@ find_package(Qt${QT_VERSION_MAJOR}
 
 set(PROJECT_SOURCES
         application.qrc
-        main.cpp
-        main_window.cc
-        main_window.h
-        main_window.ui
+        main.cc
+        src/view/diagram_scene.cc
+        src/view/diagram_scene.h
+        src/view/main_window.cc
+        src/view/main_window.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
