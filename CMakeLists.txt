@@ -30,8 +30,14 @@ find_package(Qt${QT_VERSION_MAJOR}
 set(PROJECT_SOURCES
         application.qrc
         main.cc
+        src/view/arrow.cc
+        src/view/arrow.h
+        src/view/diagram_item.cc
+        src/view/diagram_item.h
         src/view/diagram_scene.cc
         src/view/diagram_scene.h
+        src/view/diagram_text_item.cc
+        src/view/diagram_text_item.h
         src/view/main_window.cc
         src/view/main_window.h
 )

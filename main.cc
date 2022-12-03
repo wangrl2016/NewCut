@@ -2,6 +2,8 @@
 // Created by wangrl2016 on 2022/11/30.
 //
 
+// 代码地址：https://github.com/wangrl2016/NewCut
+
 #include <glog/logging.h>
 #include <QApplication>
 #include "src/view/main_window.h"
