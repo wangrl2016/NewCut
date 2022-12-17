@@ -30,6 +30,14 @@ find_package(Qt${QT_VERSION_MAJOR}
 set(PROJECT_SOURCES
         application.qrc
         main.cc
+        media/base/audio_bus.cc
+        media/base/audio_bus.h
+        media/base/channel_layout.cc
+        media/base/channel_layout.h
+        media/filters/audio_file_reader.cc
+        media/filters/audio_file_reader.h
+        media/filters/ffmpeg_glue.cc
+        media/filters/ffmpeg_glue.h
         src/view/arrow.cc
         src/view/arrow.h
         src/view/diagram_item.cc
