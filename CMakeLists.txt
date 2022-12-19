@@ -30,6 +30,8 @@ find_package(Qt${QT_VERSION_MAJOR}
 set(PROJECT_SOURCES
         application.qrc
         main.cc
+        base/memory/aligned_memory.cc
+        base/memory/aligned_memory.h
         media/base/audio_bus.cc
         media/base/audio_bus.h
         media/base/channel_layout.cc
