@@ -14,6 +14,33 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup(KEEP_RPATHS)
 
+### Build MultiMediaLibrary library
+
+add_library(MultiMediaLibrary STATIC)
+target_sources(MultiMediaLibrary
+        PRIVATE
+        base/memory/aligned_memory.cc
+        base/memory/aligned_memory.h
+        media/base/audio_bus.cc
+        media/base/audio_bus.h
+        media/base/audio_parameters.cc
+        media/base/channel_layout.cc
+        media/base/channel_layout.h
+        media/base/sample_format.cc
+        media/base/sample_format.h
+        media/filters/audio_file_reader.cc
+        media/filters/audio_file_reader.h
+        media/filters/ffmpeg_glue.cc
+        media/filters/ffmpeg_glue.h
+        )
+
+target_link_libraries(MultiMediaLibrary
+        PRIVATE
+        ${CONAN_LIBS}
+        )
+
+### Build NewCut executable
+
 set(QT_LIBS
         concurrent
         core
@@ -30,19 +57,6 @@ find_package(Qt${QT_VERSION_MAJOR}
 set(PROJECT_SOURCES
         application.qrc
         main.cc
-        base/memory/aligned_memory.cc
-        base/memory/aligned_memory.h
-        media/base/audio_bus.cc
-        media/base/audio_bus.h
-        media/base/audio_parameters.cc
-        media/base/channel_layout.cc
-        media/base/channel_layout.h
-        media/base/sample_format.cc
-        media/base/sample_format.h
-        media/filters/audio_file_reader.cc
-        media/filters/audio_file_reader.h
-        media/filters/ffmpeg_glue.cc
-        media/filters/ffmpeg_glue.h
         src/view/arrow.cc
         src/view/arrow.h
         src/view/diagram_item.cc
@@ -64,6 +78,7 @@ endif()
 
 target_link_libraries(NewCut PRIVATE
         ${CONAN_LIBS}
+        MultiMediaLibrary
         Qt${QT_VERSION_MAJOR}::Concurrent
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Gui
@@ -83,3 +98,16 @@ set_target_properties(NewCut PROPERTIES
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(NewCut)
 endif()
+
+### Build examples
+
+set (EXAMPLES
+        )
+
+foreach(EXAMPLE ${EXAMPLES}
+
+        )
+
+endforeach()
+
+### Build tests
