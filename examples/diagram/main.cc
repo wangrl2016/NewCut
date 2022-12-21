@@ -6,7 +6,7 @@
 
 #include <glog/logging.h>
 #include <QApplication>
-#include "samples/diagram/main_window.h"
+#include "examples/diagram/main_window.h"
 
 int main(int argc, char* argv[]) {
     // Initialize Google’s logging library.

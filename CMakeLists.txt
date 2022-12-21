@@ -59,6 +59,8 @@ find_package(Qt${QT_VERSION_MAJOR}
 set(PROJECT_SOURCES
         application.qrc
         main.cc
+        view/main_window.cc
+        view/main_window.h
         )
 
 qt_add_executable(NewCut
@@ -91,17 +93,17 @@ qt_finalize_executable(NewCut)
 
 set(DIAGRAM_EXAMPLE_SOURCES
         application.qrc
-        samples/diagram/main.cc
-        samples/diagram/arrow.cc
-        samples/diagram/arrow.h
-        samples/diagram/diagram_item.cc
-        samples/diagram/diagram_item.h
-        samples/diagram/diagram_scene.cc
-        samples/diagram/diagram_scene.h
-        samples/diagram/diagram_text_item.cc
-        samples/diagram/diagram_text_item.h
-        samples/diagram/main_window.cc
-        samples/diagram/main_window.h
+        examples/diagram/main.cc
+        examples/diagram/arrow.cc
+        examples/diagram/arrow.h
+        examples/diagram/diagram_item.cc
+        examples/diagram/diagram_item.h
+        examples/diagram/diagram_scene.cc
+        examples/diagram/diagram_scene.h
+        examples/diagram/diagram_text_item.cc
+        examples/diagram/diagram_text_item.h
+        examples/diagram/main_window.cc
+        examples/diagram/main_window.h
         )
 
 qt_add_executable(DiagramExample

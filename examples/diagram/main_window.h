@@ -23,7 +23,7 @@ namespace nc {
     public:
         MainWindow();
 
-        ~MainWindow();
+        ~MainWindow() override;
 
     private slots:
 
