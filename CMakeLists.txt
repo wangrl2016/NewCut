@@ -34,8 +34,11 @@ set(PROJECT_SOURCES
         base/memory/aligned_memory.h
         media/base/audio_bus.cc
         media/base/audio_bus.h
+        media/base/audio_parameters.cc
         media/base/channel_layout.cc
         media/base/channel_layout.h
+        media/base/sample_format.cc
+        media/base/sample_format.h
         media/filters/audio_file_reader.cc
         media/filters/audio_file_reader.h
         media/filters/ffmpeg_glue.cc
