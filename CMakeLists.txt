@@ -26,6 +26,8 @@ target_sources(MultiMediaLibrary
         media/base/audio_parameters.cc
         media/base/channel_layout.cc
         media/base/channel_layout.h
+        media/base/container_names.cc
+        media/base/container_names.h
         media/base/sample_format.cc
         media/base/sample_format.h
         media/filters/audio_file_reader.cc
@@ -57,24 +59,12 @@ find_package(Qt${QT_VERSION_MAJOR}
 set(PROJECT_SOURCES
         application.qrc
         main.cc
-        src/view/arrow.cc
-        src/view/arrow.h
-        src/view/diagram_item.cc
-        src/view/diagram_item.h
-        src/view/diagram_scene.cc
-        src/view/diagram_scene.h
-        src/view/diagram_text_item.cc
-        src/view/diagram_text_item.h
-        src/view/main_window.cc
-        src/view/main_window.h
-)
+        )
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(NewCut
+qt_add_executable(NewCut
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-    )
-endif()
+        )
 
 target_link_libraries(NewCut PRIVATE
         ${CONAN_LIBS}
@@ -87,27 +77,79 @@ target_link_libraries(NewCut PRIVATE
         )
 
 set_target_properties(NewCut PROPERTIES
-    MACOSX_BUNDLE_GUI_IDENTIFIER www.qt.com
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING
+        MACOSX_BUNDLE_GUI_IDENTIFIER www.qt.com
+        MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+        MACOSX_BUNDLE_SHORT_VERSION_STRING
         ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
-)
+        MACOSX_BUNDLE TRUE
+        WIN32_EXECUTABLE TRUE
+        )
 
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(NewCut)
-endif()
+qt_finalize_executable(NewCut)
 
 ### Build examples
 
-set (EXAMPLES
+set(DIAGRAM_EXAMPLE_SOURCES
+        application.qrc
+        samples/diagram/main.cc
+        samples/diagram/arrow.cc
+        samples/diagram/arrow.h
+        samples/diagram/diagram_item.cc
+        samples/diagram/diagram_item.h
+        samples/diagram/diagram_scene.cc
+        samples/diagram/diagram_scene.h
+        samples/diagram/diagram_text_item.cc
+        samples/diagram/diagram_text_item.h
+        samples/diagram/main_window.cc
+        samples/diagram/main_window.h
         )
 
-foreach(EXAMPLE ${EXAMPLES}
-
+qt_add_executable(DiagramExample
+        MANUAL_FINALIZATION
+        ${DIAGRAM_EXAMPLE_SOURCES}
         )
 
-endforeach()
+target_link_libraries(DiagramExample PRIVATE
+        ${CONAN_LIBS}
+        MultiMediaLibrary
+        Qt${QT_VERSION_MAJOR}::Concurrent
+        Qt${QT_VERSION_MAJOR}::Core
+        Qt${QT_VERSION_MAJOR}::Gui
+        Qt${QT_VERSION_MAJOR}::Network
+        Qt${QT_VERSION_MAJOR}::Widgets
+        )
+
+set_target_properties(DiagramExample PROPERTIES
+        MACOSX_BUNDLE_GUI_IDENTIFIER www.qt.com
+        MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+        MACOSX_BUNDLE_SHORT_VERSION_STRING
+        ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+        MACOSX_BUNDLE TRUE
+        WIN32_EXECUTABLE TRUE
+        )
+
+qt_finalize_executable(DiagramExample)
 
 ### Build tests
+
+enable_testing()
+
+qt_add_executable(NewCutTest
+        MANUAL_FINALIZATION
+        media/base/container_names_test.cc
+        )
+
+target_link_libraries(NewCutTest PRIVATE
+        ${CONAN_LIBS}
+        MultiMediaLibrary
+        Qt${QT_VERSION_MAJOR}::Concurrent
+        Qt${QT_VERSION_MAJOR}::Core
+        Qt${QT_VERSION_MAJOR}::Gui
+        Qt${QT_VERSION_MAJOR}::Network
+        Qt${QT_VERSION_MAJOR}::Widgets
+        )
+
+qt_finalize_executable(NewCutTest)
+
+include(GoogleTest)
+gtest_discover_tests(NewCutTest)

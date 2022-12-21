@@ -8,8 +8,8 @@
 #include <QGraphicsScene>
 #include <QMenu>
 
-#include "src/view/diagram_text_item.h"
-#include "src/view/diagram_item.h"
+#include "diagram_text_item.h"
+#include "diagram_item.h"
 
 namespace nc {
     class DiagramScene : public QGraphicsScene {

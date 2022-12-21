@@ -5,8 +5,8 @@
 #include <QPainter>
 #include <QPen>
 #include <QtMath>
-#include "src/view/arrow.h"
-#include "src/view/diagram_item.h"
+#include "arrow.h"
+#include "diagram_item.h"
 
 namespace nc {
     Arrow::Arrow(nc::DiagramItem* startItem,

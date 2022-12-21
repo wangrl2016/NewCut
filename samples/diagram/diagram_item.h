@@ -7,7 +7,7 @@
 
 #include <QGraphicsPolygonItem>
 #include <QList>
-#include "src/view/arrow.h"
+#include "arrow.h"
 
 namespace nc {
     class Arrow;

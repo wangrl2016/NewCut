@@ -4,7 +4,7 @@
 
 #include <QGraphicsSceneContextMenuEvent>
 #include <QTextCursor>
-#include "src/view/diagram_scene.h"
+#include "diagram_scene.h"
 
 namespace nc {
     DiagramScene::DiagramScene(QMenu* itemMenu, QObject* parent)

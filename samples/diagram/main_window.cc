@@ -7,10 +7,10 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QMessageBox>
-#include "src/view/diagram_item.h"
-#include "src/view/diagram_scene.h"
-#include "src/view/diagram_text_item.h"
-#include "src/view/main_window.h"
+#include "diagram_item.h"
+#include "diagram_scene.h"
+#include "diagram_text_item.h"
+#include "main_window.h"
 
 namespace nc {
     const int InsertTextButton = 10;

@@ -14,8 +14,8 @@
 #include <QFontComboBox>
 #include <QToolBox>
 #include <QToolButton>
-#include "src/view/diagram_item.h"
-#include "src/view/diagram_scene.h"
+#include "diagram_item.h"
+#include "diagram_scene.h"
 
 namespace nc {
     class MainWindow : public QMainWindow {

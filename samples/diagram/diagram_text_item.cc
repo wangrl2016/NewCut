@@ -2,7 +2,7 @@
 // Created by wr on 2022/12/2.
 //
 
-#include "src/view/diagram_text_item.h"
+#include "diagram_text_item.h"
 
 namespace nc {
     DiagramTextItem::DiagramTextItem(QGraphicsItem* parent)

@@ -6,7 +6,7 @@
 #include <QGraphicsSceneContextMenuEvent>
 #include <QMenu>
 #include <QPainter>
-#include "src/view/diagram_item.h"
+#include "diagram_item.h"
 
 namespace nc {
     DiagramItem::DiagramItem(nc::DiagramItem::DiagramType diagramType,
