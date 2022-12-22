@@ -6,6 +6,8 @@
 #define NEWCUT_MAIN_WINDOW_H
 
 #include <QMainWindow>
+#include "view/params/params_graphics_view.h"
+#include "view/params/params_graphics_scene.h"
 
 namespace nc {
     class MainWindow : public QMainWindow {
@@ -17,6 +19,9 @@ namespace nc {
 
     protected:
 
+    private:
+        ParamsGraphicsView* params_graphics_view_;
+        ParamsGraphicsScene* params_graphics_scene_;
     };
 }
 

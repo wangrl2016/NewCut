@@ -59,6 +59,10 @@ find_package(Qt${QT_VERSION_MAJOR}
 set(PROJECT_SOURCES
         application.qrc
         main.cc
+        view/params/params_graphics_scene.cc
+        view/params/params_graphics_scene.h
+        view/params/params_graphics_view.cc
+        view/params/params_graphics_view.h
         view/main_window.cc
         view/main_window.h
         )
