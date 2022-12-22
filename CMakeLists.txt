@@ -21,6 +21,8 @@ target_sources(MultiMediaLibrary
         PRIVATE
         base/memory/aligned_memory.cc
         base/memory/aligned_memory.h
+        engine/geometry/flags.cc
+        engine/geometry/flags.h
         media/base/audio_bus.cc
         media/base/audio_bus.h
         media/base/audio_parameters.cc
