@@ -57,14 +57,18 @@ find_package(Qt${QT_VERSION_MAJOR}
         REQUIRED COMPONENTS ${QT_LIBS})
 
 set(PROJECT_SOURCES
-        application.qrc
+        resources/application.qrc
         main.cc
-        view/params/params_widget.cc
-        view/params/params_widget.h
+        view/params/param_widget.cc
+        view/params/param_widget.h
         view/piano/piano_graphics_scene.cc
         view/piano/piano_graphics_scene.h
         view/piano/piano_graphics_view.cc
         view/piano/piano_graphics_view.h
+        view/tracks/track_graphics_scene.cc
+        view/tracks/track_graphics_scene.h
+        view/tracks/track_graphics_view.cc
+        view/tracks/track_graphics_view.h
         view/main_window.cc
         view/main_window.h
         )
@@ -98,7 +102,7 @@ qt_finalize_executable(NewCut)
 ### Build examples
 
 set(DIAGRAM_EXAMPLE_SOURCES
-        application.qrc
+        resources/application.qrc
         examples/diagram/main.cc
         examples/diagram/arrow.cc
         examples/diagram/arrow.h

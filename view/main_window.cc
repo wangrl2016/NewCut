@@ -9,19 +9,25 @@ namespace nc {
     constexpr int kSceneLength = 5000.0f;
 
     MainWindow::MainWindow() {
+        // 轨道窗
+        track_graphics_scene_ = new TrackGraphicsScene(this);
+        track_graphics_scene_->setSceneRect(QRectF(0, 0, kSceneLength, kSceneLength));
+        track_graphics_view_ = new TrackGraphicsView(track_graphics_scene_, this);
+
         // 钢琴窗
         piano_graphics_scene_ = new PianoGraphicsScene(this);
         piano_graphics_scene_->setSceneRect(QRectF(0, 0, kSceneLength, kSceneLength));
         piano_graphics_view_ = new PianoGraphicsView(piano_graphics_scene_, this);
 
         // 参数窗
-        params_widget_ = new ParamsWidget(this);
-        params_widget_->setMinimumHeight(100);
+        param_widget_ = new ParamWidget(this);
+        param_widget_->setMinimumHeight(height() / 4);
 
-
+        // 从上到下的布局
         auto* layout = new QVBoxLayout();
+        layout->addWidget(track_graphics_view_);
         layout->addWidget(piano_graphics_view_);
-        layout->addWidget(params_widget_);
+        layout->addWidget(param_widget_);
 
         auto* widget = new QWidget();
         widget->setLayout(layout);

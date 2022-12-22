@@ -6,10 +6,9 @@
 #include "view/piano/piano_graphics_view.h"
 
 namespace nc {
-    PianoGraphicsView::PianoGraphicsView(QGraphicsScene* scene,
-                                           QWidget* parent)
+    PianoGraphicsView::PianoGraphicsView(QGraphicsScene* scene, QWidget* parent)
             : QGraphicsView(scene, parent) {
-
+        LOG(INFO) << __FUNCTION__;
     }
 
     PianoGraphicsView::~PianoGraphicsView() {

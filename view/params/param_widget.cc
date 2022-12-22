@@ -5,19 +5,19 @@
 #include <glog/logging.h>
 #include <QColor>
 #include <QPainter>
-#include "view/params/params_widget.h"
+#include "view/params/param_widget.h"
 
 namespace nc {
-    ParamsWidget::ParamsWidget(QWidget* parent)
+    ParamWidget::ParamWidget(QWidget* parent)
             : QWidget(parent) {
 
     }
 
-    ParamsWidget::~ParamsWidget() {
+    ParamWidget::~ParamWidget() {
         LOG(INFO) << __FUNCTION__;
     }
 
-    void ParamsWidget::paintEvent(QPaintEvent* event) {
+    void ParamWidget::paintEvent(QPaintEvent* event) {
         LOG(INFO) << __FUNCTION__;
         QPainter painter(this);
         painter.setBrush(QColor(255, 0, 0, 127));
@@ -27,27 +27,27 @@ namespace nc {
         painter.drawRect(0, 0, width(), height() / 2);
     }
 
-    void ParamsWidget::mouseDoubleClickEvent(QMouseEvent* event) {
+    void ParamWidget::mouseDoubleClickEvent(QMouseEvent* event) {
         // QWidget::mouseDoubleClickEvent(event);
     }
 
-    void ParamsWidget::mouseMoveEvent(QMouseEvent* event) {
+    void ParamWidget::mouseMoveEvent(QMouseEvent* event) {
         // QWidget::mouseMoveEvent(event);
     }
 
-    void ParamsWidget::mousePressEvent(QMouseEvent* event) {
+    void ParamWidget::mousePressEvent(QMouseEvent* event) {
         // QWidget::mousePressEvent(event);
     }
 
-    void ParamsWidget::mouseReleaseEvent(QMouseEvent* event) {
+    void ParamWidget::mouseReleaseEvent(QMouseEvent* event) {
         // QWidget::mouseReleaseEvent(event);
     }
 
-    void ParamsWidget::resizeEvent(QResizeEvent* event) {
+    void ParamWidget::resizeEvent(QResizeEvent* event) {
         // QWidget::resizeEvent(event);
     }
 
-    void ParamsWidget::showEvent(QShowEvent* event) {
+    void ParamWidget::showEvent(QShowEvent* event) {
         // QWidget::showEvent(event);
     }
 }

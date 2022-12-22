@@ -1,0 +1,19 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource>
+        <file>images/diagram/pointer.png</file>
+        <file>images/diagram/linepointer.png</file>
+        <file>images/diagram/textpointer.png</file>
+        <file>images/diagram/bold.png</file>
+        <file>images/diagram/italic.png</file>
+        <file>images/diagram/underline.png</file>
+        <file>images/diagram/floodfill.png</file>
+        <file>images/diagram/bringtofront.png</file>
+        <file>images/diagram/delete.png</file>
+        <file>images/diagram/sendtoback.png</file>
+        <file>images/diagram/linecolor.png</file>
+        <file>images/diagram/background1.png</file>
+        <file>images/diagram/background2.png</file>
+        <file>images/diagram/background3.png</file>
+        <file>images/diagram/background4.png</file>
+    </qresource>
+</RCC>

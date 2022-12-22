@@ -2,18 +2,18 @@
 // Created by wangrl2016 on 2022/12/22.
 //
 
-#ifndef NEWCUT_PARAMS_WIDGET_H
-#define NEWCUT_PARAMS_WIDGET_H
+#ifndef NEWCUT_PARAM_WIDGET_H
+#define NEWCUT_PARAM_WIDGET_H
 
 #include <QWidget>
 
 namespace nc {
-    class ParamsWidget : public QWidget {
+    class ParamWidget : public QWidget {
     Q_OBJECT
     public:
-        ParamsWidget(QWidget* parent = nullptr);
+        ParamWidget(QWidget* parent = nullptr);
 
-        ~ParamsWidget() override;
+        ~ParamWidget() override;
 
     protected:
         void paintEvent(QPaintEvent *event) override;
@@ -32,4 +32,4 @@ namespace nc {
     };
 }
 
-#endif //NEWCUT_PARAMS_WIDGET_H
+#endif //NEWCUT_PARAM_WIDGET_H

@@ -6,9 +6,12 @@
 #define NEWCUT_MAIN_WINDOW_H
 
 #include <QMainWindow>
-#include "view/params/params_widget.h"
+
+#include "view/params/param_widget.h"
 #include "view/piano/piano_graphics_view.h"
 #include "view/piano/piano_graphics_scene.h"
+#include "view/tracks/track_graphics_view.h"
+#include "view/tracks/track_graphics_scene.h"
 
 namespace nc {
     class MainWindow : public QMainWindow {
@@ -22,13 +25,15 @@ namespace nc {
 
     private:
         // 轨道窗
+        TrackGraphicsView* track_graphics_view_;
+        TrackGraphicsScene* track_graphics_scene_;
 
         // 钢琴窗
         PianoGraphicsView* piano_graphics_view_;
         PianoGraphicsScene* piano_graphics_scene_;
 
         // 参数窗
-        ParamsWidget* params_widget_;
+        ParamWidget* param_widget_;
     };
 }
 

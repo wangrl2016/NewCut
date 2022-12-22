@@ -8,7 +8,7 @@
 namespace nc {
     PianoGraphicsScene::PianoGraphicsScene(QObject* parent)
             : QGraphicsScene(parent) {
-
+        LOG(INFO) << __FUNCTION__;
     }
 
     PianoGraphicsScene::~PianoGraphicsScene() {
