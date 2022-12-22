@@ -11,7 +11,7 @@
 int main(int argc, char* argv[]) {
     // Initialize Google’s logging library.
     google::InitGoogleLogging(argv[0]);
-    FLAGS_stderrthreshold = google::INFO;
+    FLAGS_stderrthreshold = google::GLOG_INFO;
 
     QApplication app(argc, argv);
     nc::MainWindow mainWindow;

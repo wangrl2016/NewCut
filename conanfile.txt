@@ -8,6 +8,7 @@ cmake
 
 [options]
 ffmpeg:with_libwebp=False
+ffmpeg:with_libvpx=False
 ffmpeg:with_libx265=False
 ffmpeg:with_openh264=False
 ffmpeg:with_openjpeg=False

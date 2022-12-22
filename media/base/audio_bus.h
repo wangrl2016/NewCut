@@ -6,6 +6,7 @@
 #define NEWCUT_AUDIO_BUS_H
 
 #include <memory>
+#include <vector>
 
 namespace media {
     class AudioParameters;

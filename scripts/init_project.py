@@ -28,6 +28,8 @@ def init_project():
         exit(0)
 
     print('Dependencies is OK')
+    
+    # conan install -s build_type=Debug .. --build=missing
 
 
 if __name__ == '__main__':
