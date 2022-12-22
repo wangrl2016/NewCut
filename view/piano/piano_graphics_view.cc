@@ -3,16 +3,16 @@
 //
 
 #include <glog/logging.h>
-#include "view/params/params_graphics_view.h"
+#include "view/piano/piano_graphics_view.h"
 
 namespace nc {
-    ParamsGraphicsView::ParamsGraphicsView(QGraphicsScene* scene,
+    PianoGraphicsView::PianoGraphicsView(QGraphicsScene* scene,
                                            QWidget* parent)
             : QGraphicsView(scene, parent) {
 
     }
 
-    ParamsGraphicsView::~ParamsGraphicsView() {
+    PianoGraphicsView::~PianoGraphicsView() {
         LOG(INFO) << __FUNCTION__;
     }
 }

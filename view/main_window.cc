@@ -9,15 +9,19 @@ namespace nc {
     constexpr int kSceneLength = 5000.0f;
 
     MainWindow::MainWindow() {
-        // 构建绘制区域
-        params_graphics_scene_ = new ParamsGraphicsScene(this);
-        params_graphics_scene_->setSceneRect(
-                QRectF(0, 0, kSceneLength, kSceneLength));
+        // 钢琴窗
+        piano_graphics_scene_ = new PianoGraphicsScene(this);
+        piano_graphics_scene_->setSceneRect(QRectF(0, 0, kSceneLength, kSceneLength));
+        piano_graphics_view_ = new PianoGraphicsView(piano_graphics_scene_, this);
 
-        params_graphics_view_ = new ParamsGraphicsView(params_graphics_scene_, this);
+        // 参数窗
+        params_widget_ = new ParamsWidget(this);
+        params_widget_->setMinimumHeight(100);
 
-        auto* layout = new QHBoxLayout();
-        layout->addWidget(params_graphics_view_);
+
+        auto* layout = new QVBoxLayout();
+        layout->addWidget(piano_graphics_view_);
+        layout->addWidget(params_widget_);
 
         auto* widget = new QWidget();
         widget->setLayout(layout);
