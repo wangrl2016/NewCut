@@ -21,10 +21,25 @@ namespace media {
         kSampleFormatPlanarS32,         // Signed 32-bit planar
         kSampleFormatS24,               // Signed 24-bit.
         kSampleFormatAc3,               // Compressed AC3 bitstream.
+        kSampleFormatPlanarU8,          // Unsigned 8-bit w/ bias of 128 planar.
 
         // Must always be equal to the largest value ever logged.
-        kSampleFormatMax = kSampleFormatAc3,
+        kSampleFormatMax = kSampleFormatPlanarU8,
     };
+
+    // Returns the number of bytes used per channel for the specified
+    // |sample_format|.
+    int SampleFormatToBytesPerChannel(SampleFormat sample_format);
+
+    int SampleFormatToBitsPerChannel(SampleFormat sample_format);
+
+    // Returns the name of the sample format as a string.
+    const char* SampleFormatToString(SampleFormat sample_format);
+
+    // Return true if |sample_format| is planar, false otherwise.
+    bool IsPlanar(SampleFormat sample_format);
+
+    bool IsInterleaved(SampleFormat sample_format);
 }
 
 #endif //NEWCUT_SAMPLE_FORMAT_H
