@@ -2,6 +2,7 @@
 // Created by wr on 2022/12/21.
 //
 
+#include <glog/logging.h>
 #include <QHBoxLayout>
 #include "view/main_window.h"
 
@@ -9,6 +10,7 @@ namespace nc {
     constexpr int kSceneLength = 5000.0f;
 
     MainWindow::MainWindow() {
+        LOG(INFO) << __FUNCTION__;
         // 轨道窗
         track_graphics_scene_ = new TrackGraphicsScene(this);
         track_graphics_scene_->setSceneRect(QRectF(0, 0, kSceneLength, kSceneLength));
@@ -37,6 +39,6 @@ namespace nc {
     }
 
     MainWindow::~MainWindow() {
-
+        LOG(INFO) << __FUNCTION__;
     }
 }

@@ -11,7 +11,7 @@ namespace nc {
     class ParamWidget : public QWidget {
     Q_OBJECT
     public:
-        ParamWidget(QWidget* parent = nullptr);
+        explicit ParamWidget(QWidget* parent = nullptr);
 
         ~ParamWidget() override;
 

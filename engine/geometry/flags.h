@@ -15,7 +15,7 @@ namespace engine {
     };
 
     enum Flag {
-        kFlagUndone         = 1 << 0,       // flag for undoables
+        kFlagUndone         = 1 << 0,       // flag for undoable
         kFlagVisible        = 1 << 1,       // entity visibility
         kFlagByLayer        = 1 << 2,       // entity attribute (e.g. color) is defined by layer
         kFlagByBlock        = 1 << 3,       // entity attribute (e.g. color) is defined by block
@@ -23,7 +23,7 @@ namespace engine {
         kFlagDefFrozen      = 1 << 5,       // layer frozen by default
         kFlagLocked         = 1 << 6,       // layer locked
         kFlagInvalid        = 1 << 7,       // used for invalid pens
-        kflagSelected       = 1 << 8,       // entity in current selection
+        kFlagSelected       = 1 << 8,       // entity in current selection
     };
 
     struct Flags {

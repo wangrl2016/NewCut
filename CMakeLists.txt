@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(NewCut VERSION 0.1 LANGUAGES CXX)
+project(NewCut VERSION 0.1.0 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -91,7 +91,7 @@ target_link_libraries(NewCut PRIVATE
         )
 
 set_target_properties(NewCut PROPERTIES
-        MACOSX_BUNDLE_GUI_IDENTIFIER www.qt.com
+        MACOSX_BUNDLE_GUI_IDENTIFIER www.newcut.com
         MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
         MACOSX_BUNDLE_SHORT_VERSION_STRING
         ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
@@ -131,15 +131,6 @@ target_link_libraries(DiagramExample PRIVATE
         Qt${QT_VERSION_MAJOR}::Gui
         Qt${QT_VERSION_MAJOR}::Network
         Qt${QT_VERSION_MAJOR}::Widgets
-        )
-
-set_target_properties(DiagramExample PROPERTIES
-        MACOSX_BUNDLE_GUI_IDENTIFIER www.qt.com
-        MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-        MACOSX_BUNDLE_SHORT_VERSION_STRING
-        ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-        MACOSX_BUNDLE TRUE
-        WIN32_EXECUTABLE TRUE
         )
 
 qt_finalize_executable(DiagramExample)
