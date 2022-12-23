@@ -26,6 +26,7 @@ target_sources(MultiMediaLibrary
         media/base/audio_bus.cc
         media/base/audio_bus.h
         media/base/audio_parameters.cc
+        media/base/audio_parameters.h
         media/base/channel_layout.cc
         media/base/channel_layout.h
         media/base/container_names.cc
@@ -63,6 +64,16 @@ set(PROJECT_SOURCES
         main.cc
         view/params/param_widget.cc
         view/params/param_widget.h
+        view/path_stroke/arthur_frame.cc
+        view/path_stroke/arthur_frame.h
+        view/path_stroke/arthur_style.cc
+        view/path_stroke/arthur_style.h
+        view/path_stroke/path_stroke_controls.cc
+        view/path_stroke/path_stroke_controls.h
+        view/path_stroke/path_stroke_renderer.cc
+        view/path_stroke/path_stroke_renderer.h
+        view/path_stroke/path_stroke_widget.cc
+        view/path_stroke/path_stroke_widget.h
         view/piano/piano_graphics_scene.cc
         view/piano/piano_graphics_scene.h
         view/piano/piano_graphics_view.cc
