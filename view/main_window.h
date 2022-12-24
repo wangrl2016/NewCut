@@ -8,7 +8,7 @@
 #include <QMainWindow>
 
 #include "view/params/param_widget.h"
-#include "view/path_stroke/path_stroke_renderer.h"
+#include "view/path_stroke/path_stroke_widget.h"
 #include "view/piano/piano_graphics_view.h"
 #include "view/piano/piano_graphics_scene.h"
 #include "view/tracks/track_graphics_view.h"
@@ -37,7 +37,7 @@ namespace nc {
         ParamWidget* param_widget_;
 
         // 画线测试
-        PathStrokeRenderer* path_stroke_renderer_;
+        PathStrokeWidget* path_stroke_widget_;
     };
 }
 

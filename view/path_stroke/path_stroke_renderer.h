@@ -50,6 +50,10 @@ namespace nc {
             update();
         }
 
+    signals:
+
+        void Clicked();
+
     public slots:
 
         void set_animation(bool animation);

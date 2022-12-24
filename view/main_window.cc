@@ -25,8 +25,8 @@ namespace nc {
 //        param_widget_ = new ParamWidget(this);
 //        param_widget_->setMinimumHeight(height() / 4);
 
-        path_stroke_renderer_ = new PathStrokeRenderer(this);
-        path_stroke_renderer_->setMinimumHeight(height() / 2);
+        path_stroke_widget_ = new PathStrokeWidget(false);
+        path_stroke_widget_->setMinimumHeight(height() / 2);
 
         // 从上到下的布局
         auto* layout = new QVBoxLayout();
@@ -34,7 +34,7 @@ namespace nc {
 //        layout->addWidget(piano_graphics_view_);
 //        layout->addWidget(param_widget_);
 
-        layout->addWidget(path_stroke_renderer_);
+        layout->addWidget(path_stroke_widget_);
 
         auto* widget = new QWidget();
         widget->setLayout(layout);

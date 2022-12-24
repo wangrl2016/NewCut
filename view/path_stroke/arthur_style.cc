@@ -2,6 +2,7 @@
 // Created by wangrl2016 on 2022/12/23.
 //
 
+#include <QPainter>
 #include <QPainterPath>
 #include <QPixmap>
 #include <QPixmapCache>
@@ -17,7 +18,7 @@ namespace nc {
         pm = QPixmap::fromImage(QImage(img),
                                 Qt::OrderedDither | Qt::OrderedAlphaDither);
         if (pm.isNull())
-            return QPixmap();
+            return {};
 
         QPixmapCache::insert(img, pm);
         return pm;
@@ -34,11 +35,25 @@ namespace nc {
         QPainterPath path;
         path.addRect(rect.x() + h2, rect.y() + 0, rect.width() - h2 * 2, rect.height());
         path.addEllipse(rect.x(), rect.y(), h, h);
+        path.setFillRule(Qt::WindingFill);
+        painter->setPen(Qt::NoPen);
+        painter->setBrush(QColor(191, 215, 191));   // rgba
+        painter->setRenderHint(QPainter::Antialiasing);
+        painter->drawPath(path);
     }
 
     void ArthurStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption* option, QPainter* painter,
                                     const QWidget* widget) const {
-        QCommonStyle::drawPrimitive(element, option, painter, widget);
+        Q_ASSERT(option);
+        switch (element) {
+            case QStyle::PE_FrameFocusRect:
+                break;
+            case QStyle::PE_IndicatorRadioButton:
+
+            default:
+                QCommonStyle::drawPrimitive(element, option, painter, widget);
+                break;
+        }
     }
 
     void ArthurStyle::drawControl(QStyle::ControlElement element, const QStyleOption* opt, QPainter* p,

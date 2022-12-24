@@ -5,10 +5,29 @@
 #ifndef NEWCUT_PATH_STROKE_WIDGET_H
 #define NEWCUT_PATH_STROKE_WIDGET_H
 
+#include <QWidget>
 
-class path_stroke_widget {
+#include "view/path_stroke/path_stroke_controls.h"
+#include "view/path_stroke/path_stroke_renderer.h"
 
-};
+namespace nc {
+    class PathStrokeWidget : public QWidget {
+    Q_OBJECT
+    public:
+        PathStrokeWidget(bool small_screen);
 
+        void SetStyle(QStyle* style);
+
+    private slots:
+
+        void ShowControls();
+
+        void HideControls();
+
+    private:
+        PathStrokeRenderer* renderer_;
+        PathStrokeControls* controls_;
+    };
+}
 
 #endif //NEWCUT_PATH_STROKE_WIDGET_H

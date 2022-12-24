@@ -14,7 +14,8 @@ namespace nc {
     Q_OBJECT
     public:
         PathStrokeControls(QWidget* parent,
-                           PathStrokeRenderer* renderer);
+                           PathStrokeRenderer* renderer,
+                           bool small_screen);
 
     signals:
 
@@ -29,7 +30,7 @@ namespace nc {
         void EmitOkSignal();
 
     private:
-        void CreateCommonControls(QWidget* widget);
+        void CreateCommonControls(QWidget* parent);
 
         void LayoutForDesktop();
 
