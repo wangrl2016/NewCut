@@ -28,11 +28,11 @@ namespace nc {
 
     void PathStrokeControls::CreateCommonControls(QWidget* parent) {
         cap_group_ = new QGroupBox(parent);
+        cap_group_->setTitle(tr("Cap Style"));
         cap_group_->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
         auto* flat_cap = new QRadioButton(cap_group_);
         auto* square_cap = new QRadioButton(cap_group_);
         auto* round_cap = new QRadioButton(cap_group_);
-        cap_group_->setTitle(tr("Cap Style"));
         flat_cap->setText(tr("Flat"));
         square_cap->setText(tr("Square"));
         round_cap->setText(tr("Round"));
@@ -41,17 +41,59 @@ namespace nc {
         round_cap->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
         join_group_ = new QGroupBox(parent);
+        join_group_->setTitle(tr("Join Style"));
         join_group_->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
         auto* bevel_join = new QRadioButton(join_group_);
         auto* miter_join = new QRadioButton(join_group_);
         auto* svg_miter_join = new QRadioButton(join_group_);
         auto* round_join = new QRadioButton(join_group_);
-        join_group_->setTitle(tr("Join Style"));
         bevel_join->setText(tr("Bevel"));
         miter_join->setText(tr("Miter"));
         svg_miter_join->setText(tr("SvgMiter"));
         round_join->setText(tr("Round"));
 
+        style_group_ = new QGroupBox(parent);
+        style_group_->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        auto* solid_line = new QRadioButton(style_group_);
+        auto* dash_line = new QRadioButton(style_group_);
+        auto* dot_line = new QRadioButton(style_group_);
+        auto* dash_dot_line = new QRadioButton(style_group_);
+        auto* dash_dot_dot_line = new QRadioButton(style_group_);
+        auto* custom_dash_line = new QRadioButton(style_group_);
+
+        QPixmap line_solid(":images/path_stroke/line_solid.png");
+        solid_line->setIcon(line_solid);
+        solid_line->setIconSize(line_solid.size());
+        QPixmap line_dashed(":images/path_stroke/line_dashed.png");
+        dash_line->setIcon(line_dashed);
+        dash_line->setIconSize(line_dashed.size());
+        QPixmap line_dotted(":images/path_stroke/line_dotted.png");
+        dot_line->setIcon(line_dotted);
+        dot_line->setIconSize(line_dotted.size());
+        QPixmap line_dash_dot(":images/path_stroke/line_dash_dot.png");
+        dash_dot_line->setIcon(line_dash_dot);
+        dash_dot_line->setIconSize(line_dash_dot.size());
+        QPixmap line_dash_dot_dot(":images/path_stroke/line_dash_dot_dot.png");
+        dash_dot_dot_line->setIcon(line_dash_dot_dot);
+        dash_dot_dot_line->setIconSize(line_dash_dot_dot.size());
+        custom_dash_line->setText(tr("Custom"));
+
+        int fixed_height = bevel_join->sizeHint().height();
+        solid_line->setFixedHeight(fixed_height);
+        dash_line->setFixedHeight(fixed_height);
+        dot_line->setFixedHeight(fixed_height);
+        dash_dot_line->setFixedHeight(fixed_height);
+        dash_dot_dot_line->setFixedHeight(fixed_height);
+
+        path_mode_group_ = new QGroupBox(parent);
+        path_mode_group_->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        auto* curve_mode = new QRadioButton(path_mode_group_);
+        auto* line_mode = new QRadioButton(path_mode_group_);
+        path_mode_group_->setTitle(tr("Line Style"));
+        curve_mode->setText(tr("Curves"));
+        curve_mode->setText(tr("Lines"));
+
+        // Layouts
         auto* cap_group_layout = new QVBoxLayout(cap_group_);
         cap_group_layout->addWidget(flat_cap);
         cap_group_layout->addWidget(square_cap);
@@ -63,8 +105,23 @@ namespace nc {
         join_group_layout->addWidget(svg_miter_join);
         join_group_layout->addWidget(round_join);
 
+        auto* style_group_layout = new QVBoxLayout(style_group_);
+        style_group_layout->addWidget(solid_line);
+        style_group_layout->addWidget(dash_line);
+        style_group_layout->addWidget(dot_line);
+        style_group_layout->addWidget(dash_dot_line);
+        style_group_layout->addWidget(dash_dot_dot_line);
+        style_group_layout->addWidget(custom_dash_line);
+
+        auto* path_mode_group_layout = new QVBoxLayout(path_mode_group_);
+        path_mode_group_layout->addWidget(curve_mode);
+        path_mode_group_layout->addWidget(line_mode);
+
+        // connections
+
         flat_cap->setChecked(true);
         bevel_join->setChecked(true);
+        solid_line->setChecked(true);
     }
 
     void PathStrokeControls::LayoutForDesktop() {
@@ -103,10 +160,16 @@ namespace nc {
         main_group_layout->setContentsMargins(3, 3, 3, 3);
         main_group_layout->addWidget(cap_group_);
         main_group_layout->addWidget(join_group_);
+        main_group_layout->addWidget(style_group_);
         main_group_layout->addWidget(pen_width_group);
+        main_group_layout->addWidget(path_mode_group_);
         main_group_layout->addWidget(animated);
         main_group_layout->addStretch(1);
         main_group_layout->addWidget(show_source_button);
         main_group_layout->addWidget(whats_this_button);
+
+        // Set the defaults.
+        animated->setChecked(true);
+        pen_width->setValue(50);
     }
 }

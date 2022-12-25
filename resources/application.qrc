@@ -15,5 +15,11 @@
         <file>images/diagram/background2.png</file>
         <file>images/diagram/background3.png</file>
         <file>images/diagram/background4.png</file>
+
+        <file>images/path_stroke/line_dash_dot.png</file>
+        <file>images/path_stroke/line_dash_dot_dot.png</file>
+        <file>images/path_stroke/line_dashed.png</file>
+        <file>images/path_stroke/line_dotted.png</file>
+        <file>images/path_stroke/line_solid.png</file>
     </qresource>
 </RCC>
