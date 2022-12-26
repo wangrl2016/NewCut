@@ -56,7 +56,87 @@ namespace nc {
 
     public slots:
 
+        void SetPenWidth(int pen_width) {
+            pen_width_ = pen_width / 10.0;
+            update();
+        };
+
         void set_animation(bool animation);
+
+        void SetFlatCap() {
+            cap_style_ = Qt::FlatCap;
+            update();
+        }
+
+        void SetSquareCap() {
+            cap_style_ = Qt::SquareCap;
+            update();
+        }
+
+        void SetRoundCap() {
+            cap_style_ = Qt::RoundCap;
+            update();
+        }
+
+        void SetBevelJoin() {
+            join_style_ = Qt::BevelJoin;
+            update();
+        }
+
+        void SetMiterJoin() {
+            join_style_ = Qt::MiterJoin;
+            update();
+        }
+
+        void SetSvgMiterJoin() {
+            join_style_ = Qt::SvgMiterJoin;
+            update();
+        }
+
+        void SetRoundJoin() {
+            join_style_ = Qt::RoundJoin;
+            update();
+        }
+
+        void SetCurveMode() {
+            path_mode_ = kCurveMode;
+            update();
+        }
+
+        void SetLineMode() {
+            path_mode_ = kLineMode;
+            update();
+        }
+
+        void SetSolidLine() {
+            pen_style_ = Qt::SolidLine;
+            update();
+        }
+
+        void SetDashLine() {
+            pen_style_ = Qt::DashLine;
+            update();
+        }
+
+        void SetDotLine() {
+            pen_style_ = Qt::DotLine;
+            update();
+        }
+
+        void SetDashDotLine() {
+            pen_style_ = Qt::DashDotLine;
+            update();
+        }
+
+        void SetDashDotDotLine() {
+            pen_style_ = Qt::DashDotDotLine;
+            update();
+        }
+
+        void SetCustomDashLine() {
+            pen_style_ = Qt::NoPen;
+            update();
+        }
 
     private:
         void InitializePoints();

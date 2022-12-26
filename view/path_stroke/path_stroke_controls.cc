@@ -118,6 +118,16 @@ namespace nc {
         path_mode_group_layout->addWidget(line_mode);
 
         // connections
+        connect(flat_cap, &QAbstractButton::clicked,
+                renderer_, &PathStrokeRenderer::SetFlatCap);
+        connect(square_cap, &QAbstractButton::clicked,
+                renderer_, &PathStrokeRenderer::SetSquareCap);
+        connect(round_cap, &QAbstractButton::clicked,
+                renderer_, &PathStrokeRenderer::SetRoundCap);
+
+        connect(bevel_join, &QAbstractButton::clicked,
+                renderer_, &PathStrokeRenderer::SetBevelJoin);
+
 
         flat_cap->setChecked(true);
         bevel_join->setChecked(true);
