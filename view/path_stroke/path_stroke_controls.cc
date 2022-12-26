@@ -9,6 +9,10 @@
 #include "view/path_stroke/path_stroke_controls.h"
 
 namespace nc {
+    extern void DrawRoundRect(QPainter* painter,
+                              const QRect& bounds,
+                              int radius);
+
     PathStrokeControls::PathStrokeControls(QWidget* parent,
                                            nc::PathStrokeRenderer* renderer,
                                            bool small_screen)
@@ -53,6 +57,7 @@ namespace nc {
         round_join->setText(tr("Round"));
 
         style_group_ = new QGroupBox(parent);
+        style_group_->setTitle(tr("Pen Style"));
         style_group_->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
         auto* solid_line = new QRadioButton(style_group_);
         auto* dash_line = new QRadioButton(style_group_);
@@ -86,10 +91,10 @@ namespace nc {
         dash_dot_dot_line->setFixedHeight(fixed_height);
 
         path_mode_group_ = new QGroupBox(parent);
+        path_mode_group_->setTitle(tr("Line Style"));
         path_mode_group_->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
         auto* curve_mode = new QRadioButton(path_mode_group_);
         auto* line_mode = new QRadioButton(path_mode_group_);
-        path_mode_group_->setTitle(tr("Line Style"));
         curve_mode->setText(tr("Curves"));
         curve_mode->setText(tr("Lines"));
 
@@ -127,10 +132,35 @@ namespace nc {
 
         connect(bevel_join, &QAbstractButton::clicked,
                 renderer_, &PathStrokeRenderer::SetBevelJoin);
+        connect(miter_join, &QAbstractButton::clicked,
+                renderer_, &PathStrokeRenderer::SetMiterJoin);
+        connect(svg_miter_join, &QAbstractButton::clicked,
+                renderer_, &PathStrokeRenderer::SetSvgMiterJoin);
+        connect(round_join, &QAbstractButton::clicked,
+                renderer_, &PathStrokeRenderer::SetRoundJoin);
 
+        connect(curve_mode, &QAbstractButton::clicked,
+                renderer_, &PathStrokeRenderer::SetCurveMode);
+        connect(line_mode, &QAbstractButton::clicked,
+                renderer_, &PathStrokeRenderer::SetLineMode);
 
+        connect(solid_line, &QAbstractButton::clicked,
+                renderer_, &PathStrokeRenderer::SetSolidLine);
+        connect(dash_line, &QAbstractButton::clicked,
+                renderer_, &PathStrokeRenderer::SetDashLine);
+        connect(dot_line, &QAbstractButton::clicked,
+                renderer_, &PathStrokeRenderer::SetDotLine);
+        connect(dash_dot_line, &QAbstractButton::clicked,
+                renderer_, &PathStrokeRenderer::SetDashDotLine);
+        connect(dash_dot_dot_line, &QAbstractButton::clicked,
+                renderer_, &PathStrokeRenderer::SetDashDotDotLine);
+        connect(custom_dash_line, &QAbstractButton::clicked,
+                renderer_, &PathStrokeRenderer::SetCustomDashLine);
+
+        // Set the defaults.
         flat_cap->setChecked(true);
         bevel_join->setChecked(true);
+        curve_mode->setChecked(true);
         solid_line->setChecked(true);
     }
 
@@ -177,6 +207,14 @@ namespace nc {
         main_group_layout->addStretch(1);
         main_group_layout->addWidget(show_source_button);
         main_group_layout->addWidget(whats_this_button);
+
+        // Set up connections
+        connect(animated, &QAbstractButton::toggled,
+                renderer_, &PathStrokeRenderer::set_animation);
+        connect(pen_width, &QAbstractSlider::valueChanged,
+                renderer_, &PathStrokeRenderer::SetPenWidth);
+        connect(whats_this_button, &QAbstractButton::clicked,
+                renderer_, &ArthurFrame::SetDescriptionEnabled);
 
         // Set the defaults.
         animated->setChecked(true);
