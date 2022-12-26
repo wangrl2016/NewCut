@@ -23,11 +23,11 @@ namespace nc {
     }
 
     void PathStrokeControls::EmitQuitSignal() {
-
+        emit QuitPressed();
     }
 
     void PathStrokeControls::EmitOkSignal() {
-
+        emit OkPressed();
     }
 
     void PathStrokeControls::CreateCommonControls(QWidget* parent) {
@@ -96,7 +96,7 @@ namespace nc {
         auto* curve_mode = new QRadioButton(path_mode_group_);
         auto* line_mode = new QRadioButton(path_mode_group_);
         curve_mode->setText(tr("Curves"));
-        curve_mode->setText(tr("Lines"));
+        line_mode->setText(tr("Lines"));
 
         // Layouts
         auto* cap_group_layout = new QVBoxLayout(cap_group_);
@@ -181,8 +181,6 @@ namespace nc {
         animated->setText(tr("Animate"));
         animated->setChecked(true);
 
-        auto* show_source_button = new QPushButton(main_group);
-        show_source_button->setText(tr("Show Source"));
         auto* whats_this_button = new QPushButton(main_group);
         whats_this_button->setText(tr("What's This?"));
         whats_this_button->setCheckable(true);
@@ -205,7 +203,6 @@ namespace nc {
         main_group_layout->addWidget(path_mode_group_);
         main_group_layout->addWidget(animated);
         main_group_layout->addStretch(1);
-        main_group_layout->addWidget(show_source_button);
         main_group_layout->addWidget(whats_this_button);
 
         // Set up connections
@@ -215,6 +212,8 @@ namespace nc {
                 renderer_, &PathStrokeRenderer::SetPenWidth);
         connect(whats_this_button, &QAbstractButton::clicked,
                 renderer_, &ArthurFrame::SetDescriptionEnabled);
+        connect(renderer_, &ArthurFrame::DescriptionEnabledChanged,
+                whats_this_button, &QAbstractButton::setChecked);
 
         // Set the defaults.
         animated->setChecked(true);

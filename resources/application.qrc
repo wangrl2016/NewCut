@@ -22,4 +22,8 @@
         <file>images/path_stroke/line_dotted.png</file>
         <file>images/path_stroke/line_solid.png</file>
     </qresource>
+
+    <qresource>
+        <file>html/path_stroke/path_stroke.html</file>
+    </qresource>
 </RCC>

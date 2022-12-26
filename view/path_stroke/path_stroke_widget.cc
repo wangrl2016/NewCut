@@ -21,6 +21,8 @@ namespace nc {
             view_layout->addWidget(controls_);
         }
 
+        renderer_->LoadDescription(":html/path_stroke/path_stroke.html");
+
         // 使用类名加函数名
         connect(renderer_, &PathStrokeRenderer::Clicked,
                 this, &PathStrokeWidget::ShowControls);

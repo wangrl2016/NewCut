@@ -66,8 +66,6 @@ set(PROJECT_SOURCES
         view/params/param_widget.h
         view/path_stroke/arthur_frame.cc
         view/path_stroke/arthur_frame.h
-        view/path_stroke/arthur_style.cc
-        view/path_stroke/arthur_style.h
         view/path_stroke/path_stroke_controls.cc
         view/path_stroke/path_stroke_controls.h
         view/path_stroke/path_stroke_renderer.cc

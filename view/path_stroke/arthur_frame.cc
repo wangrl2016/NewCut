@@ -26,7 +26,19 @@ namespace nc {
         QPainter painter;
 
         if (prefer_image()) {
+            if (!static_image || static_image->size() != size()) {
+                delete static_image;
+                static_image = new QImage(size(), QImage::Format_RGB32);
+            }
+            painter.begin(static_image);
 
+            int o = 10;
+
+            auto bg = palette().brush(QPalette::Window);
+            painter.fillRect(0, 0, o, o, bg);
+            painter.fillRect(width() - o, 0, o, o, bg);
+            painter.fillRect(0, height() - o, o, o, bg);
+            painter.fillRect(width() - o, height() - o, o, o, bg);
         } else {
             painter.begin(this);
         }
@@ -62,12 +74,21 @@ namespace nc {
         // 恢复QPainter对象为之前保存的状态
         painter.restore();
 
-        painter.save();
+        // painter.save();
+        if (show_doc_) {
+            PaintDescription(&painter);
+        }
 
         int level = 180;
         painter.setPen(QPen(QColor(level, level, level), 2));
         painter.setBrush(Qt::NoBrush);
         painter.drawPath(clip_path);
+
+        if (prefer_image()) {
+            painter.end();
+            painter.begin(this);
+            painter.drawImage(event->rect(), *static_image, event->rect());
+        }
     }
 
     void ArthurFrame::resizeEvent(QResizeEvent* event) {

@@ -6,6 +6,7 @@
 #define NEWCUT_PATH_STROKE_RENDERER_H
 
 #include <QBasicTimer>
+#include <QMouseEvent>
 #include "view/path_stroke/arthur_frame.h"
 
 namespace nc {
@@ -151,7 +152,6 @@ namespace nc {
         bool was_animated_;
 
         qreal pen_width_;
-        int point_count_;
         int point_size_;
         int active_point_;
         QList<QPointF> points_;
