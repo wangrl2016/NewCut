@@ -6,6 +6,7 @@
 #define NEWCUT_PARAM_WIDGET_H
 
 #include <QWidget>
+#include <QBasicTimer>
 
 namespace nc {
     class ParamWidget : public QWidget {
@@ -29,6 +30,14 @@ namespace nc {
         void resizeEvent(QResizeEvent *event) override;
 
         void showEvent(QShowEvent *event) override;
+
+        void timerEvent(QTimerEvent* event) override;
+
+    private:
+        QBasicTimer timer_;
+
+
+
     };
 }
 

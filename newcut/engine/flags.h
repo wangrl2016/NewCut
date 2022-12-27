@@ -7,7 +7,7 @@
 
 #include <cstdint>
 
-namespace engine {
+namespace nc {
     enum UndoableType {
         kUndoableUnknown,       // Unknown undoable
         kUndoableEntity,        // Entity

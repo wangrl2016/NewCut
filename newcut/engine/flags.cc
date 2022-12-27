@@ -2,9 +2,9 @@
 // Created by wr on 2022/12/22.
 //
 
-#include "engine/geometry/flags.h"
+#include "newcut/engine/flags.h"
 
-namespace engine {
+namespace nc {
     Flags::Flags(uint32_t f) : flags_(f) {}
 
     uint32_t Flags::flags() const {

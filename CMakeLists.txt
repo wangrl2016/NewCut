@@ -21,8 +21,6 @@ target_sources(MultiMediaLibrary
         PRIVATE
         base/memory/aligned_memory.cc
         base/memory/aligned_memory.h
-        engine/geometry/flags.cc
-        engine/geometry/flags.h
         media/base/audio_bus.cc
         media/base/audio_bus.h
         media/base/audio_parameters.cc
@@ -62,6 +60,19 @@ find_package(Qt${QT_VERSION_MAJOR}
 set(PROJECT_SOURCES
         resources/application.qrc
         main.cc
+        newcut/actions/snapper.cc
+        newcut/actions/snapper.h
+        newcut/engine/entity.cc
+        newcut/engine/entity.h
+        newcut/engine/entity_container.cc
+        newcut/engine/entity_container.h
+        newcut/engine/enum_collect.h
+        newcut/engine/flags.cc
+        newcut/engine/flags.h
+        newcut/engine/undoable.cc
+        newcut/engine/undoable.h
+        newcut/engine/vector.cc
+        newcut/engine/vector.h
         view/params/param_widget.cc
         view/params/param_widget.h
         view/path_stroke/arthur_frame.cc

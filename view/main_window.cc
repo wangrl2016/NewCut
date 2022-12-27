@@ -11,30 +11,30 @@ namespace nc {
 
     MainWindow::MainWindow() {
         LOG(INFO) << __FUNCTION__;
-//        // 轨道窗
-//        track_graphics_scene_ = new TrackGraphicsScene(this);
-//        track_graphics_scene_->setSceneRect(QRectF(0, 0, kSceneLength, kSceneLength));
-//        track_graphics_view_ = new TrackGraphicsView(track_graphics_scene_, this);
-//
-//        // 钢琴窗
-//        piano_graphics_scene_ = new PianoGraphicsScene(this);
-//        piano_graphics_scene_->setSceneRect(QRectF(0, 0, kSceneLength, kSceneLength));
-//        piano_graphics_view_ = new PianoGraphicsView(piano_graphics_scene_, this);
-//
-//        // 参数窗
-//        param_widget_ = new ParamWidget(this);
-//        param_widget_->setMinimumHeight(height() / 4);
+        // 轨道窗
+        track_graphics_scene_ = new TrackGraphicsScene(this);
+        track_graphics_scene_->setSceneRect(QRectF(0, 0, kSceneLength, kSceneLength));
+        track_graphics_view_ = new TrackGraphicsView(track_graphics_scene_, this);
+
+        // 钢琴窗
+        piano_graphics_scene_ = new PianoGraphicsScene(this);
+        piano_graphics_scene_->setSceneRect(QRectF(0, 0, kSceneLength, kSceneLength));
+        piano_graphics_view_ = new PianoGraphicsView(piano_graphics_scene_, this);
+
+        // 参数窗
+        param_widget_ = new ParamWidget(this);
+        param_widget_->setMinimumHeight(height() / 4);
 
         path_stroke_widget_ = new PathStrokeWidget(false);
         path_stroke_widget_->setMinimumHeight(height() / 2);
 
         // 从上到下的布局
         auto* layout = new QVBoxLayout();
-//        layout->addWidget(track_graphics_view_);
-//        layout->addWidget(piano_graphics_view_);
-//        layout->addWidget(param_widget_);
+        layout->addWidget(track_graphics_view_);
+        layout->addWidget(piano_graphics_view_);
+        layout->addWidget(param_widget_);
 
-        layout->addWidget(path_stroke_widget_);
+//        layout->addWidget(path_stroke_widget_);
 
         auto* widget = new QWidget();
         widget->setLayout(layout);

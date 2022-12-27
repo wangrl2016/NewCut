@@ -12,6 +12,7 @@ namespace nc {
     ParamWidget::ParamWidget(QWidget* parent)
             : QWidget(parent) {
         LOG(INFO) << __FUNCTION__;
+        // timer_.start(100, Qt::PreciseTimer, this);
     }
 
     ParamWidget::~ParamWidget() {
@@ -20,19 +21,10 @@ namespace nc {
 
     void ParamWidget::paintEvent(QPaintEvent* event) {
         QWidget::paintEvent(event);
-        LOG(INFO) << __FUNCTION__;
+        // LOG(INFO) << __FUNCTION__;
         QPainter painter(this);
         painter.setBrush(QColor(255, 0, 0, 127));
-        painter.drawRect(0, 0, width() / 2, height());
-
-        painter.setBrush(QColor(0, 0, 255, 127));
-        painter.drawRect(0, 0, width(), height() / 2);
-
-        auto mid_line_color = QColor(255, 0, 255);
-        QPen pen(mid_line_color, 6);
-        painter.setPen(pen);
-        painter.drawLine(QPoint(0, QWidget::height() / 2),
-                         QPoint(QWidget::width(), QWidget::height() / 2));
+        painter.drawRect(0, 0, width(), height());
     }
 
     void ParamWidget::mouseDoubleClickEvent(QMouseEvent* event) {
@@ -60,5 +52,9 @@ namespace nc {
 
     void ParamWidget::showEvent(QShowEvent* event) {
         QWidget::showEvent(event);
+    }
+
+    void ParamWidget::timerEvent(QTimerEvent* event) {
+        // LOG(INFO) << __FUNCTION__;
     }
 }
