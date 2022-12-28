@@ -60,6 +60,12 @@ find_package(Qt${QT_VERSION_MAJOR}
 set(PROJECT_SOURCES
         resources/application.qrc
         main.cc
+        newcut/actions/action_draw_line_free.cc
+        newcut/actions/action_draw_line_free.h
+        newcut/actions/action_interface.cc
+        newcut/actions/action_interface.h
+        newcut/actions/preview_action_interface.cc
+        newcut/actions/preview_action_interface.h
         newcut/actions/snapper.cc
         newcut/actions/snapper.h
         newcut/engine/entity.cc
@@ -69,10 +75,14 @@ set(PROJECT_SOURCES
         newcut/engine/enum_collect.h
         newcut/engine/flags.cc
         newcut/engine/flags.h
+        newcut/engine/polyline.cc
+        newcut/engine/polyline.h
         newcut/engine/undoable.cc
         newcut/engine/undoable.h
         newcut/engine/vector.cc
         newcut/engine/vector.h
+        newcut/gui/graphic_view.cc
+        newcut/gui/graphic_view.h
         view/params/param_widget.cc
         view/params/param_widget.h
         view/path_stroke/arthur_frame.cc

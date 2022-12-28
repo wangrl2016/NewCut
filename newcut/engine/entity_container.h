@@ -5,10 +5,11 @@
 #ifndef NEWCUT_ENTITY_CONTAINER_H
 #define NEWCUT_ENTITY_CONTAINER_H
 
+namespace nc {
+    class EntityContainer {
 
-class entity_container {
-
-};
+    };
+}
 
 
 #endif //NEWCUT_ENTITY_CONTAINER_H

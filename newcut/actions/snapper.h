@@ -16,7 +16,7 @@ namespace nc {
         // The conversion is only used for save/restore of active snap modes in application settings.
         // Don't change existing mode order, because this will mess up settings on upgrades.
         enum SnapModes {
-            kSnapInterction         = 1 << 0,
+            KSnapIntersection       = 1 << 0,
             kSnapOnEntity           = 1 << 1,
             kSnapCenter             = 1 << 2,
             kSnapDistance           = 1 << 3,

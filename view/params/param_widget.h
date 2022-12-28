@@ -35,9 +35,6 @@ namespace nc {
 
     private:
         QBasicTimer timer_;
-
-
-
     };
 }
 
