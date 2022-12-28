@@ -43,6 +43,20 @@ namespace nc {
             kEntityOverlayLine
         };
 
+        // Action types used by action factories
+        enum ActionType {
+            kActionNone,
+            kActionDefault,
+            kActionFileNew,
+            kActionFileNewTemplate,
+            kActionFileOpen,
+            kActionFileSave,
+            kActionFileSaveAs,
+            kActionFileExport,
+            kActionFileClose,
+            kActionFilePrint
+        };
+
         enum SnapRestriction {
             kRestricNothing,        // No restriction to snap mode
             kRestricHorizontal,     // Restrict to 0, 180 degrees

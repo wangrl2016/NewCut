@@ -8,6 +8,7 @@
 #include <QObject>
 #include "newcut/actions/snapper.h"
 #include "newcut/engine/entity_container.h"
+#include "newcut/engine/enum_collect.h"
 #include "newcut/gui/graphic_view.h"
 
 namespace nc {
@@ -19,6 +20,24 @@ namespace nc {
                         GraphicView& graphic_view);
 
         virtual ~ActionInterface() = default;
+
+        virtual EnumCollect::ActionType Rtti() const;
+
+        void SetName(const char* name);
+
+        QString GetName();
+
+        virtual void Init(int status = 0);
+
+        virtual void MouseMoveEvent(QMouseEvent* event);
+
+        virtual void MousePressEvent(QMouseEvent* event);
+
+        virtual void KeyPressEvent(QKeyEvent* event);
+
+        virtual void KeyReleaseEvent(QKeyEvent* event);
+
+        virtual void Trigger();
 
     protected:
         QString name_;

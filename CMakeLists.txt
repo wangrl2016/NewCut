@@ -62,6 +62,8 @@ set(PROJECT_SOURCES
         main.cc
         newcut/actions/action_draw_line_free.cc
         newcut/actions/action_draw_line_free.h
+        newcut/actions/action_file_new.cc
+        newcut/actions/action_file_new.h
         newcut/actions/action_interface.cc
         newcut/actions/action_interface.h
         newcut/actions/preview_action_interface.cc
@@ -72,6 +74,7 @@ set(PROJECT_SOURCES
         newcut/engine/entity.h
         newcut/engine/entity_container.cc
         newcut/engine/entity_container.h
+        newcut/engine/enum_collect.cc
         newcut/engine/enum_collect.h
         newcut/engine/flags.cc
         newcut/engine/flags.h
@@ -81,8 +84,16 @@ set(PROJECT_SOURCES
         newcut/engine/undoable.h
         newcut/engine/vector.cc
         newcut/engine/vector.h
+        newcut/gui/action_group_manager.cc
+        newcut/gui/action_group_manager.h
+        newcut/gui/widget_factory.cc
+        newcut/gui/widget_factory.h
         newcut/gui/graphic_view.cc
         newcut/gui/graphic_view.h
+        newcut/application_window.cc
+        newcut/application_window.h
+        newcut/main_window.cc
+        newcut/main_window.h
         view/params/param_widget.cc
         view/params/param_widget.h
         view/path_stroke/arthur_frame.cc
@@ -101,8 +112,6 @@ set(PROJECT_SOURCES
         view/tracks/track_graphics_scene.h
         view/tracks/track_graphics_view.cc
         view/tracks/track_graphics_view.h
-        view/main_window.cc
-        view/main_window.h
         )
 
 qt_add_executable(NewCut

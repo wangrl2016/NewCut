@@ -8,6 +8,8 @@
 #include <cstdint>
 #include <initializer_list>
 #include "newcut/engine/enum_collect.h"
+#include "newcut/engine/entity_container.h"
+#include "newcut/gui/graphic_view.h"
 
 namespace nc {
     // This class holds information on how to snap the mouse.
@@ -68,6 +70,12 @@ namespace nc {
     class Snapper {
     public:
         Snapper() = delete;
+
+        Snapper(EntityContainer& container, GraphicView& graphic_view);
+
+    protected:
+        EntityContainer* container_;
+        GraphicView* graphic_view_;
     };
 }
 

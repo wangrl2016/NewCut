@@ -6,16 +6,24 @@
 #include <QApplication>
 #include <QGuiApplication>
 #include <QScreen>
-#include "view/main_window.h"
+#include <QSettings>
+
+#include "newcut/application_window.h"
 
 int main(int argc, char* argv[]) {
+
     // Initialize Google’s logging library.
     google::InitGoogleLogging(argv[0]);
     FLAGS_stderrthreshold = google::GLOG_INFO;
 
     QApplication app(argc, argv);
+    QCoreApplication::setOrganizationName("NewCut");
+    QCoreApplication::setApplicationName("NewCut");
+    QCoreApplication::setApplicationVersion("0.1.0");
 
-    nc::MainWindow window;
+    QSettings settings;
+
+    nc::ApplicationWindow window;
     QRect screen_rect = QGuiApplication::primaryScreen()->geometry();
     int screen_width = screen_rect.width();
     int screen_height = screen_rect.height();
