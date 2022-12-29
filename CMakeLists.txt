@@ -19,6 +19,7 @@ conan_basic_setup(KEEP_RPATHS)
 add_library(MultiMediaLibrary STATIC)
 target_sources(MultiMediaLibrary
         PRIVATE
+        base/containers/ring_buffer.h
         base/memory/aligned_memory.cc
         base/memory/aligned_memory.h
         media/base/audio_bus.cc
