@@ -50,8 +50,8 @@ namespace nc {
         double distance_ = 5.0;
 
         // Disable all snapping.
-        // This effectiely puts the object into free snap mode.
-        SnapMode const& clear();
+        // This effectively puts the object into free snap mode.
+        SnapMode const& Clear();
 
         bool operator==(SnapMode const& rhs) const;
 
@@ -65,7 +65,7 @@ namespace nc {
 
     // This class is used for snapping functions in a graphic view.
     // Actions are usually derived from this base class if they need
-    // to catch entities or snap to coordinates. Use the methods to
+    // to catch entities or snap to coordinate. Use the methods to
     // retrieve a graphic coordinate from a mouse coordinate.
     class Snapper {
     public:

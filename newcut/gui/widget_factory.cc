@@ -28,7 +28,7 @@ namespace nc {
         file_menu_->setObjectName("File");
         file_menu_->setTearOffEnabled(true);
         file_menu_->addAction(action_map_["FileNew"]);
-        file_menu_->addAction(action_map_["FilenewTemplate"]);
+        file_menu_->addAction(action_map_["FileNewTemplate"]);
         file_menu_->addAction(action_map_["FileOpen"]);
         file_menu_->addSeparator();
         file_menu_->addAction(action_map_["FileSave"]);

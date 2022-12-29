@@ -84,8 +84,12 @@ set(PROJECT_SOURCES
         newcut/engine/undoable.h
         newcut/engine/vector.cc
         newcut/engine/vector.h
+        newcut/gui/action_factory.cc
+        newcut/gui/action_factory.h
         newcut/gui/action_group_manager.cc
         newcut/gui/action_group_manager.h
+        newcut/gui/action_handler.cc
+        newcut/gui/action_handler.h
         newcut/gui/widget_factory.cc
         newcut/gui/widget_factory.h
         newcut/gui/graphic_view.cc

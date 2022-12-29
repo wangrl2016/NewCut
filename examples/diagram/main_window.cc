@@ -7,10 +7,10 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QMessageBox>
-#include "diagram_item.h"
-#include "diagram_scene.h"
-#include "diagram_text_item.h"
-#include "main_window.h"
+#include "examples/diagram/diagram_item.h"
+#include "examples/diagram/diagram_scene.h"
+#include "examples/diagram/diagram_text_item.h"
+#include "examples/diagram/main_window.h"
 
 namespace nc {
     const int InsertTextButton = 10;
@@ -291,7 +291,6 @@ namespace nc {
         toFrontAction->setShortcut(tr("Ctrl+F"));
         toFrontAction->setStatusTip(tr("Bring item to front"));
         connect(toFrontAction, &QAction::triggered, this, &MainWindow::bringToFront);
-//! [23]
 
         sendBackAction = new QAction(QIcon(":/images/diagram/sendtoback.png"), tr("Send to &Back"), this);
         sendBackAction->setShortcut(tr("Ctrl+T"));
@@ -305,7 +304,7 @@ namespace nc {
 
         exitAction = new QAction(tr("Abort"), this);
         exitAction->setShortcuts(QKeySequence::Quit);
-        exitAction->setStatusTip(tr("Quit Scenediagram example"));
+        exitAction->setStatusTip(tr("Quit scene diagram example"));
         connect(exitAction, &QAction::triggered, this, &QWidget::close);
 
         boldAction = new QAction(tr("Bold"), this);

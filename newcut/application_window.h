@@ -8,6 +8,7 @@
 #include "newcut/main_window.h"
 
 namespace nc {
+    class ActionHandler;
     class ActionGroupManager;
 
     class ApplicationWindow : public MainWindow {
@@ -24,7 +25,11 @@ namespace nc {
             return app_window_;
         }
     private:
+        // Pointer to the application window.
         static ApplicationWindow* app_window_;
+        QTimer* auto_save_timer_ = nullptr;
+
+        ActionHandler* action_handler_ = nullptr;
     };
 }
 
