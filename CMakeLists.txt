@@ -22,6 +22,8 @@ target_sources(MultiMediaLibrary
         base/containers/ring_buffer.h
         base/memory/aligned_memory.cc
         base/memory/aligned_memory.h
+        media/base/audio_buffer.cc
+        media/base/audio_buffer.h
         media/base/audio_bus.cc
         media/base/audio_bus.h
         media/base/audio_codec.cc
@@ -32,6 +34,8 @@ target_sources(MultiMediaLibrary
         media/base/channel_layout.h
         media/base/container_names.cc
         media/base/container_names.h
+        media/base/decoder_buffer.cc
+        media/base/decoder_buffer.h
         media/base/sample_format.cc
         media/base/sample_format.h
         media/ffmpeg/ffmpeg_deleters.cc
@@ -40,6 +44,8 @@ target_sources(MultiMediaLibrary
         media/filters/audio_file_reader.h
         media/filters/ffmpeg_glue.cc
         media/filters/ffmpeg_glue.h
+        media/filters/memory_url_protocol.cc
+        media/filters/memory_url_protocol.h
         )
 
 target_link_libraries(MultiMediaLibrary
@@ -181,6 +187,7 @@ qt_add_executable(NewCutTest
         MANUAL_FINALIZATION
         media/base/container_names_test.cc
         media/filters/audio_file_reader_test.cc
+        media/filters/memory_url_protocol_test.cc
         )
 
 target_link_libraries(NewCutTest PRIVATE

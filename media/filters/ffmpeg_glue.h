@@ -21,10 +21,10 @@ namespace media {
 
         // Returns true and the current file position for this file, false if the
         // file position could not be retrieved.
-        virtual bool GetPostion(int64_t* position_out) = 0;
+        virtual bool GetPosition(int64_t* position_out) = 0;
 
         // Return true if the file position could be set, false otherwise.
-        virtual bool SetPostion(int64_t position) = 0;
+        virtual bool SetPosition(int64_t position) = 0;
 
         // Returns true and the file size, false if the file size could not be
         virtual bool GetSize(int64_t* size_out) = 0;
