@@ -24,6 +24,8 @@ target_sources(MultiMediaLibrary
         base/memory/aligned_memory.h
         media/base/audio_bus.cc
         media/base/audio_bus.h
+        media/base/audio_codec.cc
+        media/base/audio_codec.h
         media/base/audio_parameters.cc
         media/base/audio_parameters.h
         media/base/channel_layout.cc
@@ -32,6 +34,8 @@ target_sources(MultiMediaLibrary
         media/base/container_names.h
         media/base/sample_format.cc
         media/base/sample_format.h
+        media/ffmpeg/ffmpeg_deleters.cc
+        media/ffmpeg/ffmpeg_deleters.h
         media/filters/audio_file_reader.cc
         media/filters/audio_file_reader.h
         media/filters/ffmpeg_glue.cc
@@ -71,6 +75,8 @@ set(PROJECT_SOURCES
         newcut/actions/preview_action_interface.h
         newcut/actions/snapper.cc
         newcut/actions/snapper.h
+        newcut/engine/color.cc
+        newcut/engine/color.h
         newcut/engine/entity.cc
         newcut/engine/entity.h
         newcut/engine/entity_container.cc
@@ -81,6 +87,8 @@ set(PROJECT_SOURCES
         newcut/engine/flags.h
         newcut/engine/layer.cc
         newcut/engine/layer.h
+        newcut/engine/math.cc
+        newcut/engine/math.h
         newcut/engine/pen.cc
         newcut/engine/pen.h
         newcut/engine/polyline.cc
@@ -172,6 +180,7 @@ enable_testing()
 qt_add_executable(NewCutTest
         MANUAL_FINALIZATION
         media/base/container_names_test.cc
+        media/filters/audio_file_reader_test.cc
         )
 
 target_link_libraries(NewCutTest PRIVATE

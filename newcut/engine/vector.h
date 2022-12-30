@@ -28,6 +28,7 @@ namespace nc {
 
         void Set(double vx, double vy, double vz = 0.0);
 
+        // 极坐标，大小和角度
         void SetPolar(double radius, double angle);
 
         static Vector Polar(double rho, double theta);

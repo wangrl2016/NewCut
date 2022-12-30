@@ -8,6 +8,8 @@
 #include "newcut/engine/flags.h"
 
 namespace nc {
+    // A pen stores attributes for painting such as line width,
+    // line type, color, ...
     class Pen : public Flags {
     public:
 

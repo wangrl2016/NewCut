@@ -11,6 +11,7 @@
 #include "newcut/engine/undoable.h"
 #include "entity_container.h"
 #include "vector.h"
+#include "layer.h"
 
 namespace nc {
     class Entity : public Undoable {
@@ -34,11 +35,11 @@ namespace nc {
         Vector min_v_;  // minimum coordinates
         Vector max_v_;  // maximum coordinates
 
-        // Layer* layer_;  // pointer to layer
+        Layer* layer_;  // pointer to layer
 
         uint64_t id_;   // entity id
 
-        // Pen pen_;       // pen(attributes) for this entity
+        Pen pen_;       // pen(attributes) for this entity
 
         bool update_enabled_;   // auto updating enabled?
 

@@ -8,6 +8,7 @@
 namespace nc {
     class EnumCollect {
     public:
+        // Entity types returned by the Rtti() method
         enum EntityType {
             kEntityUnknown,
             kEntityContainer,
@@ -47,6 +48,7 @@ namespace nc {
         enum ActionType {
             kActionNone,
             kActionDefault,
+
             kActionFileNew,
             kActionFileNewTemplate,
             kActionFileOpen,
@@ -54,7 +56,50 @@ namespace nc {
             kActionFileSaveAs,
             kActionFileExport,
             kActionFileClose,
-            kActionFilePrint
+            kActionFilePrint,
+            kActionFilePrintPDF,
+            kActionFilePrintPreview,
+            kActionFileExportMakerCam,
+            kActionFileQuit,
+
+            kActionEditKillAllActions,
+            kActionEditUndo,
+            kActionEditRedo,
+            kActionEditCut,
+            kActionEditCutNoSelect,
+            kActionEditPaste,
+            kActionOrderNoSelect,
+            kActionOrderBottom,
+            kActionOrderLower,
+            kActionOrderRaise,
+            kActionOrderTop,
+
+            kActionViewStatusBar,
+            kActionViewLayerList,
+            kActionViewBlockList,
+            kActionViewCommandLine,
+            kActionViewLibrary,
+
+            kActionViewPenToolbar,
+            kActionViewOptionToolbar,
+            kActionViewCadToolbar,
+            kActionViewFileToolbar,
+            kActionViewEditToolbar,
+            kActionViewEditSnapToolbar,
+
+            kActionViewGrid,
+            kActionViewDraft,
+
+            kActionZoomIn,
+            kActionZoomOut,
+            kActionZoomAuto,
+            kActionZoomWindow,
+            kActionZoomPan,
+            kActionZoomRedraw,
+            kActionZoomPrevious,
+
+            kActionSelect,
+            kAction
         };
 
         enum SnapRestriction {

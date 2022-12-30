@@ -6,6 +6,11 @@
 #define NEWCUT_FFMPEG_GLUE_H
 
 #include <cstdint>
+#include <memory>
+extern "C" {
+#include <libavformat/avformat.h>
+}
+#include "media/ffmpeg/ffmpeg_deleters.h"
 
 namespace media {
     class FFmpegURLProtocol {
@@ -26,6 +31,31 @@ namespace media {
 
         // Returns false if this protocol supports random seeking.
         virtual bool IsStreaming() = 0;
+    };
+
+    class FFmpegGlue {
+    public:
+        // Set file documention for usage. |protocol| must outlive FFmpegGlue.
+        explicit FFmpegGlue(FFmpegURLProtocol* protocol);
+
+        FFmpegGlue(const FFmpegGlue&) = delete;
+
+        FFmpegGlue& operator=(const FFmpegGlue&) = delete;
+
+        ~FFmpegGlue();
+
+        // Opens an AVFormatContext specially prepared to process reads and seeks
+        // through the FFmpegURLProtocol provided during construction.
+        // |is_local_file| is an optional parameter used for metrics reporting.
+        bool OpenContext(bool is_local_file = false);
+
+        AVFormatContext* format_context() { return format_context_; }
+
+    private:
+        bool open_called_ = false;
+        bool detected_hls = false;
+        AVFormatContext* format_context_;
+        std::unique_ptr<AVIOContext, ScopedPtrAVFree> avio_context_;
     };
 }
 
