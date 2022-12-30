@@ -1,0 +1,4 @@
+// the configure options and settings for NewCut
+#define NewCut_VERSION_MAJOR    @NewCut_VERSION_MAJOR@
+#define NewCut_VERSION_MINOR    @NewCut_VERSION_MINOR@
+#define NewCut_VERSION_PATCH    @NewCut_VERSION_PATCH@

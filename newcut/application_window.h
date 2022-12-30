@@ -24,6 +24,10 @@ namespace nc {
         static ApplicationWindow* GetAppWindow() {
             return app_window_;
         }
+
+    public slots:
+        void ShowAboutWindow();     // about dialog
+
     private:
         // Pointer to the application window.
         static ApplicationWindow* app_window_;

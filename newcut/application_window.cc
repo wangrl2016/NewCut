@@ -3,7 +3,13 @@
 //
 
 #include <glog/logging.h>
+#include <QDialog>
 #include <QSettings>
+#include <QVBoxLayout>
+#include <QGroupBox>
+#include <QApplication>
+#include <QLabel>
+#include "newcut_config.h"
 #include "newcut/application_window.h"
 #include "newcut/gui/action_handler.h"
 #include "newcut/gui/action_group_manager.h"
@@ -15,8 +21,8 @@ namespace nc {
 
     ApplicationWindow::ApplicationWindow()
             : action_group_manager_(new ActionGroupManager(this)),
-            auto_save_timer_(nullptr),
-            action_handler_(new ActionHandler(this)) {
+              auto_save_timer_(nullptr),
+              action_handler_(new ActionHandler(this)) {
         LOG(INFO) << __FUNCTION__;
 
         // accept drop events to open files
@@ -47,5 +53,43 @@ namespace nc {
 
     ApplicationWindow::~ApplicationWindow() {
 
+    }
+
+    void ApplicationWindow::ShowAboutWindow() {
+        QDialog dialog;
+        dialog.setWindowTitle(tr("About"));
+
+        auto layout = new QVBoxLayout;
+        dialog.setLayout(layout);
+
+        auto frame = new QGroupBox(qApp->applicationName());
+        layout->addWidget(frame);
+
+        auto f_layout = new QVBoxLayout;
+        frame->setLayout(f_layout);
+
+        QString info(
+                tr("Version: %1.%2.%3").arg(NewCut_VERSION_MAJOR)
+                        .arg(NewCut_VERSION_MINOR)
+                        .arg(NewCut_VERSION_PATCH) + "\n" +
+                #if defined(Q_CC_CLANG)
+                tr("Compiler: Clang %1.%2.%3").arg(__clang_major__)
+                        .arg(__clang_minor__)
+                        .arg(__clang_patchlevel__) + "\n" +
+                #elif defined(Q_CC_GNU)
+                tr("Compiler: GNU GCC %1.%2.%3").arg(__GNUC__)
+                        .arg(__GNUC_MIN_OR)
+                        .arg(__GNUC_PATCHLEVEL__) + "\n" +
+                #elif defined(Q_CC_MSVC)
+                tr("Compiler: Microsoft Visual C++") + "\n" +
+                #endif
+                tr("Compiled on: %1").arg(__DATE__) + "\n" +
+                tr("Qt Version: %1").arg(qVersion())
+        );
+        auto app_info = new QLabel(info);
+        app_info->setTextInteractionFlags(Qt::TextSelectableByMouse);
+        f_layout->addWidget(app_info);
+
+        dialog.exec();
     }
 }

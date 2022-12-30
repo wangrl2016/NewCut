@@ -11,6 +11,9 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# 配置选项
+option(CHECK_IS_ON "开启代码检查" ON)
+
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup(KEEP_RPATHS)
 
@@ -22,6 +25,8 @@ target_sources(MultiMediaLibrary
         base/containers/ring_buffer.h
         base/memory/aligned_memory.cc
         base/memory/aligned_memory.h
+        base/memory/ref_counted.cc
+        base/memory/ref_counted.h
         media/base/audio_buffer.cc
         media/base/audio_buffer.h
         media/base/audio_bus.cc
@@ -54,6 +59,7 @@ target_link_libraries(MultiMediaLibrary
         )
 
 ### Build NewCut executable
+configure_file(newcut/newcut_config.h.in newcut_config.h)
 
 set(QT_LIBS
         concurrent
@@ -123,6 +129,9 @@ qt_add_executable(NewCut
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         )
+
+target_include_directories(NewCut PUBLIC
+        "${PROJECT_BINARY_DIR}")
 
 target_link_libraries(NewCut PRIVATE
         ${CONAN_LIBS}

@@ -36,6 +36,17 @@ namespace nc {
         file_menu_->addAction(action_map_["FileSaveAll"]);
         file_menu_->addSeparator();
 
+        QMenu* help_menu = new QMenu(ApplicationWindow::tr("&Help"), menu_bar);
+        help_menu->setObjectName("Help");
+        help_menu->setTearOffEnabled(true);
+
+        QAction* help_about = new QAction(ApplicationWindow::tr("Abount"), application_window_);
+        connect(help_about, SIGNAL(triggered()),
+                application_window_, SLOT(ShowAboutWindow()));
+        help_menu->addAction(help_about);
+
+
         menu_bar->addMenu(file_menu_);
+        menu_bar->addMenu(help_menu);
     }
 }
