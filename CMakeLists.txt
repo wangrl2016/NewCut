@@ -79,6 +79,10 @@ set(PROJECT_SOURCES
         newcut/engine/enum_collect.h
         newcut/engine/flags.cc
         newcut/engine/flags.h
+        newcut/engine/layer.cc
+        newcut/engine/layer.h
+        newcut/engine/pen.cc
+        newcut/engine/pen.h
         newcut/engine/polyline.cc
         newcut/engine/polyline.h
         newcut/engine/undoable.cc
@@ -99,24 +103,6 @@ set(PROJECT_SOURCES
         newcut/application_window.h
         newcut/main_window.cc
         newcut/main_window.h
-        view/params/param_widget.cc
-        view/params/param_widget.h
-        view/path_stroke/arthur_frame.cc
-        view/path_stroke/arthur_frame.h
-        view/path_stroke/path_stroke_controls.cc
-        view/path_stroke/path_stroke_controls.h
-        view/path_stroke/path_stroke_renderer.cc
-        view/path_stroke/path_stroke_renderer.h
-        view/path_stroke/path_stroke_widget.cc
-        view/path_stroke/path_stroke_widget.h
-        view/piano/piano_graphics_scene.cc
-        view/piano/piano_graphics_scene.h
-        view/piano/piano_graphics_view.cc
-        view/piano/piano_graphics_view.h
-        view/tracks/track_graphics_scene.cc
-        view/tracks/track_graphics_scene.h
-        view/tracks/track_graphics_view.cc
-        view/tracks/track_graphics_view.h
         )
 
 qt_add_executable(NewCut

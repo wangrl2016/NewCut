@@ -1,5 +1,5 @@
 //
-// Created by wr on 2022/12/22.
+// Created by wangrl2016 on 2022/12/22.
 //
 
 #ifndef NEWCUT_FLAGS_H
@@ -50,6 +50,5 @@ namespace nc {
         uint32_t flags_ = 0;
     };
 }
-
 
 #endif //NEWCUT_FLAGS_H
