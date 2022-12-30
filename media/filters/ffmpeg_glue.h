@@ -7,10 +7,15 @@
 
 #include <cstdint>
 #include <memory>
+#include <glog/logging.h>
+
 extern "C" {
 #include <libavformat/avformat.h>
+#include <libavcodec/avcodec.h>
 }
+
 #include "media/ffmpeg/ffmpeg_deleters.h"
+#include "media/base/container_names.h"
 
 namespace media {
     class FFmpegURLProtocol {
@@ -51,11 +56,21 @@ namespace media {
 
         AVFormatContext* format_context() { return format_context_; }
 
+        // Returns the container name.
+        // Note that it is only avaiable after calling OpenContext.
+        MediaContainerName container() const {
+            DCHECK(open_called_);
+            return container_;
+        }
+
+        bool deleted_hls() { return detected_hls_; }
+
     private:
         bool open_called_ = false;
-        bool detected_hls = false;
+        bool detected_hls_ = false;
         AVFormatContext* format_context_;
         std::unique_ptr<AVIOContext, ScopedPtrAVFree> avio_context_;
+        MediaContainerName container_ = MediaContainerName::CONTAINER_UNKNOWN;
     };
 }
 

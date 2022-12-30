@@ -4,3 +4,7 @@
 
 #include <gtest/gtest.h>
 
+namespace media {
+
+}
+

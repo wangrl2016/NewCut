@@ -16,4 +16,31 @@ namespace media {
         EXPECT_EQ(4, protocol.Read(sizeof(out), out));
         EXPECT_EQ(0, memcmp(out, kData, sizeof(out)));
     }
+
+    TEST(MemoryURLProtocolTest, ReadWithNegativeSize) {
+        MemoryURLProtocol protocol(kData, sizeof(kData), false);
+        uint8_t out[sizeof(kData)];
+        EXPECT_EQ(AVERROR(EIO), protocol.Read(-1, out));
+    }
+
+    TEST(MemoryURLProtocolTest, ReadWithZeroSize) {
+        MemoryURLProtocol protocol(kData, sizeof(kData), false);
+        uint8_t out;
+        EXPECT_EQ(0, protocol.Read(0, &out));
+    }
+
+    TEST(MemoryURLprotocolTest, SetPosition) {
+        MemoryURLProtocol protocol(kData, sizeof(kData), false);
+        EXPECT_FALSE(protocol.SetPosition(-1));
+        EXPECT_FALSE(protocol.SetPosition(sizeof(kData) + 1));
+
+        uint8_t out;
+        EXPECT_TRUE(protocol.SetPosition(sizeof(kData)));
+        EXPECT_EQ(AVERROR_EOF, protocol.Read(1, &out));
+
+        int i = sizeof(kData) / 2;
+        EXPECT_TRUE(protocol.SetPosition(i));
+        EXPECT_EQ(1, protocol.Read(1, &out));
+        EXPECT_EQ(kData[i], out);
+    }
 }

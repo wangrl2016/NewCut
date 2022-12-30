@@ -6,8 +6,18 @@
 #define NEWCUT_REF_COUNTED_H
 
 #include <cstdint>
+#include <glog/logging.h>
+#include "newcut_config.h"
 
 namespace base {
+    enum StartRefCountFromZeroTag {
+        kStartRefCountFromZeroTag
+    };
+
+    enum StartRefCountFromOneTag {
+        kStartRefCountFromOneTag
+    };
+
     class RefCountedBase {
     public:
         RefCountedBase(const RefCountedBase&) = delete;
@@ -19,9 +29,24 @@ namespace base {
         bool HasAtLeastOneRef() const { return ref_count_ >= 1; }
 
     protected:
-        explicit RefCountedBase() {
+        explicit RefCountedBase(StartRefCountFromZeroTag) {}
 
+        explicit RefCountedBase(StartRefCountFromOneTag) : ref_count_(1) {}
+
+        ~RefCountedBase() {}
+
+        void AddRef() const {
+            AddRefImpl();
         }
+
+        bool Release() const {
+            ReleaseImpl();
+            return ref_count_ == 0;
+        }
+
+        void AddRefImpl() const { ++ref_count_; }
+
+        void ReleaseImpl() const { --ref_count_; }
 
     private:
 
