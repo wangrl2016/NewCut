@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <vector>
+#include "base/memory/aligned_memory.h"
 
 namespace media {
     class AudioParameters;
@@ -61,6 +62,35 @@ namespace media {
         static std::unique_ptr<const AudioBus> WrapReadOnlyMemory(
                 const AudioParameters& params,
                 const void* data);
+
+        static int CalculateMemorySize(int channels, int frames);
+
+        static int CalculateMemorySize(const AudioParameters& params);
+
+        // Methods that are expectd to be called after AudioBus::CreateWrapper() in
+        // order to wrap externally allocated memory. Note: It is illegal to call
+        // these methods when using a factory method other than CreateWrapper().
+        void SetChannelData(int channel, float* data);
+
+        void set_frames(int frames);
+
+
+    private:
+        // contiguous block of channel memory.
+        std::unique_ptr<float, >()
+
+        // Whether the data is compressed bitstream or not
+        bool is_bitstream_format_ = false;
+        // The data size for a compressed bitstream.
+        size_t bitstream_data_size_ = 0;
+        // The PCM frame count for a compressed bitstream.
+        int bitstream_frames_ = 0;
+
+
+        std::vector<float*> channel_data_;
+        int frames_;
+
+        bool is_wrapper_;
     };
 }
 

@@ -36,6 +36,7 @@ namespace media {
     int AudioFileReader::Read(
             std::vector<std::unique_ptr<AudioBus>>* decoded_audio_packets,
             int packets_to_read) {
+        DCHECK(glue_ && codec_context_) << __FUNCTION__ << ": reader is not opened!";
 
     }
 
@@ -183,5 +184,58 @@ namespace media {
             int* total_frames,
             std::vector<std::unique_ptr<AudioBus>>* decoded_audio_packets,
             AVFrame* frame) {
+        int frames_read = frame->nb_samples;
+        if (frames_read < 0)
+            return false;
+
+        const int channels = frame->channels;
+        if (frame->sample_rate != sample_rate_ || channels != channels_ ||
+            frame->format != av_sample_format_) {
+            DLOG(ERROR) << "Unsupported midstream configuration change!"
+                        << " Sample Rate: " << frame->sample_rate << " vs "
+                        << sample_rate_ << ", Channels: " << channels << " vs "
+                        << channels_ << ", Sample Format: " << frame->format << " vs "
+                        << av_sample_format_;
+
+            // This is an unrecoverable error, so bail out. We'll return
+            // whatever we've decoded up to this point.
+            return false;
+        }
+
+        // AAC decoding doesn't properly trim the last packet in a stream, so if we
+        // have duration information, use it to set the correct length to avoid extra
+        // silence from being output. In the case where we are also discarding some
+        // portion of the packet (as indicated by a negative pts), we further want to
+        // adjust the duration downward by however much exists before zero.
+        if (audio_codec_ == AudioCodec::kAAC && frame->pkt_duration) {
+            const int64_t pkt_duration = ConvertFromTimeBase(
+                    glue_->format_context()->streams[stream_index_]->time_base,
+                    frame->pkt_duration + std::min(static_cast<int64_t>(0), frame->pts));
+
+            const auto frame_duration = int64_t((frames_read / static_cast<double>(sample_rate_)) *
+                    base::Time::kMicrosecondPerSecond);
+
+            if (pkt_duration < frame_duration && pkt_duration > 0) {
+                const int new_frames_read =
+                        int(frames_read * (pkt_duration / frame_duration));
+                DVLOG(google::WARNING) << "Shrinking AAC frame from " << frames_read << " to "
+                        << new_frames_read << " based on packet duration.";
+                frames_read = new_frames_read;
+            }
+
+            // The above process may delete the entire packet.
+            if (!frames_read)
+                return true;
+        }
+
+        // Deinterleave each channel and convert to 32bit floating-point with
+        // nominal range -1.0 -> +1.0. If the output is already in float planar
+        // format, just copy it into the AudioBus.
+        decoded_audio_packets->emplace_back(AudioBus::Create(channels, frames_read));
+        auto* audio_bus = decoded_audio_packets->back().get();
+
+        if (codec_context_->sample_fmt == AV_SAMPLE_FMT_FLT) {
+
+        }
     }
 }

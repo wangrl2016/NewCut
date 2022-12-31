@@ -198,6 +198,7 @@ enable_testing()
 
 qt_add_executable(NewCutTest
         MANUAL_FINALIZATION
+        media/base/audio_bus_test.cc
         media/base/container_names_test.cc
         media/filters/audio_file_reader_test.cc
         media/filters/ffmpeg_glue_test.cc
