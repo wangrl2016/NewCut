@@ -43,6 +43,8 @@ target_sources(MultiMediaLibrary
         media/base/decoder_buffer.h
         media/base/sample_format.cc
         media/base/sample_format.h
+        media/ffmpeg/ffmpeg_common.cc
+        media/ffmpeg/ffmpeg_common.h
         media/ffmpeg/ffmpeg_deleters.cc
         media/ffmpeg/ffmpeg_deleters.h
         media/filters/audio_file_reader.cc
