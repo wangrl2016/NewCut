@@ -6,6 +6,17 @@
 #include "media/ffmpeg/ffmpeg_common.h"
 
 namespace media {
+
+    int64_t ConvertFromTimeBase(const AVRational& time_base,
+                                int64_t timestamp) {
+        return av_rescale_q(timestamp, time_base, kMicrosBase);
+    }
+
+    int64_t ConvertToTimeBase(const AVRational& time_base,
+                              int64_t timestamp) {
+        return av_rescale_q(timestamp, kMicrosBase, time_base);
+    }
+
     AudioCodec CodecIDToAudioCodec(AVCodecID codec_id) {
         switch (codec_id) {
             case AV_CODEC_ID_AAC:

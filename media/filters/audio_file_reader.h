@@ -110,5 +110,4 @@ namespace media {
     };
 }
 
-
 #endif //NEWCUT_AUDIO_FILE_READER_H

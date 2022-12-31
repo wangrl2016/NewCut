@@ -3,10 +3,15 @@
 //
 
 #include <glog/logging.h>
+#include <cmath>
 #include "media/ffmpeg/ffmpeg_common.h"
 #include "media/filters/audio_file_reader.h"
 
 namespace media {
+    // AAC(M4A) decoding specific constants.
+    static const int kAACPrimingFrameCount = 2112;
+    static const int kAACRemainerFrameCount = 519;
+
     AudioFileReader::AudioFileReader(media::FFmpegURLProtocol* protocol)
             : stream_index_(0),
               protocol_(protocol),
@@ -21,6 +26,72 @@ namespace media {
 
     bool AudioFileReader::Open() {
         return OpenDemuxer() && OpenDecoder();
+    }
+
+    void AudioFileReader::Close() {
+        codec_context_.reset();
+        glue_.reset();
+    }
+
+    int AudioFileReader::Read(
+            std::vector<std::unique_ptr<AudioBus>>* decoded_audio_packets,
+            int packets_to_read) {
+
+    }
+
+    bool AudioFileReader::HasKnownDuration() const {
+        return glue_->format_context()->duration != AV_NOPTS_VALUE;
+    }
+
+    int64_t AudioFileReader::GetDuration() const {
+        const AVRational av_time_base = {1, AV_TIME_BASE};
+        DCHECK_NE(glue_->format_context()->duration, AV_NOPTS_VALUE);
+        int64_t estimated_duration_us = glue_->format_context()->duration;
+
+        if (audio_codec_ == AudioCodec::kAAC) {
+            // For certain AAC-encoded files, FFMPEG's estimated frame count might not
+            // be sufficient to capture the entire audio content that we want. This is
+            // especially noticeable for short files (< 10ms) resulting in silence
+            // thourghout the decoded buffer. Thus, we add the priming frames and the
+            // remainder frames to the estimation.
+            estimated_duration_us += ceil(
+                    1000000.0 *
+                    static_cast<double>(kAACPrimingFrameCount + kAACRemainerFrameCount) /
+                    sample_rate());
+        } else {
+            // Add one microsecond to avoid rounding-down erros which can occur when
+            // |duration| has been calculated from an exact number of sample-frames.
+            // One microsecond is much less than the time of a single sample-frame
+            // at any real-world sample rate.
+            estimated_duration_us += 1;
+        }
+
+        return ConvertFromTimeBase(av_time_base, estimated_duration_us);
+    }
+
+    int AudioFileReader::GetNumberOfFrames() const {
+        return int(std::round(static_cast<double>(GetDuration()) /
+                              base::Time::kMicrosecondPerSecond * sample_rate_));
+    }
+
+    bool AudioFileReader::OpenDemuxerForTesting() {
+        return OpenDemuxer();
+    }
+
+    bool AudioFileReader::ReadPacketForTesting(AVPacket* output_packet) {
+        return ReadPacket(output_packet);
+    }
+
+    bool AudioFileReader::SeekForTesting(int64_t seek_time) {
+        return av_seek_frame(
+                glue_->format_context(), stream_index_,
+                // 转化为FFmpeg表示的时间
+                ConvertToTimeBase(GetAVStreamForTesting()->time_base, seek_time),
+                AVSEEK_FLAG_BACKWARD) >= 0;
+    }
+
+    const AVStream* AudioFileReader::GetAVStreamForTesting() const {
+        return glue_->format_context()->streams[stream_index_];
     }
 
     bool AudioFileReader::OpenDemuxer() {
@@ -96,12 +167,21 @@ namespace media {
         return true;
     }
 
-    bool AudioFileReader::HasKnownDuration() const {
-        return glue_->format_context()->duration != AV_NOPTS_VALUE;
+    bool AudioFileReader::ReadPacket(AVPacket* output_packet) {
+        while (av_read_frame(glue_->format_context(), output_packet) >= 0) {
+            // Skip packets from other streams.
+            if (output_packet->stream_index != stream_index_) {
+                av_packet_unref(output_packet);
+                continue;
+            }
+            return true;
+        }
+        return false;
     }
 
-    void AudioFileReader::Close() {
-        codec_context_.reset();
-        glue_.reset();
+    bool AudioFileReader::OnNewFrame(
+            int* total_frames,
+            std::vector<std::unique_ptr<AudioBus>>* decoded_audio_packets,
+            AVFrame* frame) {
     }
 }
