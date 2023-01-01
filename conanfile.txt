@@ -1,7 +1,9 @@
 [requires]
+zlib/1.2.13
 ffmpeg/5.0
 glog/0.5.0
 gtest/1.11.0
+boost/1.80.0
 
 [generators]
 cmake
@@ -14,3 +16,4 @@ ffmpeg:with_openh264=False
 ffmpeg:with_openjpeg=False
 ffmpeg:with_opus=False
 ffmpeg:with_vorbis=False
+boost:without_test=True

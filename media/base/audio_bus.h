@@ -204,6 +204,18 @@ namespace media {
         explicit AudioBus(int channels);
 
     private:
+        void BuildChannelData(int channels, int aligned_frame, float* data);
+
+        static void CheckOverflow(int start_frame, int frames, int total_frames);
+
+        template<class SourceSampleTypeTraits>
+        static void CopyConvertFromInterleavedSourceToAudioBus(
+                const typename SourceSampleTypeTraits::ValueType* source_buffer,
+                int write_offset_in_frames,
+                int num_frames_to_write,
+                AudioBus* dest);
+
+    private:
         // contiguous block of channel memory.
         std::unique_ptr<float, base::AlignedFreeDeleter> data_;
 

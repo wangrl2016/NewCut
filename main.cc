@@ -8,6 +8,7 @@
 #include <QScreen>
 #include <QSettings>
 
+#include "newcut_config.h"
 #include "newcut/application_window.h"
 
 int main(int argc, char* argv[]) {
@@ -19,7 +20,11 @@ int main(int argc, char* argv[]) {
     QApplication app(argc, argv);
     QCoreApplication::setOrganizationName("NewCut");
     QCoreApplication::setApplicationName("NewCut");
-    QCoreApplication::setApplicationVersion("0.1.0");
+    QString version = QString::fromStdString(
+            std::to_string(NewCut_VERSION_MAJOR) + "." +
+            std::to_string(NewCut_VERSION_MINOR) + "." +
+            std::to_string(NewCut_VERSION_PATCH));
+    QCoreApplication::setApplicationVersion(version);
 
     QSettings settings;
 
