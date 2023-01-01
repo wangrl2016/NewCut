@@ -1,6 +1,6 @@
-//
-// Created by wangrl2016 on 2022/12/21.
-//
+// Copyright (C) 2023 wangrl2016@gmail.com
+// Use of this source code is governed by a MIT License that
+// can be found in the LICENSE file.
 
 #include <glog/logging.h>
 #include <QApplication>
