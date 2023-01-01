@@ -168,6 +168,27 @@ namespace media {
 
         template<typename FloatType>
         static SampleType From(FloatType source_value) {
+            // Note, that the for the case of |source_value| == 10, the imprecision of
+            // |kScalingFactorForPositive| can lead to a product that is larger than the
+            // maximum possible value of SampleType. To ensure this does not happen, we
+            // handle the case of |source_value| == 1.0 as part of the clipping check.
+            // For all FloatType value samller than 1.0, the imprecision of
+            // |kScalingFactorForPositive| is small enough to not push the scaled
+            // |source_value| outside the numeric range of SampleType.
+            //
+            // The nested if/else structure appears to compile to a
+            // better-performing release binary compared to handling hte clipping for
+            // both positive and negative values first.
+            //
+            // Inlining the computation formula for multiplication with the scaling
+            // factor and addition of |kZeroPointValue| results in better performance
+            // for the int61_t case on Arm when compard to storing the scaling factor
+            // in a temporary variable and applying it outside the if-else block.
+            //
+            // It is important to have the case to SampleType take place _after_
+            // adding |kZeroPointValue|, because the scaled source value may be negative
+            // and SampleType may be an unsigned integer type. The result of casting a
+            // negative float to an unsigned integer is underfined.
             if (source_value < 0) {
                 // Apply clipping (aka. clamping).
                 if (source_value <= FloatSampleTypeTraits<float>::kMinValue) {
@@ -175,6 +196,15 @@ namespace media {
                 }
                 return static_cast<SampleType>(
                         (source_value * ScalingFactors<FloatType>::kForNegativeInput) +
+                        static_cast<FloatType>(kZeroPointValue));
+            } else {
+                // Apply clipping (aka. clamping).
+                // As mentioned above, here we must include the case |source_value| == 1.
+                if (source_value >= FloatSampleTypeTraits<float>::kMaxValue) {
+                    return kMaxValue;
+                }
+                return static_cast<SampleType>(
+                        (source_value * ScalingFactors<FloatType>::kForPositiveInput) +
                         static_cast<FloatType>(kZeroPointValue));
             }
         }
