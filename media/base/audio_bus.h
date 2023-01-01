@@ -232,8 +232,37 @@ namespace media {
         // by the client.
         std::vector<float*> channel_data_;
         int frames_;
-    };
-}
 
+        // Protect SetChannelData(), set_frames() and SetWrappedDataDeleter() for use
+        // by CreateWrapper().
+        bool is_wrapper_;
+
+        // Run on Destruction. Free memory to the data set via SetChannelData().
+        // Only used with CreateWrapper().
+        void (* wrapped_data_deleter_cb_)();
+    };
+
+    // 因为是范型，实现必须写在头文件中
+    // Delegates to FromInterleavedParatial()
+    template<class SourceSampleTypeTraits>
+    void AudioBus::FromInterleaved(
+            const typename SourceSampleTypeTraits::ValueType* source_buffer,
+            int num_frames_to_write) {
+        FromInterleavedPartial<SourceSampleTypeTraits>(source_buffer,
+                                                       0,
+                                                       num_frames_to_write);
+        // Zero any remaing frames.
+        ZeroFramesPartial(num_frames_to_write, frames_ - num_frames_to_write);
+    }
+
+    template<class SourceSampleTypeTraits>
+    void AudioBus::FromInterleavedPartial(
+            const typename SourceSampleTypeTraits::ValueType* source_buffer,
+            int write_offset_in_frames,
+            int num_frames_to_write) {
+        CheckOverflow(write_offset_in_frames, num_frames_to_write, frames_);
+
+    }
+}
 
 #endif //NEWCUT_AUDIO_BUS_H

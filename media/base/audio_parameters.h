@@ -73,7 +73,9 @@ namespace media {
                    int sample_rate,
                    int frames_per_buffer);
 
+        int channels() const { return channel_layout_config_.channels(); }
 
+        int frames_per_buffer() const { return frames_per_buffer_; }
 
     private:
         Format format_;                                 // Format of the stream
