@@ -37,6 +37,7 @@ target_sources(MultiMediaLibrary
         media/base/audio_codec.h
         media/base/audio_parameters.cc
         media/base/audio_parameters.h
+        media/base/audio_sample_types.h
         media/base/channel_layout.cc
         media/base/channel_layout.h
         media/base/container_names.cc
@@ -199,6 +200,7 @@ enable_testing()
 qt_add_executable(NewCutTest
         MANUAL_FINALIZATION
         media/base/audio_bus_test.cc
+        media/base/audio_sample_types_test.cc
         media/base/container_names_test.cc
         media/filters/audio_file_reader_test.cc
         media/filters/ffmpeg_glue_test.cc

@@ -4,6 +4,7 @@
 
 #include <glog/logging.h>
 #include <cmath>
+#include "media/base/audio_bus.h"
 #include "media/ffmpeg/ffmpeg_common.h"
 #include "media/filters/audio_file_reader.h"
 

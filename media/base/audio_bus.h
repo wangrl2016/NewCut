@@ -74,23 +74,47 @@ namespace media {
 
         void set_frames(int frames);
 
+        // Method optionally called after AudioBus::CreateWrapper().
+        // Runs |deleter| when on |this| desruction, freeing external data
+        // referenced by SetChannelData().
+        // Note: It is illegal to call this method when using a factory method oter
+        // than CreateWrapper().
+        void SetWrappedDataDeleter(void (*deleter)());
 
+        // Methods for compressed bitstream formats. The data size may not be equal to
+        // the capacity of the AudioBus. Also, the frame count may not be equal to the
+        // capacity of the AudioBus. Thus, we need extra methods to access the real
+        // data size and frame count for bitstream formats.
+        bool is_bitstram_format() const { return is_bitstream_format_; }
+
+        void set_is_bitstream_format(bool is_bitstream_format) {
+            is_bitstream_format_ = is_bitstream_format;
+        }
+
+        size_t GetBitstreamDataSize() const;
+
+        void SetBitstreamDataSize(size_t data_size);
+
+        int GetBitstreamFrames() const;
+
+        void SetBitstreamFrames(int frames);
     private:
         // contiguous block of channel memory.
-        std::unique_ptr<float, >()
+        std::unique_ptr<float, base::AlignedFreeDeleter> data_;
 
-        // Whether the data is compressed bitstream or not
+        // Whether the data is compressed bitstream or not.
         bool is_bitstream_format_ = false;
         // The data size for a compressed bitstream.
         size_t bitstream_data_size_ = 0;
         // The PCM frame count for a compressed bitstream.
         int bitstream_frames_ = 0;
 
-
+        // One float pointer per channel pointing to a contiguous block of memory for
+        // that channel. If the memory is owned by this instance, this will
+        // point to the memory in |data_|. Otherwise, it may point to memory provided
+        // by the client.
         std::vector<float*> channel_data_;
         int frames_;
-
-        bool is_wrapper_;
     };
 }
 

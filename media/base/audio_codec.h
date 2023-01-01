@@ -5,6 +5,9 @@
 #ifndef NEWCUT_AUDIO_CODEC_H
 #define NEWCUT_AUDIO_CODEC_H
 
+#include <string>
+#include <ostream>
+
 namespace media {
     enum class AudioCodec {
         kUnknown    = 0,
