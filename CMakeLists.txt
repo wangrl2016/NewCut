@@ -27,6 +27,7 @@ target_sources(MultiMediaLibrary
         base/memory/aligned_memory.h
         base/memory/ref_counted.cc
         base/memory/ref_counted.h
+        base/misc/bits.h
         base/time/time.cc
         base/time/time.h
         media/base/audio_buffer.cc

@@ -30,4 +30,29 @@ namespace media {
     ChannelLayoutConfig ChannelLayoutConfig::Guess(int channels) {
         return {GuessChannelLayout(channels), channels};
     }
+
+    AudioParameters::AudioParameters()
+        : AudioParameters(AUDIO_PCM_LINEAR,
+                          ChannelLayoutConfig::FromLayout<CHANNEL_LAYOUT_NONE>(),
+                                  0,
+                                  0) {}
+
+    AudioParameters::AudioParameters(Format format,
+                                     ChannelLayoutConfig channel_layout_config,
+                                     int sample_rate,
+                                     int frames_per_buffer) {
+        Reset(format, channel_layout_config, sample_rate, frames_per_buffer);
+    }
+
+    AudioParameters::~AudioParameters() = default;
+
+    void AudioParameters::Reset(Format format,
+                                ChannelLayoutConfig channel_layout_config,
+                                int sample_rate,
+                                int frames_per_buffer) {
+        format_ = format;
+        channel_layout_config_ = channel_layout_config;
+        sample_rate_ = sample_rate;
+        frames_per_buffer_ = frames_per_buffer;
+    }
 }

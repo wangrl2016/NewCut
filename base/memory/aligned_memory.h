@@ -10,9 +10,7 @@
 #include <glog/logging.h>
 
 namespace base {
-    void* AlignedAlloc(size_t size, size_t alignment) {
-        return std::aligned_alloc(alignment, size);
-    }
+    void* AlignedAlloc(size_t size, size_t alignment);
 
     inline void AlignedFree(void* ptr) {
 #if defined(_MSC_VER)

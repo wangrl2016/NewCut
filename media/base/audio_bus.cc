@@ -6,7 +6,7 @@
 #include "media/base/limits.h"
 #include "media/base/audio_parameters.h"
 #include "audio_sample_types.h"
-#include "vector_math.h"
+#include "media/base/vector_math.h"
 
 namespace media {
     static bool IsAligned(void* ptr) {
@@ -123,10 +123,10 @@ namespace media {
         frames_ = frames;
     }
 
-    void AudioBus::SetWrappedDataDeleter(void (* deleter)()) {
+    void AudioBus::SetWrappedDataDeleter(std::function<void()> deleter) {
         CHECK(is_wrapper_);
         DCHECK(!wrapped_data_deleter_cb_);
-        wrapped_data_deleter_cb_ = deleter;
+        wrapped_data_deleter_cb_ = std::move(deleter);
     }
 
     size_t AudioBus::GetBitstreamDataSize() const {

@@ -5,6 +5,7 @@
 #ifndef NEWCUT_AUDIO_BUS_H
 #define NEWCUT_AUDIO_BUS_H
 
+#include <functional>
 #include <memory>
 #include <vector>
 #include "base/memory/aligned_memory.h"
@@ -79,7 +80,7 @@ namespace media {
         // referenced by SetChannelData().
         // Note: It is illegal to call this method when using a factory method oter
         // than CreateWrapper().
-        void SetWrappedDataDeleter(void (* deleter)());
+        void SetWrappedDataDeleter(std::function<void()> deleter);
 
         // Methods for compressed bitstream formats. The data size may not be equal to
         // the capacity of the AudioBus. Also, the frame count may not be equal to the
@@ -246,7 +247,7 @@ namespace media {
 
         // Run on Destruction. Free memory to the data set via SetChannelData().
         // Only used with CreateWrapper().
-        void (* wrapped_data_deleter_cb_)();
+        std::function<void()> wrapped_data_deleter_cb_;
     };
 
     // 因为是范型，实现必须写在头文件中
