@@ -5,6 +5,7 @@
 #include "media/base/audio_bus.h"
 #include "media/base/limits.h"
 #include "media/base/audio_parameters.h"
+#include "audio_sample_types.h"
 
 namespace media {
     static bool IsAligned(void* ptr) {
@@ -156,5 +157,106 @@ namespace media {
         bitstream_frames_ = frames;
     }
 
+    void AudioBus::CopyTo(media::AudioBus* dest) const {
+        dest->set_is_bitstream_format(is_bitstram_format());
+        if (is_bitstram_format()) {
+            dest->SetBitstreamDataSize(GetBitstreamDataSize());
+            dest->SetBitstreamFrames(GetBitstreamFrames());
+            memcpy(dest->channel(0), channel(0), GetBitstreamDataSize());
+            return;
+        }
+        CopyPartialFrameTo(0, frames(), 0, dest);
+    }
 
+    void AudioBus::CopyAndClipTo(media::AudioBus* dest) const {
+        DCHECK(!is_bitstream_format_);
+        CHECK_EQ(channels(), dest->channels());
+        CHECK_LE(frames(), dest->frames());
+        for (int i = 0; i < channels(); i++) {
+            float* dest_ptr = dest->channel(i);
+            const float* source_ptr = channel(i);
+            for (int j = 0; j < frames(); j++) {
+                dest_ptr[j] = Float32SampleTypeTraits::FromFloat(source_ptr[j]);
+            }
+        }
+    }
+
+    void AudioBus::CopyPartialFrameTo(int source_start_frame,
+                                      int frame_count,
+                                      int dest_start_frame,
+                                      media::AudioBus* dest) const {
+        DCHECK(!is_bitstream_format_);
+        CHECK_EQ(channels(), dest->channels());
+        CHECK_LE(source_start_frame + frame_count, frames());
+        CHECK_LE(dest_start_frame + frame_count, dest->frames());
+
+        // Since we don't know if the other AudioBus is wrapped or not (and we don't
+        // want to care), just copy using the public channel() accessors.
+        for (int i = 0; i < channels(); i++) {
+            memcpy(dest->channel(i) + dest_start_frame,
+                   channel(i) + source_start_frame,
+                   sizeof(*channel(i)) * frame_count);
+        }
+    }
+
+    void AudioBus::Zero() {
+        ZeroFrames(frames_);
+    }
+
+    void AudioBus::ZeroFrames(int frames) {
+        ZeroFramesPartial(0, frames);
+    }
+
+    void AudioBus::ZeroFramesPartial(int start_frame, int frames) {
+        CheckOverflow(start_frame, frames, frames_);
+
+        if (frames <= 0) {
+            return;
+        }
+
+        if (is_bitstream_format_) {
+            // No need to clean unused region for bitstream formats.
+            if (start_frame >= bitstream_frames_) {
+                return;
+            }
+
+            // Cannot clean partial frames.
+            DCHECK_EQ(start_frame, 0);
+            DCHECK(frames >= bitstream_frames_);
+
+            // For compressed bitstream, zeroed buffer is not valid and would be
+            // discarded immediately. It is faster and makes more sense to reset
+            // |bitstream_data_size_| and |is_bitstream_format| so that the buffer
+            // contains no data instead of zeroed data.
+            SetBitstreamDataSize(0);
+            SetBitstreamFrames(0);
+            return;
+        }
+
+        for (size_t i = 0; i < channel_data_.size(); i++) {
+            memset(channel_data_[i] + start_frame, 0,
+                   frames * sizeof *channel_data_[i]);
+        }
+    }
+
+    bool AudioBus::AreFramesZero() const {
+        DCHECK(!is_bitstream_format_);
+        for (size_t i = 0; i < channel_data_.size(); i++) {
+            for (int j = 0; j < frames_; j++) {
+                if (channel_data_[i][j]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    void AudioBus::Scale(float volume) {
+        DCHECK(!is_bitstream_format_);
+        if (volume > 0 && volume != 1) {
+
+        } else if (volume == 0) {
+            Zero();
+        }
+    }
 }

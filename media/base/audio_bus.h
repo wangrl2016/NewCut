@@ -146,7 +146,7 @@ namespace media {
         void CopyTo(AudioBus* dest) const;
 
         // Similar to above, but clips values to [-1. +1] during the copy process.
-        void CopyAndClipto(AudioBus* dest) const;
+        void CopyAndClipTo(AudioBus* dest) const;
 
         // Helper method to copy frames from one AudioBus to another. Both AudioBus
         // objects must have the same number of channels(). |source_start_frame| is
@@ -215,6 +215,13 @@ namespace media {
                 int num_frames_to_write,
                 AudioBus* dest);
 
+        template<class TargetSampleTypeTraits>
+        static void CopyConvertFromAudioBusToInterleavedTarget(
+                const AudioBus* source,
+                int read_offset_in_frames,
+                int num_frames_to_read,
+                typename TargetSampleTypeTraits::ValueType* dest_buffer);
+
     private:
         // contiguous block of channel memory.
         std::unique_ptr<float, base::AlignedFreeDeleter> data_;
@@ -261,7 +268,71 @@ namespace media {
             int write_offset_in_frames,
             int num_frames_to_write) {
         CheckOverflow(write_offset_in_frames, num_frames_to_write, frames_);
+        CopyConvertFromInterleavedSourceToAudioBus<SourceSampleTypeTraits>(
+                source_buffer, write_offset_in_frames, num_frames_to_write, this);
+    }
 
+    // Delegates to InterleavedPartial()
+    template<class TargetSampleTypeTraits>
+    void AudioBus::ToInterleaved(
+            int num_frames_to_read,
+            typename TargetSampleTypeTraits::ValueType* dest_buffer) const {
+        ToInterleavedPartial<TargetSampleTypeTraits>(0, num_frames_to_read, dest_buffer);
+    }
+
+    template<class TargetSampleTypeTraits>
+    void AudioBus::ToInterleavedPartial(
+            int read_offset_in_frames,
+            int num_frames_to_read,
+            typename TargetSampleTypeTraits::ValueType* dest_buffer) const {
+        CheckOverflow(read_offset_in_frames, num_frames_to_read, frames_);
+        CopyConvertFromInterleavedSourceToAudioBus<TargetSampleTypeTraits>(
+                this,
+                read_offset_in_frames,
+                num_frames_to_read,
+                dest_buffer);
+    }
+
+    // Consider using vector instrcutions to speed this up.
+    template<class SourceSampleTypeTraits>
+    void AudioBus::CopyConvertFromInterleavedSourceToAudioBus(
+            const typename SourceSampleTypeTraits::ValueType* source_buffer,
+            int write_offset_in_frames,
+            int num_frames_to_write,
+            AudioBus* dest) {
+        const int channels = dest->channels();
+        for (int ch = 0; ch < channels; ch++) {
+            float* channel_data = dest->channel(ch);
+            for (int target_frame_index = write_offset_in_frames,
+                         read_pos_in_source = ch;
+                 target_frame_index < write_offset_in_frames + num_frames_to_write;
+                 ++target_frame_index, read_pos_in_source += ch) {
+                auto source_value = source_buffer[read_pos_in_source];
+                channel_data[target_frame_index] = source_buffer[read_pos_in_source];
+                channel_data[target_frame_index] =
+                        SourceSampleTypeTraits::ToFloat(source_value);
+            }
+        }
+    }
+
+    template<class TargetSampleTypeTraits>
+    void AudioBus::CopyConvertFromAudioBusToInterleavedTarget(
+            const media::AudioBus* source,
+            int read_offset_in_frames,
+            int num_frames_to_read,
+            typename TargetSampleTypeTraits::ValueType* dest_buffer) {
+        const int channels = source->channels();
+        for (int ch = 0; ch < channels; ch++) {
+            const float* channel_data = source->channel(ch);
+            for (int source_frame_index = read_offset_in_frames,
+                         write_pos_in_dest = ch;
+                 source_frame_index < read_offset_in_frames + num_frames_to_read;
+                 ++source_frame_index, write_pos_in_dest += channels) {
+                float source_sample_value = channel_data[source_frame_index];
+                dest_buffer[write_pos_in_dest] =
+                        TargetSampleTypeTraits::FromFloat(source_sample_value);
+            }
+        }
     }
 }
 
