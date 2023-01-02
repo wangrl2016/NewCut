@@ -57,7 +57,7 @@ namespace base {
         // This specialization of |IsFilledIndex| is a micro-optimization that enables
         // us to do e.g. `CHECK(IsFilledIndex(n))` without calling |BufferIndex|
         // twice. Since |BufferIndex| involves a % operation, it's not quite free at a
-        // micro-scale.
+        // microscale.
         inline bool IsFilledIndexByBufferIndex(size_t buffer_index) const {
             return buffer_index < current_index_;
         }

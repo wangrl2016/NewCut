@@ -307,7 +307,7 @@ namespace media {
             for (int target_frame_index = write_offset_in_frames,
                          read_pos_in_source = ch;
                  target_frame_index < write_offset_in_frames + num_frames_to_write;
-                 ++target_frame_index, read_pos_in_source += ch) {
+                 ++target_frame_index, read_pos_in_source += channels) {
                 auto source_value = source_buffer[read_pos_in_source];
                 channel_data[target_frame_index] = source_buffer[read_pos_in_source];
                 channel_data[target_frame_index] =
