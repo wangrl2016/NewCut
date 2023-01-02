@@ -6,6 +6,7 @@
 #include "media/base/limits.h"
 #include "media/base/audio_parameters.h"
 #include "audio_sample_types.h"
+#include "vector_math.h"
 
 namespace media {
     static bool IsAligned(void* ptr) {
@@ -38,15 +39,6 @@ namespace media {
         CHECK_GT(frames, 0);
         CHECK_GT(channels, 0);
         CHECK_LE(channels, static_cast<int>(kMaxChannels));
-    }
-
-    void AudioBus::CheckOverflow(int start_frame, int frames, int total_frames) {
-        CHECK_GE(start_frame, 0);
-        CHECK_GE(frames, 0);
-        CHECK_GT(total_frames, 0);
-        int sum = start_frame + frames;
-        CHECK_LE(sum, total_frames);
-        CHECK_GE(sum, 0);
     }
 
     std::unique_ptr<AudioBus> AudioBus::Create(int channels, int frames) {
@@ -254,9 +246,88 @@ namespace media {
     void AudioBus::Scale(float volume) {
         DCHECK(!is_bitstream_format_);
         if (volume > 0 && volume != 1) {
-
+            for (int i = 0; i < channels(); i++) {
+                FMUL(channel(i), volume, frames(), channel(i));
+            }
         } else if (volume == 0) {
             Zero();
         }
+    }
+
+    void AudioBus::SwapChannels(int a, int b) {
+        DCHECK(!is_bitstream_format_);
+        DCHECK(a < channels() && a >= 0);
+        DCHECK(b < channels() && b >= 0);
+        DCHECK_NE(a, b);
+        std::swap(channel_data_[a], channel_data_[b]);
+    }
+
+    AudioBus::~AudioBus() {
+        if (wrapped_data_deleter_cb_) {
+            wrapped_data_deleter_cb_();
+        }
+    }
+
+    AudioBus::AudioBus(int channels, int frames)
+            : frames_(frames), is_wrapper_(false) {
+        ValidateConfig(channels, frames_);
+
+        int aligned_frames = 0;
+        int size = CalculateMemorySizeInternal(channels, frames, &aligned_frames);
+
+        data_.reset(static_cast<float*>(base::AlignedAlloc(
+                size, AudioBus::kChannelAlignment)));
+
+        BuildChannelData(channels, aligned_frames, data_.get());
+    }
+
+    AudioBus::AudioBus(int channels, int frames, float* data)
+            : frames_(frames), is_wrapper_(false) {
+        // Since |data| may have come from an external source, ensure it's valid.
+        CHECK(data);
+        ValidateConfig(channels, frames_);
+
+        int aligned_frames = 0;
+        CalculateMemorySizeInternal(channels, frames, &aligned_frames);
+
+        BuildChannelData(channels, aligned_frames, data);
+    }
+
+    AudioBus::AudioBus(int frames, const std::vector<float*>& channel_data)
+            : channel_data_(channel_data), frames_(frames), is_wrapper_(false) {
+        ValidateConfig(int(channel_data_.size()), frames_);
+
+        // Sanity check wrapped vector for alignment and channel count.
+        for (size_t i = 0; i < channel_data_.size(); i++) {
+            DCHECK(IsAligned(channel_data_[i]));
+        }
+    }
+
+    AudioBus::AudioBus(int channels)
+            : channel_data_(channels), frames_(0), is_wrapper_(true) {
+        CHECK_GT(channels, 0);
+        for (size_t i = 0; i < channel_data_.size(); i++) {
+            channel_data_[i] = nullptr;
+        }
+    }
+
+    void AudioBus::BuildChannelData(int channels, int aligned_frame, float* data) {
+        DCHECK(!is_bitstream_format_);
+        DCHECK(IsAligned(data));
+        DCHECK_EQ(channel_data_.size(), 0U);
+        // Initialize |channel_data_| with pointers into |data|.
+        channel_data_.reserve(channels);
+        for (int i = 0; i < channels; i++) {
+            channel_data_.push_back(data + i * aligned_frame);
+        }
+    }
+
+    void AudioBus::CheckOverflow(int start_frame, int frames, int total_frames) {
+        CHECK_GE(start_frame, 0);
+        CHECK_GE(frames, 0);
+        CHECK_GT(total_frames, 0);
+        int sum = start_frame + frames;
+        CHECK_LE(sum, total_frames);
+        CHECK_GE(sum, 0);
     }
 }
