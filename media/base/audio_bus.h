@@ -287,7 +287,7 @@ namespace media {
             int num_frames_to_read,
             typename TargetSampleTypeTraits::ValueType* dest_buffer) const {
         CheckOverflow(read_offset_in_frames, num_frames_to_read, frames_);
-        CopyConvertFromInterleavedSourceToAudioBus<TargetSampleTypeTraits>(
+        CopyConvertFromAudioBusToInterleavedTarget<TargetSampleTypeTraits>(
                 this,
                 read_offset_in_frames,
                 num_frames_to_read,

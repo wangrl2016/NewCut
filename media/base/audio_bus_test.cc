@@ -413,6 +413,23 @@ namespace media {
 
     // Verify ToInterleaved() interleaves audio in supported formats correctly.
     TEST_F(AudioBusTest, ToInterleaved) {
-
+        std::unique_ptr<AudioBus> bus =
+                AudioBus::Create(kTestVectorChannelCount, kTestVectorFrameCount);
+        // Fill the bus with our test vector.
+        for (int ch = 0; ch < bus->channels(); ch++) {
+            memcpy(bus->channel(ch), kTestVectorResult[ch],
+                   kTestVectorFrameCount * sizeof(*bus->channel(ch)));
+        }
+        {
+            SCOPED_TRACE("UnsignedInt8SampleTypeTraits");
+            uint8_t test_array[std::size(kTestVectorUint8)];
+            bus->ToInterleaved<UnsignedInt8SampleTypeTraits>(bus->frames(), test_array);
+            ASSERT_EQ(0, memcmp(test_array, kTestVectorUint8, sizeof(kTestVectorUint8)));
+        }
+        {
+            SCOPED_TRACE("SingedInt16SampleTypeTraits");
+            int16_t test_array[std::size(kTestVectorInt16)];
+            bus->ToInterleaved<SignedInt16SampleTypeTraits>(bus->frames(), test_array);
+        }
     }
 }
