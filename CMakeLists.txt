@@ -45,6 +45,8 @@ target_sources(MultiMediaLibrary
         media/base/limits.h
         media/base/sample_format.cc
         media/base/sample_format.h
+        media/base/test_data_util.cc
+        media/base/test_data_util.h
         media/base/vector_math.cc
         media/base/vector_math.h
         media/ffmpeg/ffmpeg_common.cc
