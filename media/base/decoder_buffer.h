@@ -18,13 +18,13 @@ namespace media {
     public:
 
         struct TimeInfo {
-            TimeInfo();
+            TimeInfo() = default;
 
-            ~TimeInfo();
+            ~TimeInfo() = default;
 
-            TimeInfo(const TimeInfo&);
+            TimeInfo(const TimeInfo&) = default;
 
-            TimeInfo& operator=(const TimeInfo&);
+            TimeInfo& operator=(const TimeInfo&) = default;
 
             // Presentation time of the frame.
             int64_t timestamp;
@@ -40,14 +40,24 @@ namespace media {
 
         DecoderBuffer& operator=(const DecoderBuffer&) = delete;
 
+        const uint8_t* data() const {
+            DCHECK(!end_of_stream());
+            return data_.get();
+        }
+
         uint8_t* writable_data() const {
             DCHECK(!end_of_stream());
             return data_.get();
         }
 
+        size_t data_size() const {
+            DCHECK(!end_of_stream());
+            return size_;
+        }
+
         // If there's no data in this buffer, it represents end of stream.
         bool end_of_stream() const {
-
+            return !data_;
         }
 
     protected:

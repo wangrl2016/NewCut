@@ -1,3 +1,6 @@
+# 测试文件
+resources/test/
+
 .DS_Store
 
 CMakeLists.txt.user

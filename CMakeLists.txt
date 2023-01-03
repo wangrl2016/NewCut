@@ -14,6 +14,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup(KEEP_RPATHS)
 
+configure_file(newcut/newcut_config.h.in newcut_config.h)
+
 ### Build MultiMediaLibrary library
 
 add_library(MultiMediaLibrary STATIC)
@@ -67,7 +69,6 @@ target_link_libraries(MultiMediaLibrary
         )
 
 ### Build NewCut executable
-configure_file(newcut/newcut_config.h.in newcut_config.h)
 
 set(QT_LIBS
         concurrent
@@ -137,9 +138,6 @@ qt_add_executable(NewCut
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         )
-
-target_include_directories(NewCut PUBLIC
-        "${PROJECT_BINARY_DIR}")
 
 target_link_libraries(NewCut PRIVATE
         ${CONAN_LIBS}
