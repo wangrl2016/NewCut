@@ -29,6 +29,10 @@ target_sources(MultiMediaLibrary
         base/memory/ref_counted.cc
         base/memory/ref_counted.h
         base/misc/bits.h
+        base/strings/string_piece.cc
+        base/strings/string_piece.h
+        base/strings/string_util.cc
+        base/strings/string_util.h
         base/time/time.cc
         base/time/time.h
         media/base/audio_buffer.cc
@@ -202,6 +206,7 @@ enable_testing()
 
 qt_add_executable(NewCutTest
         MANUAL_FINALIZATION
+        base/files/file_path_test.cc
         media/base/audio_bus_test.cc
         media/base/audio_sample_types_test.cc
         media/base/container_names_test.cc

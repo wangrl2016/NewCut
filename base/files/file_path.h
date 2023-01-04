@@ -54,11 +54,52 @@
 // between char[]-based path-names on POSIX systems and wchar_t[]-based
 // path-names on Windows.
 //
-// As a precaution against premature
+// As a precaution against premature truncation, paths can't contain NULs.
+//
+// Because a FilePath object should not be instantiated at the global scope,
+// instead, use a FilePath::CharType[] and initialize it with
+// FILE_PATH_LITERAL. At runtime, a FilePath object can be created from the
+// character array. Example:
+//
+// const FilePath::CharType kLogFileName[ = = FILE_PATH_LITERAL("log.txt");
+//
+// void Function() {
+//     FilePath log_file_path(kLogFileName);
+//     [...]
+// }
+//
+// WARNING: FilePath should ALWAYS de display with LTR direcionality, even
+// when the UI language is RTL. This means you always need to pass filepath
+// through WrapPathWithLTRFormatting() before displaying it in the
+// TRL UI.
+//
+// This is a very common source of bugs, please try to keep this in mind.
+//
+// ARCANE BITS OF PATH TRIVIA
+//
+// - A double leading slash ia actually part of the POSIX standard. Systems
+//   are allowed to treat // as alternate root, as Windows does for UNC
+//   (Universal Naming Conversion, \\servername\share-name\directory\filename)
+//   paths. Most POSIX systems don't do anything
+//   special with two leading slashes, but FilePath handles this case properly
+//   in case it ever comes across such a system. FilePath needs this support
+//   for Windows UNC paths, anyway.
+//
+// - Windows treats c:\\ the same way it treats \\. This was intended to
+//   allow older applications that require drive letters to support UNC paths
+//   like \\server\share\path, by permitting c:\\server\share\path as an
+//   equivalent. Since the OS treats these paths specially, FilePath needs
+//   to de the same. Since windows can use either / or \ as the separator,
+//   FilePath treats C://, C:\\, //, and \\ all equivalently.
+
 
 #include <cstddef>
 #include <string>
 
+// Window-style drive letter support and pathname separator characters can be
+// enabled and disabled independently, to aid testing. These #defines are
+// here so that the same setting can be used in both implementation and
+// in the unit test.
 #if defined(_WIN32)
 #define FILE_PATH_USES_DRIVE_LETTERS
 #define FILE_PATH_USES_WIN_SEPARATORS
@@ -75,18 +116,21 @@
 namespace base {
     class FilePath {
     public:
-#if defined(_WIN32)     // Defined for applications for Win32 and Win64. Always defined.
+#if defined(_WIN32)
+        // Defined for applications for Win32 and Win64. Always defined.
         // On Windows, for Unicode-aware applications, native pathnames are wchar_t
         // arrays encoded in UTF-16.
         typedef std::wstring StringType;
 #else
         // On most platforms, native path-names are char arrays, and the encoding
-        // may or may not be specified. On Mac OS X, native pathnames are encoded
+        // may or may not be specified. On Mac OS X, native path-names are encoded
         // in UTF-8.
         typedef std::string StringType;
 #endif
 
         typedef StringType::value_type CharType;
+
+        typedef std::basic_string_view<CharType> StringPieceType;
 
         static constexpr CharType kSeparators[] =
 #if defined(FILE_PATH_USES_WIN_SEPARATORS)
@@ -111,10 +155,52 @@ namespace base {
 
         FilePath(const FilePath& that);
 
+        explicit FilePath(StringPieceType path);
+
         FilePath& operator=(const FilePath& that);
 
         ~FilePath();
 
+        // Constructs FilePath with the contents of |that|, which is left in valid but
+        // unspecified state.
+        FilePath(FilePath&& that) noexcept;
+
+        // Replaces the contents with those of |that|, which is left in valid but
+        // unspecified state.
+        FilePath& operator=(FilePath&& that) noexcept;
+
+        bool operator==(const FilePath& that) const;
+
+        bool operator!=(const FilePath& that) const;
+
+        bool operator<(const FilePath& that) const {
+            return path_ < that.path_;
+        }
+
+        const StringType& value() const { return path_; }
+
+        bool empty() const { return path_.empty(); }
+
+        void clear() { path_.clear(); }
+
+        // Return true if |character| is in kSeparators.
+        static bool IsSeparator(CharType character);
+
+        // Return a vector of all the components of the provided path. It is
+        // equivalent to calling DirName().value() on the path's root component,
+        // and BaseName().value on each child component.
+        //
+        // To make sure this is lossless, so we can differentiate absolute and
+        // relative paths, the root slash will be included even though no other
+        // slashes will be. The precise behavior is:
+        //
+        // Posix: "/foo/bar" -> ["/", "foo", "bar"]
+        // Windows: "C:\foo\bar" -> ["C:", "\\", "foo", "bar"]
+        std::vector<FilePath::StringType> GetComponents() const;
+
+        bool IsParent(const FilePath& child) const;
+
+        [[nodiscard]] FilePath DirName() const;
     private:
         StringType path_;
     };

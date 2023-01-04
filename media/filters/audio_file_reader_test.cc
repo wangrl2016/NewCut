@@ -29,8 +29,8 @@ namespace media {
             reader_ = std::make_unique<AudioFileReader>(protocol_.get());
         }
 
-        // Reads and the entire file provided to Initalize().
-        void ReadAndVerify(const char* expected_ausio_hash, int expected_frames) {
+        // Reads and the entire file provided to Initialize().
+        void ReadAndVerify(const char* expected_audio_hash, int expected_frames) {
             std::vector<std::unique_ptr<AudioBus>> decoded_audio_packets;
             int actual_frames = reader_->Read(&decoded_audio_packets);
             std::unique_ptr<AudioBus> decoded_audio_data =
