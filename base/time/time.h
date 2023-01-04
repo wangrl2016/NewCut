@@ -17,7 +17,7 @@ namespace base {
         static constexpr int64_t kSecondPerHour =
                 kSecondsPerMinute * kMinutesPerHour;
         static constexpr int64_t kMillsecondsPerSecond = 1000;
-        static constexpr int64_t kMillsecondPerDay =
+        static constexpr int64_t kMillsecondsPerDay =
                 kMillsecondsPerSecond * kSecondPerHour * kHoursPerDay;
         static constexpr int64_t kMicrosecondPerMillisecond = 1000;
         static constexpr int64_t kMicrosecondPerSecond =

@@ -48,7 +48,7 @@ namespace media {
             case AV_CODEC_ID_MPEGH_3D_AUDIO:
                 return AudioCodec::kMpegHAudio;
             default:
-                DVLOG(google::WARNING) << "Unknown audio CodecID: " << codec_id;
+                LOG(WARNING) << "Unknown audio CodecID: " << codec_id;
         }
         return AudioCodec::kUnknown;
     }

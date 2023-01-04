@@ -219,7 +219,7 @@ namespace media {
             if (pkt_duration < frame_duration && pkt_duration > 0) {
                 const int new_frames_read =
                         int(frames_read * (pkt_duration / frame_duration));
-                DVLOG(google::WARNING) << "Shrinking AAC frame from " << frames_read << " to "
+                LOG(WARNING) << "Shrinking AAC frame from " << frames_read << " to "
                         << new_frames_read << " based on packet duration.";
                 frames_read = new_frames_read;
             }

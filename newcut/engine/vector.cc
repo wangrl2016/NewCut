@@ -44,5 +44,6 @@ namespace nc {
     }
 
     double Vector::Angle() const {
+        return 0.0;
     }
 }
