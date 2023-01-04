@@ -22,6 +22,8 @@ add_library(MultiMediaLibrary STATIC)
 target_sources(MultiMediaLibrary
         PRIVATE
         base/containers/ring_buffer.h
+        base/files/file_path.cc
+        base/files/file_path.h
         base/memory/aligned_memory.cc
         base/memory/aligned_memory.h
         base/memory/ref_counted.cc
