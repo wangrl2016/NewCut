@@ -11,5 +11,93 @@ namespace nc {
         LOG(INFO) << __FUNCTION__ << " OK";
     }
 
+    void ActionHandler::SlotFileNewTemplate() {
+
+    }
+
+    void ActionHandler::SlotFileOpen() {
+
+    }
+
+    void ActionHandler::SlotFileSaveAs() {
+
+    }
+
+    void ActionHandler::SlotFileExportMakerCam() {
+
+    }
+
+    void ActionHandler::SlotZoomIn() {
+
+    }
+
+    void ActionHandler::SlotZoomOut() {
+
+    }
+
+    void ActionHandler::SlotZoomAuto() {
+
+    }
+
+    void ActionHandler::SlotZoomWindow() {
+
+    }
+
+    void ActionHandler::SlotZoomPan() {
+
+    }
+
+    void ActionHandler::SlotZoomPrevious() {
+
+    }
+
+    void ActionHandler::SlotZoomReDraw() {
+
+    }
+
+    void ActionHandler::SlotTooRegenerateDimensions() {
+
+    }
+
+    void ActionHandler::SlotEditKillAllActions() {
+
+    }
+
+    void ActionHandler::SlotEditUndo() {
+
+    }
+
+    void ActionHandler::SlotEditRedo() {
+
+    }
+
+    void ActionHandler::SlotEditCut() {
+
+    }
+
+    void ActionHandler::SlotEditCopy() {
+
+    }
+
+    void ActionHandler::SlotEditPaste() {
+
+    }
+
+    void ActionHandler::SlotOrderBottom() {
+
+    }
+
+    void ActionHandler::SlotOrderLower() {
+
+    }
+
+    void ActionHandler::SlotOrderRaise() {
+
+    }
+
+    void ActionHandler::SlotOrderTop() {
+
+    }
+
 
 }

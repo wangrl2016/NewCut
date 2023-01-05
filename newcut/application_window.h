@@ -28,6 +28,9 @@ namespace nc {
     public slots:
         void ShowAboutWindow();     // about dialog
 
+
+        void SlotFileOpen();
+
     private:
         // Pointer to the application window.
         static ApplicationWindow* app_window_;
@@ -35,6 +38,10 @@ namespace nc {
 
         ActionHandler* action_handler_ = nullptr;
     };
+
+#if defined(_WIN32)
+    extern int qt_ntfs_permission_lookup;
+#endif
 }
 
 

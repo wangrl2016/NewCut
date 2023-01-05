@@ -8,7 +8,6 @@
 #include <QObject>
 #include "newcut/actions/action_interface.h"
 
-
 namespace nc {
     // This class can trigger actions (from menus, buttons, ...)
     class ActionHandler : public QObject {
@@ -29,6 +28,52 @@ namespace nc {
         void KillAllActions();
 
         bool KeyCode(const QString& code);
+
+    public slots:
+        void SlotFileNewTemplate();
+
+        void SlotFileOpen();
+
+        void SlotFileSaveAs();
+
+        void SlotFileExportMakerCam();
+
+        void SlotZoomIn();
+
+        void SlotZoomOut();
+
+        void SlotZoomAuto();
+
+        void SlotZoomWindow();
+
+        void SlotZoomPan();
+
+        void SlotZoomPrevious();
+
+        void SlotZoomReDraw();
+
+        void SlotTooRegenerateDimensions();
+
+        void SlotEditKillAllActions();
+
+        void SlotEditUndo();
+
+        void SlotEditRedo();
+
+        void SlotEditCut();
+
+        void SlotEditCopy();
+
+        void SlotEditPaste();
+
+        void SlotOrderBottom();
+
+        void SlotOrderLower();
+
+        void SlotOrderRaise();
+
+        void SlotOrderTop();
+
 
     private:
         EnumCollect::ActionType order_type_;

@@ -16,6 +16,10 @@
 #include "newcut/gui/widget_factory.h"
 #include "newcut/gui/action_factory.h"
 
+#ifndef APP_ICON
+#define APP_ICON    ":/images/newcut/app_icon.png"
+#endif
+
 namespace nc {
     ApplicationWindow* ApplicationWindow::app_window_ = nullptr;
 
@@ -24,6 +28,10 @@ namespace nc {
               auto_save_timer_(nullptr),
               action_handler_(new ActionHandler(this)) {
         LOG(INFO) << __FUNCTION__;
+
+#if defined(_WIN32)
+        qt_ntfs_persmission_lookup++;       // turn checking on
+#endif
 
         // accept drop events to open files
         setAcceptDrops(true);
@@ -39,6 +47,7 @@ namespace nc {
         QSettings settings;
 
         LOG(INFO) << __FUNCTION__ << " setting icon";
+        setWindowIcon(QIcon(APP_ICON));
 
         // QStatusBar* status_bar = statusBar();
 
@@ -91,5 +100,9 @@ namespace nc {
         f_layout->addWidget(app_info);
 
         dialog.exec();
+    }
+
+    void ApplicationWindow::SlotFileOpen() {
+
     }
 }

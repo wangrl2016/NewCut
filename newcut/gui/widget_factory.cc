@@ -36,17 +36,28 @@ namespace nc {
         file_menu_->addAction(action_map_["FileSaveAll"]);
         file_menu_->addSeparator();
 
+        auto edit_menu = new QMenu(ApplicationWindow::tr("&Edit"), menu_bar);
+        edit_menu->setObjectName("Edit");
+        edit_menu->setTearOffEnabled(true);
+        edit_menu->addAction(action_map_["EditKillAllActions"]);
+        edit_menu->addSeparator();
+        edit_menu->addAction(action_map_["EditUndo"]);
+        edit_menu->addAction(action_map_["EditRedo"]);
+        edit_menu->addSeparator();
+        edit_menu->addAction(action_map_["EditCut"]);
+
         QMenu* help_menu = new QMenu(ApplicationWindow::tr("&Help"), menu_bar);
         help_menu->setObjectName("Help");
         help_menu->setTearOffEnabled(true);
 
-        QAction* help_about = new QAction(ApplicationWindow::tr("Abount"), application_window_);
+        QAction* help_about = new QAction(ApplicationWindow::tr("About"), application_window_);
         connect(help_about, SIGNAL(triggered()),
                 application_window_, SLOT(ShowAboutWindow()));
         help_menu->addAction(help_about);
 
 
         menu_bar->addMenu(file_menu_);
+        menu_bar->addMenu(edit_menu);
         menu_bar->addMenu(help_menu);
     }
 }
