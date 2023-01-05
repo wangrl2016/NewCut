@@ -19,14 +19,25 @@ namespace base {
     };
 
     TEST_F(FilePathTest, DirName) {
-//        const struct UnaryTestData cases[] = {
-//                {FPL(""), FPL(".")},
-//        };
-//        for (size_t i = 0; i < std::size(cases); i++) {
-//            FilePath input(cases[i].input);
-//            FilePath observed = input.DirName();
-//            EXPECT_EQ(FilePath::StringType(cases[i].expected),
-//                      observed.value()) << "i: " << i << ", input " << input.value();
-//        }
+        const struct UnaryTestData cases[] = {
+                {FPL(""), FPL(".")},
+                {FPL("aa"), FPL(".")},
+                {FPL("/aa/bb"), FPL("/aa")},
+                {FPL("/aa/bb/"), FPL("/aa")},
+                {FPL("/aa/bb//"), FPL("/aa")},
+                {FPL("/aa/bb/ccc"), FPL("/aa/bb")},
+                {FPL("/aa"), FPL("/")},
+                {FPL("/aa/"), FPL("/")},
+                {FPL("/"), FPL("/")},
+                {FPL("//"), FPL("//")},
+                {FPL("///"), FPL("/")},
+                {FPL("aa/"), FPL(".")},
+        };
+        for (size_t i = 0; i < std::size(cases); i++) {
+            FilePath input(cases[i].input);
+            FilePath observed = input.DirName();
+            EXPECT_EQ(FilePath::StringType(cases[i].expected),
+                      observed.value()) << "i: " << i << ", input " << input.value();
+        }
     }
 }

@@ -70,11 +70,68 @@ namespace base {
 #endif
     }
 
+    bool FilePath::IsSeparator(char character) {
+        for (size_t i = 0; i < kSeparatorsLength - 1; i++) {
+            if (character == kSeparators[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     FilePath FilePath::DirName() const {
         FilePath new_path(path_);
+        new_path.StripTrailingSeparatorsInternal();
 
+        // The drive letter, if any always needs to remain in the output. If there
+        // is no drive letter, as will always be the case on platform which do not
+        // support drive letters, letter will be npos, or -1, so comparisons and
+        // resizes below using letter will still be valid.
+        StringType::size_type letter = FindDriveLetter(new_path.path_);
+        StringType::size_type last_separator =
+                new_path.path_.find_last_of(kSeparators, StringType::npos,
+                                            kSeparatorsLength - 1);
+        if (last_separator == StringType::npos) {
+            // path_ is the current directory.
+            new_path.path_.resize(letter + 1);
+        } else if (last_separator == letter + 1) {
+            // path_ is in the root directory.
+            new_path.path_.resize(letter + 2);
+        } else if (last_separator == letter + 2 &&
+                IsSeparator(new_path.path_[letter + 1])) {
+            // path_ is in "//" (possibly with a drive letter); leave the double
+            // separator intact indicating alternate root.
+            new_path.path_.resize(letter + 3);
+        } else if (last_separator != 0) {
+            // path_ is somewhere else, trim the basename.
+            new_path.path_.resize(last_separator);
+        }
 
+        new_path.StripTrailingSeparatorsInternal();
+        if (!new_path.path_.length()) {
+            new_path.path_ = kCurrentDirectory;
+        }
         return new_path;
     }
 
+    void FilePath::StripTrailingSeparatorsInternal() {
+        // If there is no drive letter, start will be 1, which will prevent stripping
+        // the leading separator if there is only one separator. If there is a drive
+        // letter, start will be set appropriately to prevent stripping the first
+        // separator following the drive letter, if a separator immediately follows
+        // the drive letter.
+        StringType::size_type start = FindDriveLetter(path_) + 2;
+
+        StringType::size_type last_stripped = StringType::npos;
+        for (StringType::size_type pos = path_.length();
+             pos > start && IsSeparator(path_[pos - 1]); pos--) {
+            // If the string only has two separators, and they are at the beginning,
+            // don't strip them, unless the string began with more than two separators.
+            if (pos != start + 1 || last_stripped == start + 2 ||
+                !IsSeparator(path_[start - 1])) {
+                path_.resize(pos - 1);
+                last_stripped = pos;
+            }
+        }
+    }
 }

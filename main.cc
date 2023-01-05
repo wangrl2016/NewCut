@@ -8,7 +8,7 @@
 #include <QScreen>
 #include <QSettings>
 
-#include "newcut_config.h"
+#include "build_config.h"
 #include "newcut/application_window.h"
 
 int main(int argc, char* argv[]) {

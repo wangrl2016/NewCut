@@ -96,6 +96,8 @@
 #include <cstddef>
 #include <string>
 
+#include "base/strings/string_piece.h"
+
 // Window-style drive letter support and pathname separator characters can be
 // enabled and disabled independently, to aid testing. These #defines are
 // here so that the same setting can be used in both implementation and
@@ -179,7 +181,7 @@ namespace base {
 
         const StringType& value() const { return path_; }
 
-        bool empty() const { return path_.empty(); }
+        [[nodiscard]] bool empty() const { return path_.empty(); }
 
         void clear() { path_.clear(); }
 
@@ -198,10 +200,82 @@ namespace base {
         // Windows: "C:\foo\bar" -> ["C:", "\\", "foo", "bar"]
         std::vector<FilePath::StringType> GetComponents() const;
 
-        bool IsParent(const FilePath& child) const;
+        // Returns true if this FilePath is a parent or ancestor of the |child|.
+        // Absolute and relative paths are accepted i.e. /foo is a parent to /foo/bar,
+        // and foo is a parent to foo/bar. Any ancestor is considered a parent i.e. /a
+        // is a parent to both /a/b/ and /a/b/c. Does not convert paths to absolute,
+        // follow symlinks or directory navigation (e.g. ".."). A path is *NOT* its
+        // own parent.
+        // If IsParent(child) holds, appends to path (if   non-NULL) the
+        // relative path to child and returns true. For example, if parent
+        // holds "/Users/john/Library/Application Support", child holds
+        // "/Users/john/Library/Application Support/Google/Chrome/Default", and
+        // *path holds "/Users/john/Library/Caches", then after
+        // parent.AppendRelativePath(child, path) is called *path will hold
+        // "/Users/john/Library/Caches/Google/Chrome/Default". Otherwise,
+        // return false.
+        bool AppendRelativePath(const FilePath& child, FilePath* path) const;
 
+        // Returns a FilePath corresponding to the directory containing the path
+        // named by this object, stripping away the file component. If this object
+        // only contains one component, return a FilePath identifying
+        // kCurrentDirectory. If this object already refers to the root directory,
+        // returns a FilePath identifying the root directory. Please note that this
+        // doesn't resolve directory navigation, e.g. the result for "../a" is "..".
         [[nodiscard]] FilePath DirName() const;
+
+        // Returns a FilePath corresponding to the last path component of this
+        // object, either a file or a directory. If this object already refers to
+        // the root directory, returns a FilePath identifying the root directory;
+        // this is the only situation in which BaseName will return an absolute path.
+        FilePath BaseName() const;
+
+        [[nodiscard]] StringType Extension() const;
+
+        StringType FinalExtension() const;
+
+        FilePath RemoveExtension() const;
+
+        FilePath RemoveFinalExtension() const;
+
+        FilePath InsertBeforeExtension(StringPieceType suffix) const;
+
+        FilePath InsertBeforeExtensionASCII(StringPiece suffix) const;
+
+        FilePath AddExtension(StringPieceType extension) const;
+
+        FilePath AddExtensionASCII(StringPiece extension) const;
+
+        FilePath ReplaceExtension(StringPieceType extension) const;
+
+        bool MatchesExtension(StringPieceType extension) const;
+
+        FilePath Append(StringPieceType component) const;
+
+        FilePath Append(const FilePath& component) const;
+
+        FilePath AppendASCII(StringPiece component) const;
+
+        bool IsAbsolute() const;
+
+        bool IsNetwork() const;
+
+        bool EndsWithSeparator() const;
+
+        FilePath StripTrailingSeparators() const;
+
+        bool ReferencesParent() const;
+
+        std::string MaybeAsASCII() const;
+
     private:
+        // Remove trailing separators from this object. If the path is absolute, it
+        // will never be stripped any more than to refer to the absolute root
+        // directory, so "////" will become "/", not "", A leading pair of
+        // separators is never stripped, to support alternate roots. This is used to
+        // support UNC paths on Windows.
+        void StripTrailingSeparatorsInternal();
+
         StringType path_;
     };
 }

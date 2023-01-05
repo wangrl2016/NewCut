@@ -7,7 +7,6 @@
 
 #include <cstdint>
 #include <glog/logging.h>
-#include "newcut_config.h"
 
 namespace base {
     enum StartRefCountFromZeroTag {
