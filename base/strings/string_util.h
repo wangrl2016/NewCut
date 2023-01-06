@@ -6,6 +6,7 @@
 #define NEWCUT_STRING_UTIL_H
 
 #include "base/strings/string_piece.h"
+#include "config/build_config.h"
 
 namespace base {
     enum class CompareCase {
@@ -49,8 +50,9 @@ namespace base {
 
     bool IsStringASCII(StringPiece16 str);
 
-
+#if defined(WCHAR_T_IS_UTF32)
     bool IsStringASCII(WStringPiece str);
+#endif
 
     bool StartsWith(
             StringPiece str,

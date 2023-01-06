@@ -211,6 +211,8 @@ enable_testing()
 qt_add_executable(NewCutTest
         MANUAL_FINALIZATION
         base/files/file_path_test.cc
+        base/strings/string_util_test.cc
+        base/strings/utf_string_conversions_test.cc
         media/base/audio_bus_test.cc
         media/base/audio_sample_types_test.cc
         media/base/container_names_test.cc
