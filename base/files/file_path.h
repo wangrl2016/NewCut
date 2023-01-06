@@ -95,6 +95,7 @@
 
 #include <cstddef>
 #include <string>
+#include <string_view>
 
 #include "base/strings/string_piece.h"
 

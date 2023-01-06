@@ -8,8 +8,6 @@
 #include "base/strings/string_piece.h"
 
 namespace base {
-
-
     enum class CompareCase {
         kSensitive,
         kInsensitiveASCII
@@ -56,6 +54,10 @@ namespace base {
             StringPiece16 str,
             StringPiece16 search_for,
             CompareCase case_sensitivity = CompareCase::kSensitive);
+
+    bool StartsWith(WStringPiece str,
+                    WStringPiece search_for,
+                    CompareCase case_sensitivity = CompareCase::kSensitive);
 }
 
 

@@ -38,10 +38,6 @@ namespace nc {
 
         ActionHandler* action_handler_ = nullptr;
     };
-
-#if defined(_WIN32)
-    extern int qt_ntfs_permission_lookup;
-#endif
 }
 
 

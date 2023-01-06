@@ -29,19 +29,19 @@ namespace base {
         size_t a_letter_pos = FindDriveLetter(a);
         size_t b_letter_pos = FindDriveLetter(b);
 
-        if (a_letter_pos = FilePath::StringType::npos ||
+        if (a_letter_pos == FilePath::StringType::npos ||
                 b_letter_pos == FilePath::StringType::npos) {
             return a == b;
         }
 
-        StringPieceType a_letter(a.substr(0, a_letter_pos + 1));
-        StringPieceType b_letter(b.substr(0, b_letter_pos + 1));
-        if (!StartWith(a_letter, b_letter, CompareCase::kInsensitiveASICC)) {
+        FilePath::StringPieceType a_letter(a.substr(0, a_letter_pos + 1));
+        FilePath::StringPieceType b_letter(b.substr(0, b_letter_pos + 1));
+        if (!StartsWith(a_letter, b_letter, CompareCase::kInsensitiveASCII)) {
             return false;
         }
 
-        StringPieceType a_rest(a.substr(a_letter_pos + 1));
-        StringPieceType b_rest(b.substr(b_letter_pos + 1));
+        FilePath::StringPieceType a_rest(a.substr(a_letter_pos + 1));
+        FilePath::StringPieceType b_rest(b.substr(b_letter_pos + 1));
         return a_rest == b_rest;
     }
 #endif
@@ -69,7 +69,7 @@ namespace base {
 
     bool FilePath::operator==(const FilePath& that) const {
 #if defined(FILE_PATH_USES_DRIVE_LETTERS)
-        return EqualDriveLetterCaseInsensitive(this->path_, that->path_);
+        return EqualDriveLetterCaseInsensitive(this->path_, that.path_);
 #else
         return path_ == that.path_;
 #endif
@@ -77,13 +77,13 @@ namespace base {
 
     bool FilePath::operator!=(const FilePath& that) const {
 #if defined(FILE_PATH_USES_DRIVE_LETTERS)
-        return !EqualDriveLetterCaseInsentitive(this->path_, that_path_);
+        return !EqualDriveLetterCaseInsensitive(this->path_, that.path_);
 #else
         return path_ != that.path_;
 #endif
     }
 
-    bool FilePath::IsSeparator(char character) {
+    bool FilePath::IsSeparator(CharType character) {
         for (size_t i = 0; i < kSeparatorsLength - 1; i++) {
             if (character == kSeparators[i]) {
                 return true;
@@ -94,19 +94,19 @@ namespace base {
 
     std::vector<FilePath::StringType> FilePath::GetComponents() const {
         std::vector<StringType> ret_val;
-        if (value().empty()) {
-            return ret_val;
-        }
-
-        FilePath current = *this;
-        FilePath base;
-
-        // Capture path components.
-        while (current != current.DirName()) {
-            base = current.BaseName();
-
-            current = current.DirName();
-        }
+//        if (value().empty()) {
+//            return ret_val;
+//        }
+//
+//        FilePath current = *this;
+//        FilePath base;
+//
+//        // Capture path components.
+//        while (current != current.DirName()) {
+//            base = current.BaseName();
+//
+//            current = current.DirName();
+//        }
         return ret_val;
     }
 

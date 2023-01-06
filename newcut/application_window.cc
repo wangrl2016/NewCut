@@ -29,10 +29,6 @@ namespace nc {
               action_handler_(new ActionHandler(this)) {
         LOG(INFO) << __FUNCTION__;
 
-#if defined(_WIN32)
-        qt_ntfs_persmission_lookup++;       // turn checking on
-#endif
-
         // accept drop events to open files
         setAcceptDrops(true);
 

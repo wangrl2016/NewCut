@@ -10,4 +10,16 @@ namespace base {
                     CompareCase case_sensitivity) {
         return StartsWithT(str, search_for, case_sensitivity);
     }
+
+    bool StartsWith(StringPiece16 str,
+                    StringPiece16 search_str,
+                    CompareCase case_sensitivity) {
+        return StartsWithT(str, search_str, case_sensitivity);
+    }
+
+    bool StartsWith(WStringPiece str,
+                    WStringPiece search_for,
+                    CompareCase case_sensitivity) {
+        return StartsWithT(str, search_for, case_sensitivity);
+    }
 }
