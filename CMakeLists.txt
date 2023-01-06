@@ -67,6 +67,7 @@ target_sources(MultiMediaLibrary
         media/filters/ffmpeg_glue.h
         media/filters/memory_url_protocol.cc
         media/filters/memory_url_protocol.h
+        third_party/icu/icu_utf.h
         )
 
 target_link_libraries(MultiMediaLibrary
