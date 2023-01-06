@@ -6,7 +6,7 @@
 #include <fstream>
 #include <glog/logging.h>
 #include "media/base/test_data_util.h"
-#include "build_config.h"
+#include "user_config.h"
 
 namespace media {
     std::shared_ptr<DecoderBuffer> ReadTestDataFile(

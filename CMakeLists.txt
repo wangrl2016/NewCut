@@ -14,7 +14,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup(KEEP_RPATHS)
 
-configure_file(newcut/build_config.h.in build_config.h)
+configure_file(config/user_config.h.in user_config.h)
 
 ### Build MultiMediaLibrary library
 
@@ -37,6 +37,7 @@ target_sources(MultiMediaLibrary
         base/strings/utf_string_conversions.h
         base/time/time.cc
         base/time/time.h
+        config/build_config.h
         media/base/audio_buffer.cc
         media/base/audio_buffer.h
         media/base/audio_bus.cc

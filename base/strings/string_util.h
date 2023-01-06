@@ -45,6 +45,13 @@ namespace base {
         }
     }
 
+    bool IsStringASCII(StringPiece str);
+
+    bool IsStringASCII(StringPiece16 str);
+
+
+    bool IsStringASCII(WStringPiece str);
+
     bool StartsWith(
             StringPiece str,
             StringPiece search_fr,

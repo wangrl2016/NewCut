@@ -9,7 +9,7 @@
 #include <QGroupBox>
 #include <QApplication>
 #include <QLabel>
-#include "build_config.h"
+#include "user_config.h"
 #include "newcut/application_window.h"
 #include "newcut/gui/action_handler.h"
 #include "newcut/gui/action_group_manager.h"
