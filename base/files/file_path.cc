@@ -2,6 +2,7 @@
 // Created by wangrl2016 on 2023/1/4.
 //
 
+#include <vector>
 #include "base/strings/string_util.h"
 #include "base/files/file_path.h"
 
@@ -58,6 +59,10 @@ namespace base {
 
     FilePath::~FilePath() = default;
 
+    FilePath::FilePath(FilePath&& that) noexcept {
+
+    }
+
     FilePath& FilePath::operator=(const FilePath& that) = default;
 
     FilePath& FilePath::operator=(FilePath&& that) noexcept = default;
@@ -70,6 +75,14 @@ namespace base {
 #endif
     }
 
+    bool FilePath::operator!=(const FilePath& that) const {
+#if defined(FILE_PATH_USES_DRIVE_LETTERS)
+        return !EqualDriveLetterCaseInsentitive(this->path_, that_path_);
+#else
+        return path_ != that.path_;
+#endif
+    }
+
     bool FilePath::IsSeparator(char character) {
         for (size_t i = 0; i < kSeparatorsLength - 1; i++) {
             if (character == kSeparators[i]) {
@@ -77,6 +90,24 @@ namespace base {
             }
         }
         return false;
+    }
+
+    std::vector<FilePath::StringType> FilePath::GetComponents() const {
+        std::vector<StringType> ret_val;
+        if (value().empty()) {
+            return ret_val;
+        }
+
+        FilePath current = *this;
+        FilePath base;
+
+        // Capture path components.
+        while (current != current.DirName()) {
+            base = current.BaseName();
+
+            current = current.DirName();
+        }
+        return ret_val;
     }
 
     FilePath FilePath::DirName() const {

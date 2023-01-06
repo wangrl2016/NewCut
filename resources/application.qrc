@@ -16,8 +16,4 @@
         <file>images/diagram/background3.png</file>
         <file>images/diagram/background4.png</file>
     </qresource>
-
-    <qresource>
-        <file>images/newcut/app_icon.png</file>
-    </qresource>
 </RCC>

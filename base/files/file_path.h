@@ -179,7 +179,7 @@ namespace base {
             return path_ < that.path_;
         }
 
-        const StringType& value() const { return path_; }
+        [[nodiscard]] const StringType& value() const { return path_; }
 
         [[nodiscard]] bool empty() const { return path_.empty(); }
 
@@ -198,7 +198,7 @@ namespace base {
         //
         // Posix: "/foo/bar" -> ["/", "foo", "bar"]
         // Windows: "C:\foo\bar" -> ["C:", "\\", "foo", "bar"]
-        std::vector<FilePath::StringType> GetComponents() const;
+        [[maybe_unused]] std::vector<FilePath::StringType> GetComponents() const;
 
         // Returns true if this FilePath is a parent or ancestor of the |child|.
         // Absolute and relative paths are accepted i.e. /foo is a parent to /foo/bar,
