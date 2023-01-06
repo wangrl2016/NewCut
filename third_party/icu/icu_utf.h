@@ -47,6 +47,43 @@ namespace icu {
      */
     typedef int32_t UChar32;
 
+    /**
+     * This value is intended for sentinel values for APIs that
+     * (take or) return single code points (UChar32).
+     * It is outside of the Unicode code point range 0..0x10ffff.
+     *
+     * For example, a "done" or "error" value in a new API
+     * could be indicated with U_SENTINEL.
+     *
+     * ICU APIs designed before ICU 2.4 usually define service-specific "done"
+     * values, mostly 0xffff.
+     * Those may need to be distinguished from
+     * actual U+ffff text contents by calling functions like
+     * CharacterIterator::hasNext() or UnicodeString::length().
+     *
+     * @return -1
+     * @see UChar32
+     * @stable ICU 2.4
+     */
+    #define U_SENTINEL (-1)
+
+    /**
+     * \def UPRV_BLOCK_MACRO_BEGIN
+     * Defined as the "do" keyword by default.
+     * @internal
+     */
+    #ifndef UPRV_BLOCK_MACRO_BEGIN
+    #define UPRV_BLOCK_MACRO_BEGIN do
+    #endif
+
+    /**
+     * \def UPRV_BLOCK_MACRO_END
+     * Defined as "while (false)" by default.
+     * @internal
+     */
+    #ifndef UPRV_BLOCK_MACRO_END
+    #define UPRV_BLOCK_MACRO_END while (false)
+    #endif
 
 
 }

@@ -33,6 +33,8 @@ target_sources(MultiMediaLibrary
         base/strings/string_piece.h
         base/strings/string_util.cc
         base/strings/string_util.h
+        base/strings/utf_string_conversions.cc
+        base/strings/utf_string_conversions.h
         base/time/time.cc
         base/time/time.h
         media/base/audio_buffer.cc
