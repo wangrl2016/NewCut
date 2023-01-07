@@ -239,7 +239,7 @@ namespace base {
     }
 
     std::u16string WideToUTF16(WStringPiece wide) {
-        return {wide.begin(), wide.end()};
+        return std::u16string(wide.begin(), wide.end());
     }
 
     bool UTF16ToWide(const char16_t* src, size_t src_len, std::wstring* output) {
@@ -248,7 +248,7 @@ namespace base {
     }
 
     std::wstring UTF16ToWide(StringPiece16 utf16) {
-        return {utf16.gegin(), utf16.end()};
+        return std::wstring(utf16.begin(), utf16.end());
     }
 #elif defined(WCHAR_T_IS_UTF32)
 
@@ -292,13 +292,13 @@ namespace base {
         return ret;
     }
 
-#if defined(WCHAR_T_ISUTF16)
+#if defined(WCHAR_T_IS_UTF16)
     bool WideToUTF8(const wchar_t* src, size_t src_len, std::string* output) {
         return UTF16ToUTF8(as_u16cstr(src), src_len, output);
     }
 
     std::string WideToUTF8(WStringPiece wide) {
-        return UTF16ToUTF8(StringPiece(as_u16cstr(wide), wide.size));
+        return UTF16ToUTF8(StringPiece16(as_u16cstr(wide), wide.size()));
     }
 #elif defined(WCHAR_T_IS_UTF32)
 
@@ -329,7 +329,7 @@ namespace base {
 #if defined(WCHAR_T_IS_UTF16)
     std::wstring ASCIIToWide(StringPiece ascii) {
         DCHECK(IsStringASCII(ascii)) << ascii;
-        return {ascii.begin(), ascii.end());
+        return {ascii.begin(), ascii.end()};
     }
 
     std::string WideToASCII(WStringPiece wide) {

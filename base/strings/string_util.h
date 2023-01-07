@@ -220,7 +220,31 @@ namespace base {
     bool StartsWith(WStringPiece str,
                     WStringPiece search_for,
                     CompareCase case_sensitivity = CompareCase::kSensitive);
+
+    // Reserves enough memory in |str| to accommodate |length_with_null| characters,
+    // sets the size of |str| to |length_with_null - 1| characters. This is typically
+    // used when calling a function that writes results int a character array, but
+    // the caller wants the data to be managed by a string like object. It is
+    // convenient in that is can be used inline in the call, and fast in that it
+    // avoids copying the results of the call from a char* into a string.
+    //
+    // Internally, this takes linear time because the resize() call 0-fills the
+    // underlying array for potentially all
+    // (length_with_null - 1| * sizeof(string_type::value_type)) bytes. Ideally we
+    // could avoid this aspect of the resize() call, as we expect the caller to
+    // immediately write over this memory, but there is no other way to set the size
+    // of the string, and not doing that will mean people who access |str| rather
+    // than str.c_str() will get back a string of whatever size |str| had on entry
+    // to this function (probably 0).
+    char* WriteInto(std::string* str, size_t length_with_null);
+
+    char16_t* WriteInto(std::u16string* str, size_t length_with_null);
 }
 
+#if defined(OS_WIN)
+#include "base/strings/string_util_win.h"
+#elif defined(OS_POSIX)
+#include "base/strings/string_util_posix.h"
+#endif
 
 #endif //NEWCUT_STRING_UTIL_H

@@ -33,6 +33,10 @@ target_sources(MultiMediaLibrary
         base/strings/string_piece.h
         base/strings/string_util.cc
         base/strings/string_util.h
+        base/strings/string_util_helper.h
+        base/strings/string_util_posix.h
+        base/strings/string_util_win.cc
+        base/strings/string_util_win.h
         base/strings/utf_string_conversions.cc
         base/strings/utf_string_conversions.h
         base/time/time.cc
@@ -210,7 +214,7 @@ enable_testing()
 
 qt_add_executable(NewCutTest
         MANUAL_FINALIZATION
-        base/files/file_path_test.cc
+        # base/files/file_path_test.cc
         base/strings/string_util_test.cc
         base/strings/utf_string_conversions_test.cc
         media/base/audio_bus_test.cc

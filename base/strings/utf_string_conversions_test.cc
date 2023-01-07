@@ -3,6 +3,8 @@
 //
 
 #include <gtest/gtest.h>
+#include <iostream>
+#include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "config/build_config.h"
 
@@ -42,6 +44,7 @@ namespace base {
         // simultaneously.
         for (auto* i: kConvertRoundtripCases) {
             std::ostringstream utf8;
+            WideToUTF8(i);
             utf8 << WideToUTF8(i);      // wide转换为utf8编码
             std::wostringstream wide;
             wide << UTF8ToWide(utf8.str()); // 从utf8转换到wide
@@ -180,6 +183,14 @@ namespace base {
                 '\0'
         };
         std::u16string multi_string16;
-        // memcpy(WriteInto())
+        memcpy(WriteInto(&multi_string16,
+                         std::size(multi16)), multi16, sizeof(multi16));
+        EXPECT_EQ(std::size(multi16) - 1, multi_string16.length());
+        std::string expected;
+        memcpy(WriteInto(&expected, std::size(multi)), multi, sizeof(multi));
+        EXPECT_EQ(std::size(multi) - 1, expected.length());
+        const std::string& converted = UTF16ToUTF8(multi_string16);
+        EXPECT_EQ(std::size(multi) - 1, converted.length());
+        EXPECT_EQ(expected, converted);
     }
 }

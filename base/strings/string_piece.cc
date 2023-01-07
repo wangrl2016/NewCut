@@ -15,4 +15,8 @@ namespace base {
     std::ostream& operator<<(std::ostream& o, StringPiece16 piece) {
         return o << UTF16ToUTF8(piece);
     }
+
+    std::ostream& operator<<(std::ostream& o, WStringPiece piece) {
+        return o << WideToUTF8(piece);
+    }
 }
