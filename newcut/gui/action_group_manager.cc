@@ -7,45 +7,45 @@
 namespace nc {
     ActionGroupManager::ActionGroupManager(nc::ApplicationWindow* parent)
             : QObject(parent),
-              block_(new QActionGroup(this)),
-              circle_(new QActionGroup(this)),
-              curve_(new QActionGroup(this)),
-              edit_(new QActionGroup(this)),
-              ellipse_(new QActionGroup(this)),
-              file_(new QActionGroup(this)),
-              dimension_(new QActionGroup(this)),
-              info_(new QActionGroup(this)),
-              layer_(new QActionGroup(this)),
-              line_(new QActionGroup(this)),
-              modify_(new QActionGroup(this)),
-              options_(new QActionGroup(this)),
-              other_(new QActionGroup(this)),
-              polyline_(new QActionGroup(this)),
-              restriction_(new QActionGroup(this)),
-              select_(new QActionGroup(this)),
-              snap_(new QActionGroup(this)),
-              snap_extras_(new QActionGroup(this)),
-              view_(new QActionGroup(this)),
-              widgets_(new QActionGroup(this)) {
-        block_->setObjectName(QObject::tr("Block"));
-        circle_->setObjectName(QObject::tr("Circle"));
-        curve_->setObjectName(QObject::tr("Curve"));
-        edit_->setObjectName(QObject::tr("Edit"));
-        ellipse_->setObjectName(QObject::tr("Ellipse"));
-        file_->setObjectName(QObject::tr("File"));
-        dimension_->setObjectName(QObject::tr("Dimension"));
-        info_->setObjectName(QObject::tr("Info"));
-        layer_->setObjectName(QObject::tr("Layer"));
-        line_->setObjectName(QObject::tr("Line"));
-        modify_->setObjectName(QObject::tr("Modify"));
-        options_->setObjectName(QObject::tr("Options"));
-        other_->setObjectName(QObject::tr("Other"));
-        polyline_->setObjectName(QObject::tr("Polyline"));
-        restriction_->setObjectName(QObject::tr("Restriction"));
-        select_->setObjectName(QObject::tr("Select"));
-        snap_->setObjectName(QObject::tr("Snap"));
-        snap_extras_->setObjectName(QObject::tr("Snap Extras"));
-        view_->setObjectName(QObject::tr("View"));
-        widgets_->setObjectName(QObject::tr("Widgets"));
+              block(new QActionGroup(this)),
+              circle(new QActionGroup(this)),
+              curve(new QActionGroup(this)),
+              edit(new QActionGroup(this)),
+              ellipse(new QActionGroup(this)),
+              file(new QActionGroup(this)),
+              dimension(new QActionGroup(this)),
+              info(new QActionGroup(this)),
+              layer(new QActionGroup(this)),
+              line(new QActionGroup(this)),
+              modify(new QActionGroup(this)),
+              options(new QActionGroup(this)),
+              other(new QActionGroup(this)),
+              polyline(new QActionGroup(this)),
+              restriction(new QActionGroup(this)),
+              select(new QActionGroup(this)),
+              snap(new QActionGroup(this)),
+              snap_extras(new QActionGroup(this)),
+              view(new QActionGroup(this)),
+              widgets(new QActionGroup(this)) {
+        block->setObjectName(QObject::tr("Block"));
+        circle->setObjectName(QObject::tr("Circle"));
+        curve->setObjectName(QObject::tr("Curve"));
+        edit->setObjectName(QObject::tr("Edit"));
+        ellipse->setObjectName(QObject::tr("Ellipse"));
+        file->setObjectName(QObject::tr("File"));
+        dimension->setObjectName(QObject::tr("Dimension"));
+        info->setObjectName(QObject::tr("Info"));
+        layer->setObjectName(QObject::tr("Layer"));
+        line->setObjectName(QObject::tr("Line"));
+        modify->setObjectName(QObject::tr("Modify"));
+        options->setObjectName(QObject::tr("Options"));
+        other->setObjectName(QObject::tr("Other"));
+        polyline->setObjectName(QObject::tr("Polyline"));
+        restriction->setObjectName(QObject::tr("Restriction"));
+        select->setObjectName(QObject::tr("Select"));
+        snap->setObjectName(QObject::tr("Snap"));
+        snap_extras->setObjectName(QObject::tr("Snap Extras"));
+        view->setObjectName(QObject::tr("View"));
+        widgets->setObjectName(QObject::tr("Widgets"));
     }
 }

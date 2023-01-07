@@ -17,26 +17,26 @@ namespace nc {
     public:
         explicit ActionGroupManager(ApplicationWindow* parent);
 
-        QActionGroup* block_;
-        QActionGroup* circle_;
-        QActionGroup* curve_;
-        QActionGroup* edit_;
-        QActionGroup* ellipse_;
-        QActionGroup* file_;
-        QActionGroup* dimension_;
-        QActionGroup* info_;
-        QActionGroup* layer_;
-        QActionGroup* line_;
-        QActionGroup* modify_;
-        QActionGroup* options_;
-        QActionGroup* other_;
-        QActionGroup* polyline_;
-        QActionGroup* restriction_;
-        QActionGroup* select_;
-        QActionGroup* snap_;
-        QActionGroup* snap_extras_;
-        QActionGroup* view_;
-        QActionGroup* widgets_;
+        QActionGroup* block;
+        QActionGroup* circle;
+        QActionGroup* curve;
+        QActionGroup* edit;
+        QActionGroup* ellipse;
+        QActionGroup* file;
+        QActionGroup* dimension;
+        QActionGroup* info;
+        QActionGroup* layer;
+        QActionGroup* line;
+        QActionGroup* modify;
+        QActionGroup* options;
+        QActionGroup* other;
+        QActionGroup* polyline;
+        QActionGroup* restriction;
+        QActionGroup* select;
+        QActionGroup* snap;
+        QActionGroup* snap_extras;
+        QActionGroup* view;
+        QActionGroup* widgets;
 
     private:
         QList<bool> snap_memory_;

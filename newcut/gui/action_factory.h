@@ -19,10 +19,10 @@ namespace nc {
         ActionFactory(ApplicationWindow* parent, ActionHandler* handler);
 
         void FillActionContainer(QMap<QString, QAction*>& action_map,
-                                 ActionGroupManager* action_group_manager);
+                                 ActionGroupManager* agm);
 
         void CommonActions(QMap<QString, QAction*>& action_map,
-                           ActionGroupManager* action_group_manager);
+                           ActionGroupManager* agm);
 
         bool using_theme_;
 
