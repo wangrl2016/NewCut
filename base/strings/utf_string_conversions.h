@@ -7,6 +7,7 @@
 
 #include <string>
 #include "base/strings/string_piece.h"
+#include "config/build_config.h"
 
 namespace base {
     // These convert between UTF-8, -16, and -32 strings. They are potentially slow,

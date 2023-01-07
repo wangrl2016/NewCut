@@ -1,5 +1,5 @@
 //
-// Created by wr on 2023/1/4.
+// Created by wangrl2016 on 2023/1/4.
 //
 
 #ifndef NEWCUT_STRING_UTIL_H
