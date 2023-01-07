@@ -59,9 +59,7 @@ namespace base {
 
     FilePath::~FilePath() = default;
 
-    FilePath::FilePath(FilePath&& that) noexcept {
-
-    }
+    FilePath::FilePath(FilePath&& that) noexcept = default;
 
     FilePath& FilePath::operator=(const FilePath& that) = default;
 
