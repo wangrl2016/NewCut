@@ -14,6 +14,7 @@ namespace nc {
 
     class ApplicationWindow;
 
+    // 创建所有的Widget，包括MenuBar
     class WidgetFactory : public QObject {
     Q_OBJECT
     public:

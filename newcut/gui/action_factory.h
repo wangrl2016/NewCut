@@ -13,6 +13,7 @@ namespace nc {
     class ActionGroupManager;
     class ActionHandler;
 
+    // 创建所有的Action
     class ActionFactory : public QObject {
         Q_OBJECT
     public:

@@ -8,35 +8,35 @@
 namespace nc {
     // Constructor for a point with given coordinates.
     Vector::Vector(double vx, double vy, double vz)
-            : x_(vx), y_(vy), z_(vz), valid_(true) {}
+            : x(vx), y(vy), z(vz), valid(true) {}
 
     // Constructor for a unit vector with given angle
     Vector::Vector(double angle)
-            : x_(cos(angle)), y_(sin(angle)), valid_(true) {}
+            : x(cos(angle)), y(sin(angle)), valid(true) {}
 
-    Vector::Vector(bool valid) : valid_(valid) {}
+    Vector::Vector(bool valid) : valid(valid) {}
 
-    Vector::operator bool() const { return valid_; }
+    Vector::operator bool() const { return valid; }
 
     void Vector::Set(double angle) {
-        x_ = cos(angle);
-        y_ = sin(angle);
-        z_ = 0.0;
-        valid_ = true;
+        x = cos(angle);
+        y = sin(angle);
+        z = 0.0;
+        valid = true;
     }
 
     void Vector::Set(double vx, double vy, double vz) {
-        x_ = vx;
-        y_ = vy;
-        z_ = vz;
-        valid_ = true;
+        x = vx;
+        y = vy;
+        z = vz;
+        valid = true;
     }
 
     void Vector::SetPolar(double radius, double angle) {
-        x_ = radius * cos(angle);
-        y_ = radius * sin(angle);
-        z_ = 0.0;
-        valid_ = true;
+        x = radius * cos(angle);
+        y = radius * sin(angle);
+        z = 0.0;
+        valid = true;
     }
 
     Vector Vector::Polar(double rho, double theta) {

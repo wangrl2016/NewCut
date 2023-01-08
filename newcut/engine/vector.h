@@ -133,10 +133,10 @@ namespace nc {
         friend std::ostream& operator<<(std::ostream&, const Vector& v);
 
     public:
-        double x_ = 0.0;
-        double y_ = 0.0;
-        double z_ = 0.0;
-        bool valid_ = false;
+        double x = 0.0;
+        double y = 0.0;
+        double z = 0.0;
+        bool valid = false;
     };
 }
 

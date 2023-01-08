@@ -5,6 +5,8 @@
 #ifndef NEWCUT_MATH_H
 #define NEWCUT_MATH_H
 
+#include <boost/math/special_functions/ellint_2.hpp>
+
 namespace nc {
     class Vector;
 
