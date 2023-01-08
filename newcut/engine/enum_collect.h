@@ -25,7 +25,7 @@ namespace nc {
             kEntityEllipse,
             kEntityHyperbola,
             kEntitySolid,
-            kEntityConstrucionLine,
+            KEntityConstructionLine,
             kEntityMText,
             kEntityText,
             kEntityDimAligned,
@@ -102,11 +102,22 @@ namespace nc {
             kAction
         };
 
+        enum FormatType {
+            kFormatUnknown,     // unknown / unsupported format
+        };
+
         enum SnapRestriction {
-            kRestricNothing,        // No restriction to snap mode
-            kRestricHorizontal,     // Restrict to 0, 180 degrees
-            kRestricVertical,       // Restrict to 90, 270 degrees
-            kRestricOrthogonal      // Restrict to 90, 180, 270, 0 degrees
+            kRestrictNothing,        // No restriction to snap mode
+            kRestrictHorizontal,     // Restrict to 0, 180 degrees
+            kRestrictVertical,       // Restrict to 90, 270 degrees
+            kRestrictOrthogonal      // Restrict to 90, 180, 270, 0 degrees
+        };
+
+        // Undoable Rtti.
+        enum UndoableType {
+            kUndoableUnknown,
+            kUndoableEntity,
+            kUndoableLayer
         };
     };
 }

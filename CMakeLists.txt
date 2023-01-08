@@ -112,6 +112,8 @@ set(PROJECT_SOURCES
         newcut/actions/snapper.h
         newcut/engine/color.cc
         newcut/engine/color.h
+        newcut/engine/document.cc
+        newcut/engine/document.h
         newcut/engine/entity.cc
         newcut/engine/entity.h
         newcut/engine/entity_container.cc
@@ -128,6 +130,8 @@ set(PROJECT_SOURCES
         newcut/engine/pen.h
         newcut/engine/polyline.cc
         newcut/engine/polyline.h
+        newcut/engine/quadratic.cc
+        newcut/engine/quadratic.h
         newcut/engine/undoable.cc
         newcut/engine/undoable.h
         newcut/engine/vector.cc

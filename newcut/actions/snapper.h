@@ -44,7 +44,7 @@ namespace nc {
         bool snap_angle_ = false;
 
         // The restriction on the free snap
-        EnumCollect::SnapRestriction restriction_ = EnumCollect::kRestricNothing;
+        EnumCollect::SnapRestriction restriction_ = EnumCollect::kRestrictNothing;
 
         // The distance to snap before defaulting to free snapping.
         double distance_ = 5.0;

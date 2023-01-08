@@ -6,6 +6,7 @@
 #define NEWCUT_VECTOR_H
 
 #include <ostream>
+#include <vector>
 
 namespace nc {
     // Represents a 3d vector (x/y/z)
@@ -137,6 +138,36 @@ namespace nc {
         double y = 0.0;
         double z = 0.0;
         bool valid = false;
+    };
+
+    // Represents 1 to 4 vectors. Typically used to return multiple
+    // solutions from a function.
+    class VectorSolutions {
+    public:
+        typedef Vector ValueType;
+
+        VectorSolutions();
+
+        VectorSolutions(const std::vector<Vector>& s);
+
+        VectorSolutions(std::initializer_list<Vector> const& l);
+
+        VectorSolutions(int num);
+
+        ~VectorSolutions() = default;
+
+        void Alloc(size_t num);
+
+        void Clear();
+
+        Vector Get(size_t i) const;
+
+        const Vector& At(size_t i) const;
+
+    private:
+        std::vector<Vector> vector_;
+
+        bool tangent_;
     };
 }
 

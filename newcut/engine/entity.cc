@@ -25,4 +25,36 @@ namespace nc {
     Entity* Entity::Clone() const {
         return nullptr;
     }
+
+    void Entity::ResetBorders() {
+
+    }
+
+    void Entity::MoveBorders(const Vector& offset) {
+
+    }
+
+    void Entity::ScaleBorders(const Vector& center, const Vector& factor) {
+
+    }
+
+    Quadratic Entity::GetQuadratic() const {
+        return Quadratic();
+    }
+
+    double Entity::ArcLineIntegral() const {
+        return 0.0;
+    }
+
+    bool Entity::Trimmable() const {
+        return true;
+    }
+
+    bool Entity::IsArc() const {
+        return true;
+    }
+
+    bool Entity::IsArcCircleLine() const {
+        return true;
+    }
 }

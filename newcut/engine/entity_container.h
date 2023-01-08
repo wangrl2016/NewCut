@@ -5,9 +5,20 @@
 #ifndef NEWCUT_ENTITY_CONTAINER_H
 #define NEWCUT_ENTITY_CONTAINER_H
 
-namespace nc {
-    class EntityContainer {
+#include <QList>
+#include "newcut/engine/entity.h"
 
+namespace nc {
+
+    // Class representing a tree of entities.
+    // Typical entity container are graphics, polylines, groups, texts, ...
+    class EntityContainer : public Entity {
+        typedef Entity* ValueType;
+
+    public:
+
+    protected:
+        QList<Entity*> entities_;
     };
 }
 
