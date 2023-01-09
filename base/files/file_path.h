@@ -119,7 +119,7 @@
 namespace base {
     class FilePath {
     public:
-#if defined(_WIN32)
+#if defined(OS_WIN)
         // Defined for applications for Win32 and Win64. Always defined.
         // On Windows, for Unicode-aware applications, native pathnames are wchar_t
         // arrays encoded in UTF-16.
@@ -202,6 +202,14 @@ namespace base {
         [[maybe_unused]] std::vector<FilePath::StringType> GetComponents() const;
 
         // Returns true if this FilePath is a parent or ancestor of the |child|.
+        // Absolute and relative paths are accepted. i.e /ffo is a parent to /foo/bar,
+        // and foo is a parent to foo/bar. Any ancestor is considered a parent i.e. /a
+        // is a parent to both /a/b and /a/b/c. Does not convert paths to absolute,
+        // follow symlinks or directory navigation (e.g. ".."). A path is *NOT* its
+        // own parent.
+        bool IsParent(const FilePath& child) const;
+
+        // Returns true if this FilePath is a parent or ancestor of the |child|.
         // Absolute and relative paths are accepted i.e. /foo is a parent to /foo/bar,
         // and foo is a parent to foo/bar. Any ancestor is considered a parent i.e. /a
         // is a parent to both /a/b/ and /a/b/c. Does not convert paths to absolute,
@@ -251,6 +259,8 @@ namespace base {
 
         bool MatchesExtension(StringPieceType extension) const;
 
+        bool MatchesFinalExtension(StringPieceType extension) const;
+
         FilePath Append(StringPieceType component) const;
 
         FilePath Append(const FilePath& component) const;
@@ -267,8 +277,49 @@ namespace base {
 
         bool ReferencesParent() const;
 
+        // Return a Unicode human-readable version of this path.
+        // Warning: you can *not*, in general, go from a display name back to a real
+        // path. Only use this when displaying paths to uses, not just when you
+        // want to stuff a std::u16string into some other API.
+        std::u16string LossyDisplayName() const;
+
         std::string MaybeAsASCII() const;
 
+        // Return the path as UTF-8.
+        //
+        // This function is *unsafe* as there is no way to tell what encoding is
+        // used in file name on POSIX system other than Mac,
+        // although UTF-8 is practically used everywhere these days. To mitigate
+        // the encoding issue, this function internally calls
+        // SysNativeMBToWide() on POSIX systems other than Mac,
+        // per assumption that the current locale's encoding is used in file
+        // names, but this isn't a perfect solution.
+        std::string AsUTF8Unsafe() const;
+
+        std::u16string AsUTF16Unsafe() const;
+
+        static FilePath FromASCII(StringPiece ascii);
+
+        static FilePath FromUTF8Unsafe(StringPiece utf8);
+
+        static FilePath FromUTF16Unsafe(StringPiece16 utf16);
+
+        FilePath NormalizePathSeparators() const;
+
+        FilePath NormalizePathSeparatorsTo(CharType separator) const;
+
+        static int CompareIgnoreCase(StringPieceType string1,
+                                     StringPieceType string2);
+
+        static bool CompareEqualIgnoreCase(StringPieceType string1,
+                                           StringPieceType string2) {
+            return CompareIgnoreCase(string1, string2) == 0;
+        }
+
+        static bool CompareLessIgnoreCase(StringPieceType string1,
+                                          StringPieceType string2) {
+            return CompareIgnoreCase(string1, string2) < 0;
+        }
     private:
         // Remove trailing separators from this object. If the path is absolute, it
         // will never be stripped any more than to refer to the absolute root
@@ -279,6 +330,8 @@ namespace base {
 
         StringType path_;
     };
+
+    std::ostream& operator<<(std::ostream& out, const FilePath& file_path);
 }
 
 #endif //NEWCUT_FILE_PATH_H
