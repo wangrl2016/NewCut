@@ -14,7 +14,7 @@
 namespace media {
     class AudioFileReaderTest : public testing::Test {
     public:
-        AudioFileReaderTest() : packet_verfication_disabled_(false) {}
+        AudioFileReaderTest() : packet_verification_disabled_(false) {}
 
         AudioFileReaderTest(const AudioFileReaderTest&) = delete;
 
@@ -43,10 +43,10 @@ namespace media {
         std::shared_ptr<DecoderBuffer> data_;
         std::unique_ptr<MemoryURLProtocol> protocol_;
         std::unique_ptr<AudioFileReader> reader_;
-        bool packet_verfication_disabled_;
+        bool packet_verification_disabled_;
     };
 
     TEST_F(AudioFileReaderTest, WithoutOpen) {
-        // Initialize("ocean_960x400.ogv");
+        Initialize("utf8.png");
     }
 }
