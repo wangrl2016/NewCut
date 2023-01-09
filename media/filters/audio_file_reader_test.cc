@@ -39,6 +39,24 @@ namespace media {
 
         }
 
+        void VerifyPackets() {
+
+        }
+
+        void RunTest() {
+
+        }
+
+        void RunTestFailingDemux(const char* fn) {
+            Initialize(fn);
+            EXPECT_FALSE(reader_->Open());
+        }
+
+        void RunTestFailingDecode(const char* fn, int expect_read = 0) {
+            Initialize(fn);
+            EXPECT_TRUE(reader_->Open());
+        }
+
     protected:
         std::shared_ptr<DecoderBuffer> data_;
         std::unique_ptr<MemoryURLProtocol> protocol_;
@@ -48,5 +66,9 @@ namespace media {
 
     TEST_F(AudioFileReaderTest, WithoutOpen) {
         Initialize("utf8.png");
+    }
+
+    TEST_F(AudioFileReaderTest, InvalidFile) {
+        RunTestFailingDemux("ten_byte_file");
     }
 }

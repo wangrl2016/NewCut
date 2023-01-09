@@ -11,7 +11,7 @@
 namespace media {
     // A specialized buffer for interfacing with audio/video decoders.
     //
-    // Also includes decoder specifiec functionality for decryption.
+    // Also includes decoder specific functionality for decryption.
     //
     // NOTE: It is illegal to call any method when end_of_stream() is true.
     class DecoderBuffer {
@@ -29,7 +29,7 @@ namespace media {
             // Presentation time of the frame.
             int64_t timestamp;
 
-            // Presentation duraiton of the frame.
+            // Presentation duration of the frame.
             int64_t duration;
         };
 
@@ -74,7 +74,7 @@ namespace media {
         size_t side_data_size_ = 0;
         std::unique_ptr<uint8_t> side_data_;
 
-        // Whehter the frame was marked as a keyframe in the container.
+        // Whether the frame was marked as a keyframe in the container.
         bool is_key_frame_ = false;
 
         // Constructor helper method for memory allocation.

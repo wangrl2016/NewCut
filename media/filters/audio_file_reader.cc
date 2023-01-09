@@ -229,7 +229,7 @@ namespace media {
                 return true;
         }
 
-        // Deinterleave each channel and convert to 32bit floating-point with
+        // De-interleave each channel and convert to 32bit floating-point with
         // nominal range -1.0 -> +1.0. If the output is already in float planar
         // format, just copy it into the AudioBus.
         decoded_audio_packets->emplace_back(AudioBus::Create(channels, frames_read));

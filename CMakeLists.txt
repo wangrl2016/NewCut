@@ -24,6 +24,8 @@ target_sources(MultiMediaLibrary
         base/containers/ring_buffer.h
         base/files/file_path.cc
         base/files/file_path.h
+        base/files/file_util.cc
+        base/files/file_util.h
         base/memory/aligned_memory.cc
         base/memory/aligned_memory.h
         base/memory/ref_counted.cc
