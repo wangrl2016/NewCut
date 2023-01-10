@@ -78,6 +78,8 @@ target_sources(MultiMediaLibrary
         media/filters/ffmpeg_glue.h
         media/filters/memory_url_protocol.cc
         media/filters/memory_url_protocol.h
+        modules/audio_graph/audio_node.cc
+        modules/audio_graph/audio_node.h
         third_party/icu/icu_utf.h
         )
 
