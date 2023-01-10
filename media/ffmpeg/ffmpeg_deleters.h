@@ -13,7 +13,7 @@ namespace media {
     };
 
     // Calls av_packet_free(). Do not use this with an AVPacket instance that
-    // was allocated with newe or manually av_malloc'd. ScopedAVPacket is the
+    // was allocated with new or manually av_malloc'd. ScopedAVPacket is the
     // recommended way to manage an AVPacket's lifetime.
     struct ScopedPtrAVFreePacket {
         void operator()(void* x) const;

@@ -8,6 +8,8 @@
 #include <cstdint>
 #include <glog/logging.h>
 
+#include "base/memory/atomic_ref_count.h"
+
 namespace base {
     enum StartRefCountFromZeroTag {
         kStartRefCountFromZeroTag
@@ -28,28 +30,88 @@ namespace base {
         bool HasAtLeastOneRef() const { return ref_count_ >= 1; }
 
     protected:
-        explicit RefCountedBase(StartRefCountFromZeroTag) {}
+        explicit RefCountedBase(StartRefCountFromZeroTag) {
+#if DCHECK_IS_ON()
+            // TODO: Sequence checker
+#endif
+        }
 
-        explicit RefCountedBase(StartRefCountFromOneTag) : ref_count_(1) {}
+        explicit RefCountedBase(StartRefCountFromOneTag) : ref_count_(1) {
+#ifdef DCHECK_IS_ON
+#endif
+        }
 
-        ~RefCountedBase() {}
+        ~RefCountedBase() {
+#if DCHECK_IS_ON()
+#endif
+        }
 
         void AddRef() const {
+#if DCHECK_IS_ON()
+#endif
             AddRefImpl();
         }
 
         bool Release() const {
             ReleaseImpl();
+#if DCHECK_IS_ON()
+#endif
             return ref_count_ == 0;
         }
 
-        void AddRefImpl() const { ++ref_count_; }
-
-        void ReleaseImpl() const { --ref_count_; }
-
+        bool IsOnValidSequence() const {
+#if DCHECK_IS_ON()
+            return ref_count_ <= 1;
+#else
+            return true;
+#endif
+        }
     private:
+        void Adopted() const {
+#if DCHECK_IS_ON()
+#endif
+        }
+
+        void AddRefImpl() const;
+
+        void ReleaseImpl() const;
 
         mutable uint32_t ref_count_ = 0;
+
+        static_assert(std::is_unsigned<decltype(ref_count_)>::value,
+                "ref_count_ must be an unsigned type.");
+    };
+
+    class RefCountedThreadSafeBase {
+    public:
+        RefCountedThreadSafeBase(const RefCountedThreadSafeBase&) = delete;
+
+        RefCountedThreadSafeBase& operator=(const RefCountedThreadSafeBase&) = delete;
+
+        bool HasOneRef() const;
+
+        bool HasAtLeastOneRef() const;
+
+    protected:
+        explicit constexpr RefCountedThreadSafeBase(StartRefCountFromOneTag) {}
+
+        explicit constexpr RefCountedThreadSafeBase(StartRefCountFromZeroTag)
+                : ref_count_(1) {
+#if DCHECK_IS_ON()
+#endif
+        }
+
+#if DCHECK_IS_ON()
+        ~RefCountedThreadSafeBase();
+#else
+        ~RefCountedThreadSafeBase() = default;
+#endif
+
+
+
+
+    private:
+        mutable AtomicRefCount ref_count_{0};
     };
 }
 

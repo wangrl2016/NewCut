@@ -28,8 +28,10 @@ target_sources(MultiMediaLibrary
         base/files/file_util.h
         base/memory/aligned_memory.cc
         base/memory/aligned_memory.h
+        base/memory/atomic_ref_count.h
         base/memory/ref_counted.cc
         base/memory/ref_counted.h
+        base/memory/ref_counted_test.cc
         base/misc/bits.h
         base/strings/string_piece.cc
         base/strings/string_piece.h

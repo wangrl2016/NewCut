@@ -34,7 +34,7 @@ namespace media {
 
         void Close();
 
-        // After a call to open(), attemps to decode the data of |packets_to_read|,
+        // After a call to open(), attempts to decode the data of |packets_to_read|,
         // updating |decodedAudioPackets| with each decoded packet in order.
         // The caller must convert these packets into one complete set of
         // decoded audio data. The audio data will be decoded as
@@ -56,7 +56,7 @@ namespace media {
         bool HasKnownDuration() const;
 
         // Please note that GetDuration() and GetNumberOfFrames() attempt to be
-        // accurate, but are onlye estimates. For smoe encoded formats, the actual
+        // accurate, but are only estimates. For some encoded formats, the actual
         // duration of the file can only be determined once all the file data has been
         // read. The Read() method returns the actual number of sample-frames is has
         // read.
@@ -70,7 +70,7 @@ namespace media {
         // Similar to Open() but does not initialize the decoder.
         bool OpenDemuxerForTesting();
 
-        // Return true if a packet could be demuxed from the firat audio stream in
+        // Return true if a packet could be demuxed from the first audio stream in
         // the file, |output_packet| will contain the demuxed packet then.
         bool ReadPacketForTesting(AVPacket* output_packet);
 
