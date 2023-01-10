@@ -53,6 +53,8 @@ namespace nc {
 
         WidgetFactory widget_factory(this, action_map_, action_group_manager_);
 
+        widget_factory.CreateStandardToolbars(action_handler_);
+
         widget_factory.CreateMenus(menuBar());
     }
 
@@ -98,7 +100,31 @@ namespace nc {
         dialog.exec();
     }
 
-    void ApplicationWindow::SlotFileOpen() {
+    void ApplicationWindow::SlotFileOpen(const QString& filename,
+                                         EnumCollect::FormatType type) {
 
     }
+
+    void ApplicationWindow::SlotFileOpen(const QString& filename) {
+
+    }
+
+    void ApplicationWindow::SlotFileOpenRecent(QAction* action) {
+
+    }
+
+    void ApplicationWindow::SlotFileSave() {
+
+    }
+
+    void ApplicationWindow::SlotFileSaveAs() {
+        LOG(INFO) << __FUNCTION__;
+//        if (DoSave(GetMDIWindow(), true)) {
+//
+//        }
+    }
+
+
+
+
 }

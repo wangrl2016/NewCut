@@ -6,10 +6,12 @@
 #define NEWCUT_APPLICATION_WINDOW_H
 
 #include "newcut/main_window.h"
+#include "newcut/engine/enum_collect.h"
 
 namespace nc {
     class ActionHandler;
     class ActionGroupManager;
+    class MDIWindow;
 
     class ApplicationWindow : public MainWindow {
         Q_OBJECT
@@ -29,7 +31,19 @@ namespace nc {
         void ShowAboutWindow();     // about dialog
 
 
-        void SlotFileOpen();
+        void SlotFileOpen(const QString& filename, EnumCollect::FormatType type);
+
+        void SlotFileOpen(const QString& filename); // Assume Unknown type
+
+        void SlotFileOpenRecent(QAction* action);
+
+        void SlotFileSave();
+
+        // Saves a document under a different filename
+        void SlotFileSaveAs();
+
+    private:
+        bool DoSave(MDIWindow* w, bool force_save_as = false);
 
     private:
         // Pointer to the application window.

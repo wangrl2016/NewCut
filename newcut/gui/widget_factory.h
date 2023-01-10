@@ -8,10 +8,11 @@
 #include <QObject>
 #include <QAction>
 #include <QMenuBar>
+#include <QToolBar>
 
 namespace nc {
+    class ActionHandler;
     class ActionGroupManager;
-
     class ApplicationWindow;
 
     // 创建所有的Widget，包括MenuBar
@@ -22,9 +23,20 @@ namespace nc {
                       QMap<QString, QAction*>& action_map,
                       ActionGroupManager* agm);
 
+        void CreateStandardToolbars(ActionHandler* action_handler);
+
+        void CreateCADToolBar();
+
         void CreateMenus(QMenuBar* menu_bar);
 
-        QMenu* file_menu_;
+        void CreateLeftSideBar(int columns, int icon_size);
+
+        void CreateRightSidebar(ActionHandler* action_handler);
+
+        QToolBar* CreateCategoriesToolBar();
+
+        QMenu* file_menu_;      // 最上层的菜单栏
+        QMenu* windows_menu_;
 
     private:
         ApplicationWindow* application_window_;
@@ -32,9 +44,18 @@ namespace nc {
         ActionGroupManager* action_group_manager_;
 
         QList<QAction*> file_actions_;
-
+        QList<QAction*> line_actions_;
+        QList<QAction*> circle_actions_;
+        QList<QAction*> curve_actions_;
+        QList<QAction*> ellipse_actions_;
+        QList<QAction*> polyline_actions_;
+        QList<QAction*> select_actions_;
+        QList<QAction*> dimension_actions_;
+        QList<QAction*> modify_actions_;
+        QList<QAction*> info_actions_;
+        QList<QAction*> layer_actions_;
+        QList<QAction*> block_actions_;
     };
 }
-
 
 #endif //NEWCUT_WIDGET_FACTORY_H

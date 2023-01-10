@@ -26,6 +26,7 @@ namespace nc {
         action_map["ZoomPan"] = action;
 
         // Select
+
         action = new QAction(tr("Select Entity"), agm->select);
         connect(action, SIGNAL(triggered()), action_handler_, SLOT(SlotSelectSingle()));
         action->setObjectName("SelectSingle");
@@ -36,11 +37,71 @@ namespace nc {
         action->setObjectName("SelectWindow");
         action_map["SelectWindow"] = action;
 
+        action = new QAction(tr("Deselect Window"), agm->select);
+        connect(action, SIGNAL(triggered()),
+                action_handler_, SLOT(SlotDeselectWindow()));
+        action->setObjectName("DeselectWindow");
+        action_map["DeselectWindow"] = action;
+
         action = new QAction(tr("(De-)Select &Contour"), agm->select);
-        connect(action, SIGNAL(triggered()), action_handler_, SLOT(SlotSelectContour));
+        connect(action, SIGNAL(triggered()),
+                action_handler_, SLOT(SlotSelectContour));
         action->setObjectName("SelectContour");
         action_map["SelectContour"] = action;
 
+        action = new QAction(tr("Select Intersected Entities"), agm->select);
+        connect(action, SIGNAL(triggered()),
+                action_handler_, SLOT(SlotSelectIntersected()));
+        action->setObjectName("DeselectIntersected");
+        action_map["DeselectIntersected"] = action;
+
+        action = new QAction(tr("(De-)Select Layer"), agm->select);
+        connect(action, SIGNAL(triggered()),
+                action_handler_, SLOT(SlotSelectLayer()));
+        action->setObjectName("SelectLayer");
+        action_map["SelectLayer"] = action;
+
+        // Draw
+
+        action = new QAction(tr("&Points"), agm->other);
+        connect(action, SIGNAL(triggered()),
+                action_handler_, SLOT(SlotDrawPoint()));
+        action->setObjectName("DrawPoint");
+        action_map["DrawPoint"] = action;
+
+        // Line
+        action = new QAction(tr("&2 Points"), agm->line);
+        connect(action, SIGNAL(triggered()),
+                action_handler_, SLOT(SlotDrawLine()));
+        action->setObjectName("DrawLine");
+        action_map["DrawLine"] = action;
+
+        action = new QAction(tr("&Angle"), agm->line);
+        connect(action, SIGNAL(triggered()),
+                action_handler_, SLOT(SlotDrawLineAngle()));
+        action->setObjectName("DrawLineAngle");
+        action_map["DrawLineAngle"] = action;
+
+
+        // Modify
+        action = new QAction(tr("&Attributes"), agm->modify);
+        connect(action, SIGNAL(triggered()),
+                action_handler_, SLOT(SlotModifyAttributes()));
+        action->setObjectName("ModifyAttributes");
+        action->setData("modify attr, attr, ma");
+        action_map["ModifyAttributes"] = action;
+
+        action = new QAction(tr("&Delete"), agm->modify);
+        connect(action, SIGNAL(triggered()),
+                action_handler_, SLOT(SlotModifyDelete()));
+        action->setObjectName("ModifyDelete");
+        action_map["ModifyDelete"] = action;
+
+        action = new QAction(tr("Delete Freehand"), agm->modify);
+        connect(action, SIGNAL(triggered()),
+                action_handler_, SLOT(SlotModifyDeleteFree()));
+        action->setObjectName("ModifyDeleteFree");
+        action_map["ModifyDeleteFree"] = action;
 
 
 

@@ -154,6 +154,8 @@ set(PROJECT_SOURCES
         newcut/gui/widget_factory.h
         newcut/gui/graphic_view.cc
         newcut/gui/graphic_view.h
+        newcut/gui/mdi_window.cc
+        newcut/gui/mdi_window.h
         newcut/application_window.cc
         newcut/application_window.h
         newcut/main_window.cc

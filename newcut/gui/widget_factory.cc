@@ -13,12 +13,55 @@ namespace nc {
               application_window_(window),
               action_map_(action_map),
               action_group_manager_(agm) {
-        file_actions_ << action_map["FileNew"]
-                      << action_map["FileNewTemplate"]
-                      << action_map["FileOpen"]
-                      << action_map["FileSave"]
-                      << action_map["FileSaveAs"]
-                      << action_map["FileSaveAll"];
+        file_actions_ << action_map_["FileNew"]
+                      << action_map_["FileNewTemplate"]
+                      << action_map_["FileOpen"]
+                      << action_map_["FileSave"]
+                      << action_map_["FileSaveAs"]
+                      << action_map_["FileSaveAll"];
+
+        line_actions_ << action_map_["DrawLine"]
+                << action_map_["DrawLineAngle"]
+                << action_map_["DrawLineHorizontal"]
+                << action_map_["DrawLineVertical"]
+                << action_map_["DrawLineRectangle"]
+                << action_map_["DrawLineParallelThrough"]
+                << action_map_["DrawLineParallel"]
+                << action_map_["DrawLineBisector"]
+                << action_map_["DrawLineTangent1"]
+                << action_map_["DrawLineTangent2"]
+                << action_map_["DrawLineOrthTan"];
+    }
+
+    void WidgetFactory::CreateStandardToolbars(ActionHandler* action_handler) {
+        QSizePolicy toolbar_policy(QSizePolicy::Expanding,
+                                  QSizePolicy::Expanding);
+
+        auto file_toolbar = new QToolBar(ApplicationWindow::tr("File"), application_window_);
+        file_toolbar->setSizePolicy(toolbar_policy);
+        file_toolbar->setObjectName("file_toolbar");
+        file_toolbar->addActions(file_actions_);
+        file_toolbar->addAction(action_map_["FilePrint"]);
+        file_toolbar->addAction(action_map_["FilePrintPreview"]);
+
+        auto edit_toolbar = new QToolBar(ApplicationWindow::tr("Edit"), application_window_);
+        edit_toolbar->setSizePolicy(toolbar_policy);
+        edit_toolbar->setObjectName("edit_toolbar");
+        edit_toolbar->addAction(action_map_["EditKillallActions"]);
+        edit_toolbar->addSeparator();
+        edit_toolbar->addAction(action_map_["EditUndo"]);
+        edit_toolbar->addAction(action_map_["EditRedo"]);
+        edit_toolbar->addSeparator();
+        edit_toolbar->addAction(action_map_["EditCut"]);
+        edit_toolbar->addAction(action_map_["EditCopy"]);
+        edit_toolbar->addAction(action_map_["EditPaste"]);
+
+        // Toolbars Layout
+        application_window_->addToolBar(Qt::TopToolBarArea, file_toolbar);
+        application_window_->addToolBar(Qt::TopToolBarArea, edit_toolbar);
+
+
+
     }
 
     void WidgetFactory::CreateMenus(QMenuBar* menu_bar) {
