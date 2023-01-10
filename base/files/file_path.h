@@ -98,6 +98,7 @@
 #include <string_view>
 
 #include "base/strings/string_piece.h"
+#include "config/build_config.h"
 
 // Window-style drive letter support and pathname separator characters can be
 // enabled and disabled independently, to aid testing. These #defines are
@@ -108,10 +109,10 @@
 #define FILE_PATH_USES_WIN_SEPARATORS
 #endif
 
-#if defined(_WIN32)
+#if defined(OS_WIN)
 // ##表示粘连
-#define FILE_PATH_LITERAL_INTERAL(x) L##x
-#define FILE_PATH_LITERAL(x) FILE_PATH_LITERAL_INTERAL(x)
+#define FILE_PATH_LITERAL_INTERNAL(x) L##x
+#define FILE_PATH_LITERAL(x) FILE_PATH_LITERAL_INTERNAL(x)
 #else
 #define FILE_PATH_LITERAL(x) x
 #endif

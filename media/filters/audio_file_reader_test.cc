@@ -49,6 +49,7 @@ namespace media {
 
         void RunTestFailingDemux(const char* fn) {
             Initialize(fn);
+
             EXPECT_FALSE(reader_->Open());
         }
 

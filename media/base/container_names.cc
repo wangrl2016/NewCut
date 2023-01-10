@@ -57,11 +57,11 @@ namespace media {
 
         int offset = 0;
         int valid_top_level_boxes = 0;
-        while (offset + 8 < buffer_size) {
+//        while (offset + 8 < buffer_size) {
+//
+//        }
 
-        }
-
-
+        return false;
     }
 
     // Attempt to determine the container name from the buffer provided.

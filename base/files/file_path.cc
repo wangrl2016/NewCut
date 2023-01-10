@@ -5,6 +5,7 @@
 #include <vector>
 #include <glog/logging.h>
 #include "base/strings/string_util.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/files/file_path.h"
 
 namespace base {
