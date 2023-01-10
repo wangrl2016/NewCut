@@ -59,6 +59,8 @@ target_sources(MultiMediaLibrary
         media/base/container_names.h
         media/base/decoder_buffer.cc
         media/base/decoder_buffer.h
+        media/base/decoder.cc
+        media/base/decoder.h
         media/base/limits.h
         media/base/sample_format.cc
         media/base/sample_format.h
