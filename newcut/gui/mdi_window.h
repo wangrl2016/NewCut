@@ -8,9 +8,20 @@
 #include <QMdiSubWindow>
 
 namespace nc {
-    // Multiple Document Interface
-    class MDIWindow : public QMdiSubWindow {
+    class Document;
 
+    // Multiple Document Interface
+    class MdiWindow : public QMdiSubWindow {
+    Q_OBJECT
+    public:
+        MdiWindow(Document* doc,
+                  QWidget* parent,
+                  Qt::WindowFlags flags = Qt::WindowType::Widget);
+
+        Document* GetDocument() const;
+
+    private:
+        Document* document_;
     };
 }
 

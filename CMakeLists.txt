@@ -140,6 +140,8 @@ set(PROJECT_SOURCES
         newcut/engine/polyline.h
         newcut/engine/quadratic.cc
         newcut/engine/quadratic.h
+        newcut/engine/settings.cc
+        newcut/engine/settings.h
         newcut/engine/undoable.cc
         newcut/engine/undoable.h
         newcut/engine/vector.cc
@@ -150,6 +152,8 @@ set(PROJECT_SOURCES
         newcut/gui/action_group_manager.h
         newcut/gui/action_handler.cc
         newcut/gui/action_handler.h
+        newcut/gui/central_widget.cc
+        newcut/gui/central_widget.h
         newcut/gui/widget_factory.cc
         newcut/gui/widget_factory.h
         newcut/gui/graphic_view.cc

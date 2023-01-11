@@ -5,13 +5,15 @@
 #ifndef NEWCUT_APPLICATION_WINDOW_H
 #define NEWCUT_APPLICATION_WINDOW_H
 
+#include <QMdiArea>
 #include "newcut/main_window.h"
 #include "newcut/engine/enum_collect.h"
 
 namespace nc {
     class ActionHandler;
     class ActionGroupManager;
-    class MDIWindow;
+    class Document;
+    class MdiWindow;
 
     class ApplicationWindow : public MainWindow {
         Q_OBJECT
@@ -27,9 +29,22 @@ namespace nc {
             return app_window_;
         }
 
+        QMdiArea const* GetMdiArea() const;
+
+        QMdiArea* GetMdiArea();
+
+        // Pointer to the currently active Mdi window or nullptr if no
+        // MdiWindow is active.
+        const MdiWindow* GetMdiWindow() const;
+
+        MdiWindow* GetMdiWindow();
+
     public slots:
         void ShowAboutWindow();     // about dialog
 
+
+        // Generates a new document for a graphic.
+        MdiWindow* SlotFileNew(Document* doc = nullptr);
 
         void SlotFileOpen(const QString& filename, EnumCollect::FormatType type);
 
@@ -43,7 +58,11 @@ namespace nc {
         void SlotFileSaveAs();
 
     private:
-        bool DoSave(MDIWindow* w, bool force_save_as = false);
+        bool DoSave(MdiWindow* w, bool force_save_as = false);
+
+        void DoClose(MdiWindow* w, bool activate_next = true);
+
+        void DoActivate(QMdiSubWindow* w);
 
     private:
         // Pointer to the application window.
@@ -51,6 +70,10 @@ namespace nc {
         QTimer* auto_save_timer_ = nullptr;
 
         ActionHandler* action_handler_ = nullptr;
+
+        QMdiArea* mdi_area_cad_ = nullptr;
+        QMdiSubWindow* active_mdi_sub_window_ = nullptr;
+        QMdiSubWindow* current_sub_window_ = nullptr;
     };
 }
 

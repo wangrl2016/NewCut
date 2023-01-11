@@ -9,12 +9,16 @@
 #include <QGroupBox>
 #include <QApplication>
 #include <QLabel>
+#include <QTabBar>
 #include "user_config.h"
 #include "newcut/application_window.h"
+#include "newcut/engine/document.h"
+#include "newcut/gui/action_factory.h"
 #include "newcut/gui/action_handler.h"
 #include "newcut/gui/action_group_manager.h"
+#include "newcut/gui/mdi_window.h"
 #include "newcut/gui/widget_factory.h"
-#include "newcut/gui/action_factory.h"
+#include "newcut/gui/central_widget.h"
 
 #ifndef APP_ICON
 #define APP_ICON    ":/images/newcut/app_icon.png"
@@ -47,6 +51,22 @@ namespace nc {
 
         // QStatusBar* status_bar = statusBar();
 
+        LOG(INFO) << __FUNCTION__ << " creating CentralWidget";
+        auto central = new CentralWidget(this);
+
+        setCentralWidget(central);
+
+        mdi_area_cad_ = central->GetMdiArea();
+        mdi_area_cad_->setDocumentMode(true);
+
+        mdi_area_cad_->setViewMode(QMdiArea::TabbedView);
+        QList<QTabBar*> tab_bar_list = mdi_area_cad_->findChildren<QTabBar*>();
+        QTabBar* tab_bar = tab_bar_list.at(0);
+        if (tab_bar) {
+            tab_bar->setExpanding(false);
+        }
+
+
         ActionFactory action_factory(this, action_handler_);
         action_factory.using_theme_ = settings.value("Widgets/AllowTheme", 0).toBool();
         action_factory.FillActionContainer(action_map_, action_group_manager_);
@@ -60,6 +80,38 @@ namespace nc {
 
     ApplicationWindow::~ApplicationWindow() {
 
+    }
+
+    QMdiArea const* ApplicationWindow::GetMdiArea() const {
+        return mdi_area_cad_;
+    }
+
+    QMdiArea* ApplicationWindow::GetMdiArea() {
+        return mdi_area_cad_;
+    }
+
+    MdiWindow const* ApplicationWindow::GetMdiWindow() const {
+        if (mdi_area_cad_) {
+            auto w= mdi_area_cad_->currentSubWindow();
+            if (w) {
+                return qobject_cast<MdiWindow*>(w);
+            }
+        }
+        LOG(INFO) << __FUNCTION__ << " is nullptr";
+        return nullptr;
+    }
+
+    MdiWindow* ApplicationWindow::GetMdiWindow() {
+        if (mdi_area_cad_) {
+            auto w = mdi_area_cad_->currentSubWindow();
+            if (w) {
+                return qobject_cast<MdiWindow*>(w);
+            } else {
+                LOG(WARNING) << "QMdiSubWindow is nullptr";
+            }
+        }
+        LOG(INFO) << __FUNCTION__ << " is nullptr";
+        return nullptr;
     }
 
     void ApplicationWindow::ShowAboutWindow() {
@@ -100,6 +152,16 @@ namespace nc {
         dialog.exec();
     }
 
+    MdiWindow* ApplicationWindow::SlotFileNew(Document* doc) {
+        LOG(INFO) << __FUNCTION__;
+
+        auto w = new MdiWindow(doc, mdi_area_cad_, Qt::WindowType::Widget);
+
+        mdi_area_cad_->addSubWindow(w);
+
+        return w;
+    }
+
     void ApplicationWindow::SlotFileOpen(const QString& filename,
                                          EnumCollect::FormatType type) {
 
@@ -119,12 +181,42 @@ namespace nc {
 
     void ApplicationWindow::SlotFileSaveAs() {
         LOG(INFO) << __FUNCTION__;
-//        if (DoSave(GetMDIWindow(), true)) {
-//
-//        }
+        if (DoSave(GetMdiWindow(), true)) {
+
+        }
     }
 
+    // Force-Save(as) the content of the sub window. Retry on failure.
+    // return true success (or window was not modified).
+    // return false user cancelled (or window was null).
+    bool ApplicationWindow::DoSave(MdiWindow* w, bool force_save_as) {
+        LOG(INFO) << __FUNCTION__;
+        QString name, msg;
+        if (!w) { return false; }
+        if (w->GetDocument()->IsModified() || force_save_as) {
+            name = w->GetDocument()->GetFilename();
+            if (name.isEmpty()) {
+                DoActivate(w);  // show the user the drawing for save as
+            }
+        }
+        return true;
+    }
 
+    void ApplicationWindow::DoClose(MdiWindow* w, bool activate_next) {
+
+    }
+
+    void ApplicationWindow::DoActivate(QMdiSubWindow* w) {
+        LOG(INFO) << __FUNCTION__;
+        if (w) {
+            // SlotWindowActivated(w);
+            w->activateWindow();
+            w->raise();
+            w->setFocus();
+
+            w->show();
+        }
+    }
 
 
 }

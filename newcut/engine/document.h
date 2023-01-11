@@ -17,6 +17,15 @@ namespace nc {
     // an active pen for drawing in the Document, a file name, and they
     // know whether they have been modified or not.
     class Document : public EntityContainer {
+    public:
+        virtual bool IsModified() const {
+            return modified_;
+        }
+
+        virtual QString GetFilename() const {
+            return filename_;
+        }
+
     protected:
         // Flag set if the document was modified and not yet saved.
         bool modified_;

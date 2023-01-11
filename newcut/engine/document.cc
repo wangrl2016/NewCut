@@ -1,5 +1,9 @@
 //
-// Created by wr on 2023/1/8.
+// Created by wangrl2016 on 2023/1/8.
 //
 
-#include "document.h"
+#include "newcut/engine/document.h"
+
+namespace nc {
+
+}
